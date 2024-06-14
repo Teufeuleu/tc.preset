@@ -689,6 +689,10 @@ function read() {
     }
 }
 
+function resync() {
+    calc_rows_columns();
+}
+
 function find_pattrstorage(name) {
     active_slot = 0;
     pattrstorage_obj = this.patcher.getnamed(name);

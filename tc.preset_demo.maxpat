@@ -45,7 +45,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 850.0, 546.0, 150.0, 87.0 ],
+					"patching_rect" : [ 850.0, 546.0, 153.0, 87.0 ],
 					"text" : "Minimum number of slots to display when scrollable is enabled. If a preset is stored in a slot higher than that value, then it is ignored."
 				}
 
@@ -153,7 +153,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 858.0, 316.0, 185.0, 74.0 ],
+					"patching_rect" : [ 858.0, 316.0, 188.0, 74.0 ],
 					"text" : "Makes displayed previous active slot and interpolation status to ignore slot 0.  Can be usefull when using slot 0 as a temporary step for interpolation."
 				}
 
@@ -517,7 +517,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 527.0, 665.0, 65.0, 20.0 ],
+					"patching_rect" : [ 523.0, 665.0, 65.0, 20.0 ],
 					"text" : "For testing"
 				}
 
@@ -855,7 +855,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-8",
-					"items" : "0 (tmp)",
+					"items" : "<empty>",
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -944,8 +944,8 @@
 , 			{
 				"box" : 				{
 					"border" : 0,
-					"embedstate" : [ [ "fontsize", 14 ], [ "displayinterp", 1 ], [ "fontname", "Arial" ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "scrollable", 1 ], [ "layout", 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "bubblesize", 20 ], [ "spacing", 4 ], [ "min_rows", 10 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "autowriteagain", 0 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "ignoreslotzero", 1 ], [ "margin", 7 ], [ "slot_round", 0 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ] ],
-					"filename" : "preset.better.js",
+					"embedstate" : [ [ "fontsize", 14 ], [ "displayinterp", 1 ], [ "fontname", "Arial" ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "scrollable", 1 ], [ "layout", 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "bubblesize", 20 ], [ "spacing", 4 ], [ "min_rows", 50 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "autowriteagain", 0 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "slot_round", 0 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ] ],
+					"filename" : "tc.preset.js",
 					"id" : "obj-10",
 					"jsarguments" : [ "test" ],
 					"maxclass" : "jsui",
@@ -978,15 +978,15 @@
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
-					"patching_rect" : [ 459.0, 664.0, 52.0, 22.0 ],
+					"patching_rect" : [ 464.5, 664.0, 40.0, 22.0 ],
 					"restore" : [ -0.857142857142857, -0.228571428571429, 0.314285714285714, 0.314285714285714, -0.171428571428571, -0.714285714285714, -0.942857142857143, 0.142857142857143, 0.485714285714286, 0.314285714285714, -0.057142857142857, -0.457142857142857, -0.771428571428571, -0.971428571428571, -1.0, -0.8 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0
 					}
 ,
-					"text" : "pattr oui",
-					"varname" : "oui"
+					"text" : "pattr",
+					"varname" : "u099005226"
 				}
 
 			}
@@ -1369,8 +1369,8 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "preset.better.js",
-				"bootpath" : "~/Documents/_MAX/pattrstorage_helper",
+				"name" : "tc.preset.js",
+				"bootpath" : "~/Documents/_MAX/tc.preset",
 				"patcherrelativepath" : ".",
 				"type" : "TEXT",
 				"implicit" : 1
