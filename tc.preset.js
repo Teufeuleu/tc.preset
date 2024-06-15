@@ -193,41 +193,50 @@ function draw_slot(id, scale, cont) {
         } else {
             cont.set_source_rgba(empty_slot_color);
         }
-        cont.rectangle_rounded(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, 4, 4);
-        cont.fill();
+        // cont.rectangle_rounded(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, 4, 4);
+
+          // slot name
+        var text = id;
+        // If slot is locked, add brackets around its number
+        if (slots[id][5] == 1) {
+            text = '[' + text + ']';
+        }
+        // If slot has a name, append it to the preset name
+        if (slots[id][4] != null) {
+            text += ': ' + slots[id][4];
+        }
+
+        draw_text_bubble(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, text, cont);
+        // cont.fill();
         
 
-        // slot name
-        if (1) {
-
+        // // slot name
+        // var text = id;
+        // // If slot is locked, add brackets around its number
+        // if (slots[id][5] == 1) {
+        //     text = '[' + text + ']';
+        // }
+        // // If slot has a name, append it to the preset name
         // if (slots[id][4] != null) {
-            var text = id;
-            // If slot is locked, add brackets around its number
-            if (slots[id][5] == 1) {
-                text = '[' + text + ']';
-            }
-            // If slot has a name, append it to the preset name
-            if (slots[id][4] != null) {
-                text += ': ' + slots[id][4];
-            }
+        //     text += ': ' + slots[id][4];
+        // }
 
-            text = text.toString();
-            var text_dim = cont.text_measure(text);
+        // text = text.toString();
+        // var text_dim = cont.text_measure(text);
 
-            var txt_pos_x = margin + slot_size + 2 * spacing;
-            var txt_pos_y = bg_txt_pos_y + (bg_txt_dim_h - spacing + text_dim[1]) / 2 ;
+        // var txt_pos_x = margin + slot_size + 2 * spacing;
+        // var txt_pos_y = bg_txt_pos_y + (bg_txt_dim_h - spacing + text_dim[1]) / 2 ;
 
-            cont.set_source_rgba(text_color);
-            cont.move_to(txt_pos_x, txt_pos_y);
-            cont.show_text(text.toString());
-        }
+        // cont.set_source_rgba(text_color);
+        // cont.move_to(txt_pos_x, txt_pos_y);
+        // cont.show_text(text.toString());
         
     }
 
 }
 draw_slot.local = 1;
 
-function draw_slot_bubble (x, y, w, h, cont) {
+function draw_slot_bubble(x, y, w, h, cont) {
     cont = typeof cont !== 'undefined' ? cont : mgraphics;
 
     // I assume rectange is faster to draw than rectangle_rounded. Btw rectangle_rounded is wacky when showing interpolation. Maybe *interp on  the first slot_round could solve this?
@@ -238,6 +247,33 @@ function draw_slot_bubble (x, y, w, h, cont) {
     }    
 }
 draw_slot_bubble.local = 1;
+
+function draw_text_bubble(x, y, w, h, text, cont) {
+    cont = typeof cont !== 'undefined' ? cont : mgraphics;
+    // slot text background
+    // var bg_txt_pos_x = margin + slot_size + spacing;
+    // var bg_txt_pos_y = slots[id][1];
+    // var bg_txt_dim_w = ui_width - (2*margin + slot_size + spacing);
+    // var bg_txt_dim_h = slot_size;
+
+    // if (slots[id][4] != null) {
+    //     cont.set_source_rgba(stored_slot_color);
+    // } else {
+    //     cont.set_source_rgba(empty_slot_color);
+    // }
+    cont.rectangle_rounded(x, y, w, h, 4, 4);
+    cont.fill();
+
+    text = text.toString();
+    var text_dim = cont.text_measure(text);
+
+    var txt_pos_x = margin + slot_size + 2 * spacing;
+    var txt_pos_y = y + (h - spacing + text_dim[1]) / 2 ;
+
+    cont.set_source_rgba(text_color);
+    cont.move_to(txt_pos_x, txt_pos_y);
+    cont.show_text(text.toString());
+}
 
 function paint_base() {
     // We draw all slots (empty and stored ones) so we don't have to for every redraw
@@ -256,13 +292,15 @@ function paint_base() {
 
 		// All slots
         for (var i = 1; i <= slots_count_display; i++) {
-            if (slots[i][4] != null) {
-                set_source_rgba(stored_slot_color);
-            } else {
-                set_source_rgba(empty_slot_color);
+            if (i != drag_slot) { //We mask the slot that is currently dragged as it is drawn at the mouse position already
+                if (slots[i][4] != null) {
+                    set_source_rgba(stored_slot_color);
+                } else {
+                    set_source_rgba(empty_slot_color);
+                }
+                draw_slot(i, 1, mg);
+                // fill();
             }
-            draw_slot(i, 1, mg);
-            // fill();
         }
 
         // if (layout == 0) {
@@ -307,7 +345,7 @@ function paint()
 		set_line_width(1);
 		
 		// Active slot
-		if (active_slot > 0 && active_slot <= slots_count_display) {
+		if (active_slot > 0 && active_slot <= slots_count_display && is_dragging == 0) {
 			set_source_rgba(active_slot_color);
 			draw_slot_bubble(slots[active_slot][0], slots[active_slot][1], slot_size, slot_size);
 			fill();
@@ -340,11 +378,13 @@ function paint()
 			if (shift_hold) {
 				if (option_hold) {
 					// About to delete
+                    post("about to delete\n");
 					set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.8);
 					draw_slot_bubble(slots[last_hovered][0] + 1, slots[last_hovered][1] + 1, slot_size-2, slot_size-2);
 					fill();
 				} else {
 					// About to store
+                    post("about to stàre\n");
 					set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], 0.7);
 					draw_slot_bubble(slots[last_hovered][0] + 1, slots[last_hovered][1] + 1, slot_size-2, slot_size-2);
 					fill();
@@ -400,22 +440,49 @@ function paint()
 
         // Drag slot
         if (is_dragging) {
-            translate(last_x, last_y );
-            rotate(0.15);
-            scale(1.1, 1.1);
-            // scale(3, 3);
+            if (layout == 0) {
+                translate(last_x, last_y );
+                rotate(0.15);
+                scale(1.1, 1.1);
+                // scale(3, 3);
 
-            // Shadow
-            set_source_rgba(0, 0, 0, 0.15);
-            for (var i = 0; i<4; i++) {
-                draw_slot_bubble( i*0.4 + 1-slot_size/2, i*0.4 + 1-slot_size/2, slot_size + i*0.8, slot_size+i*0.8);
+                // Shadow
+                set_source_rgba(0, 0, 0, 0.15);
+                for (var i = 0; i<4; i++) {
+                    draw_slot_bubble( i*0.4 + 1-slot_size/2, i*0.4 + 1-slot_size/2, slot_size + i*0.8, slot_size+i*0.8);
+                    fill();
+                }
+                draw_slot_bubble( 2-slot_size/2, 2-slot_size/2, slot_size, slot_size);
                 fill();
+                set_source_rgba(active_slot_color);
+                draw_slot_bubble( -slot_size/2, -slot_size/2, slot_size, slot_size);
+                fill();
+            } else {
+                translate(last_x, last_y );
+                // rotate(0.15);
+                set_source_rgba(active_slot_color);
+                
+                draw_slot_bubble( -slot_size/2, -slot_size/2, slot_size, slot_size);
+                fill();
+                // slot name
+                var text = drag_slot;
+                // If slot is locked, add brackets around its number
+                if (slots[drag_slot][5] == 1) {
+                    text = '[' + text + ']';
+                }
+                // If slot has a name, append it to the preset name
+                if (slots[drag_slot][4] != null) {
+                    text += ': ' + slots[drag_slot][4];
+                }
+                var bg_txt_pos_x = slot_size/2+ spacing;
+                var bg_txt_pos_y = -slot_size/2;
+                var bg_txt_dim_w = ui_width - (2*margin + slot_size + spacing);
+                var bg_txt_dim_h = slot_size;
+                set_source_rgba(stored_slot_color);
+                draw_text_bubble(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, text);
+
             }
-            draw_slot_bubble( 2-slot_size/2, 2-slot_size/2, slot_size, slot_size);
-            fill();
-            set_source_rgba(stored_slot_color);
-            draw_slot_bubble( -slot_size/2, -slot_size/2, slot_size, slot_size);
-            fill();
+            
         }
 
 	}
@@ -792,8 +859,8 @@ function onidle(x,y,but,cmd,shift,capslock,option,ctrl)
 		var cur = get_slot_index(x, y - y_offset);
 		if (cur != last_hovered) {
 			last_hovered = cur;
-			mgraphics.redraw();
 		}
+        mgraphics.redraw();
 	}
 }
 onidle.local = 1;
@@ -838,6 +905,7 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
         if (dist_from_start > 10) {
             is_dragging = 1;
             drag_slot = last_hovered;
+            paint_base();
         }
 
 	} else if (is_dragging == 1) {
@@ -873,16 +941,19 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                 if (drag_slot_lock) {
                     lock(last_hovered, 1);
                 }
-                
+                is_dragging = 0;
+                drag_slot = -1;
                 paint_base();
                 outlet(0, "drag", drag_slot, last_hovered, offset);
                 set_active_slot(last_hovered);
-                is_dragging = 0;
+                
                 trigger_writeagain();
 
-            } else {
+            } else { // Drag released but not somewhere we can throw a slot in
                 is_dragging = 0;
-                mgraphics.redraw();
+                drag_slot = -1;
+                paint_base();
+                // mgraphics.redraw();
             }
             
         } else {

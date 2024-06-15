@@ -918,13 +918,13 @@
 			}
 , 			{
 				"box" : 				{
-					"bubblesize" : 30,
+					"bubblesize" : 20,
 					"id" : "obj-4",
 					"maxclass" : "preset",
 					"numinlets" : 1,
 					"numoutlets" : 5,
 					"outlettype" : [ "preset", "int", "preset", "int", "" ],
-					"patching_rect" : [ 72.0, 941.0, 248.0, 87.0 ],
+					"patching_rect" : [ 72.0, 941.0, 364.0, 126.0 ],
 					"pattrstorage" : "test"
 				}
 
@@ -944,7 +944,7 @@
 , 			{
 				"box" : 				{
 					"border" : 0,
-					"embedstate" : [ [ "fontsize", 14 ], [ "displayinterp", 1 ], [ "fontname", "Arial" ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "scrollable", 1 ], [ "layout", 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "bubblesize", 20 ], [ "spacing", 4 ], [ "min_rows", 50 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "autowriteagain", 0 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "slot_round", 0 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ] ],
+					"embedstate" : [ [ "fontsize", 14 ], [ "displayinterp", 1 ], [ "fontname", "Arial" ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "scrollable", 1 ], [ "layout", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "bubblesize", 20 ], [ "spacing", 4 ], [ "min_rows", 50 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "autowriteagain", 0 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "slot_round", 0 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ] ],
 					"filename" : "tc.preset.js",
 					"id" : "obj-10",
 					"jsarguments" : [ "test" ],
