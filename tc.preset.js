@@ -82,6 +82,7 @@ var bg_width, bg_height = 0;
 
 var mg = new MGraphics(ui_width, ui_height);
 var base_drawing;
+var is_painting_base = 0;
 
 var half_slot_size, half_margin, half_spacing;
 var last_x, last_y, last_hovered = -1;
@@ -166,22 +167,17 @@ function draw_slot(id, scale, cont) {
     cont = typeof cont !== 'undefined' ? cont : mgraphics;  // Sets drawing context to mgraphics by default if not passed as argument
 
     var offset = slot_size * (1 - scale);
-    
-    draw_slot_bubble(slots[id][0] + offset, slots[id][1] + offset, slot_size * scale, slot_size * scale, cont);
+
+
+    if(is_painting_base) {
+        draw_slot_bubble(slots[id][0] * scale, slots[id][1] *scale, slot_size * scale, slot_size * scale, cont);
+
+    } else {
+        draw_slot_bubble(slots[id][0] + offset, slots[id][1] + offset, slot_size * scale, slot_size * scale, cont);
+    }
     cont.fill();
 
     if (layout == 1) {
-        // // Slot number
-        // var nb = i.toString();
-        // var nb_dim = text_measure(nb);
-
-        // var nb_pos_x = slots[i][0] + (slot_size - nb_dim[0]) / 2;
-        // var nb_pos_y = slots[i][1] + (slot_size - spacing + nb_dim[1]) / 2 ;
-
-        // set_source_rgba(text_color);
-        // move_to(nb_pos_x, nb_pos_y);
-        // show_text(nb);
-
         // slot text background
         var bg_txt_pos_x = margin + slot_size + spacing;
         var bg_txt_pos_y = slots[id][1];
@@ -193,36 +189,17 @@ function draw_slot(id, scale, cont) {
         } else {
             cont.set_source_rgba(empty_slot_color);
         }
-        // cont.rectangle_rounded(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, 4, 4);
 
           // slot name
+        cont.set_font_size(font_size*scale);
         var text = format_slot_name(id);
 
-        draw_text_bubble(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, text, cont);
-        // cont.fill();
-        
+        if (is_painting_base) {
+            draw_text_bubble(bg_txt_pos_x * scale, bg_txt_pos_y * scale, bg_txt_dim_w * scale, bg_txt_dim_h * scale, text, cont);
 
-        // // slot name
-        // var text = id;
-        // // If slot is locked, add brackets around its number
-        // if (slots[id][5] == 1) {
-        //     text = '[' + text + ']';
-        // }
-        // // If slot has a name, append it to the preset name
-        // if (slots[id][4] != null) {
-        //     text += ': ' + slots[id][4];
-        // }
-
-        // text = text.toString();
-        // var text_dim = cont.text_measure(text);
-
-        // var txt_pos_x = margin + slot_size + 2 * spacing;
-        // var txt_pos_y = bg_txt_pos_y + (bg_txt_dim_h - spacing + text_dim[1]) / 2 ;
-
-        // cont.set_source_rgba(text_color);
-        // cont.move_to(txt_pos_x, txt_pos_y);
-        // cont.show_text(text.toString());
-        
+        } else {
+            draw_text_bubble(bg_txt_pos_x + offset, bg_txt_pos_y + offset, bg_txt_dim_w * scale, bg_txt_dim_h * scale, text, cont);
+        } 
     }
 
 }
@@ -243,23 +220,13 @@ draw_slot_bubble.local = 1;
 function draw_text_bubble(x, y, w, h, text, cont) {
     cont = typeof cont !== 'undefined' ? cont : mgraphics;
     // slot text background
-    // var bg_txt_pos_x = margin + slot_size + spacing;
-    // var bg_txt_pos_y = slots[id][1];
-    // var bg_txt_dim_w = ui_width - (2*margin + slot_size + spacing);
-    // var bg_txt_dim_h = slot_size;
-
-    // if (slots[id][4] != null) {
-    //     cont.set_source_rgba(stored_slot_color);
-    // } else {
-    //     cont.set_source_rgba(empty_slot_color);
-    // }
     cont.rectangle_rounded(x, y, w, h, 4, 4);
     cont.fill();
 
     var text_dim = cont.text_measure(text);
 
-    var txt_pos_x = margin + slot_size + 2 * spacing;
-    var txt_pos_y = y + (h - spacing + text_dim[1]) / 2 ;
+    var txt_pos_x = x + spacing;
+    var txt_pos_y = y + (text_dim[1] + h)/2 - text_dim[1]*0.18;
 
     cont.set_source_rgba(text_color);
     cont.move_to(txt_pos_x, txt_pos_y);
@@ -283,14 +250,15 @@ format_slot_name.local = 1;
 
 function paint_base() {
     // We draw all slots (empty and stored ones) so we don't have to for every redraw
+    is_painting_base = 1;
 
     // Background
     bg_width = layout == 0 ? columns * (slot_size + spacing) - spacing + 2 * margin : ui_width;
     bg_height = rows * (slot_size + spacing) - spacing + 2 * margin;
-	mg = new MGraphics(ui_width, bg_height);
+	mg = new MGraphics(ui_width*2, bg_height*2);
 	with(mg) {
 		set_source_rgba(background_color);
-		rectangle(0, 0, bg_width, bg_height);
+		rectangle(0, 0, bg_width*2, bg_height*2);
 		fill();
 
         select_font_face(font_name);
@@ -304,10 +272,11 @@ function paint_base() {
                 } else {
                     set_source_rgba(empty_slot_color);
                 }
-                draw_slot(i, 1, mg);
+                draw_slot(i, 2, mg);
             }
         }
 	}
+    is_painting_base = 0;
     update_umenu();
 	base_drawing = new Image(mg);
 	mgraphics.redraw();
@@ -318,9 +287,15 @@ function paint()
 {
     // post("redraw\n");
 	with (mgraphics) {
+        select_font_face(font_name);
+        set_font_size(font_size);
         translate(0, y_offset);
         // Draw the base, which includes empty and filled slots
+        // It is first rendered at twice the size in order to make texts look nice and cripsy on hidpi discplays
+        // So we need to scale it down here
+        scale(0.5, 0.5);
 		image_surface_draw(base_drawing);
+        scale(2, 2);
         
 		set_line_width(1);
 		
@@ -376,8 +351,6 @@ function paint()
             if (layout == 0) {
                 //Text (slot number and name)
                 var text = format_slot_name(last_hovered);
-                select_font_face(font_name);
-                set_font_size(font_size);
                 var text_dim = text_measure(text);
                 // If the text is too big or a slot is being dragged, display the text on top of the next slot.
                 // Otherwise, it gets displayed on the hovered slot.
@@ -414,9 +387,8 @@ function paint()
                 translate(last_x, last_y );
                 rotate(0.15);
                 scale(1.1, 1.1);
-                // scale(3, 3);
 
-                // Shadow
+                // Slot shadow
                 set_source_rgba(0, 0, 0, 0.15);
                 for (var i = 0; i<4; i++) {
                     draw_slot_bubble( i*0.4 + 1-slot_size/2, i*0.4 + 1-slot_size/2, slot_size + i*0.8, slot_size+i*0.8);
@@ -424,6 +396,8 @@ function paint()
                 }
                 draw_slot_bubble( 2-slot_size/2, 2-slot_size/2, slot_size, slot_size);
                 fill();
+
+                //Flying slot
                 set_source_rgba(active_slot_color);
                 draw_slot_bubble( -slot_size/2, -slot_size/2, slot_size, slot_size);
                 fill();
@@ -435,15 +409,7 @@ function paint()
                 draw_slot_bubble( -slot_size/2, -slot_size/2, slot_size, slot_size);
                 fill();
                 // slot name
-                var text = drag_slot;
-                // If slot is locked, add brackets around its number
-                if (slots[drag_slot][5] == 1) {
-                    text = '[' + text + ']';
-                }
-                // If slot has a name, append it to the preset name
-                if (slots[drag_slot][4] != null) {
-                    text += ': ' + slots[drag_slot][4];
-                }
+                var text = format_slot_name(drag_slot);
                 var bg_txt_pos_x = slot_size/2+ spacing;
                 var bg_txt_pos_y = -slot_size/2;
                 var bg_txt_dim_w = ui_width - (2*margin + slot_size + spacing);

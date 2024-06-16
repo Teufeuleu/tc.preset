@@ -30,7 +30,7 @@ A [jsui] replacement for the [preset] object in Cycling'74 Max.
 - The js program send a lot of message to the [pattrstorage] (patch cord not required), which makes it output a lot of messages required for the [jsui] to stay in sync. Using one of the above messages incorrectly, or sending `getslotlist`, `getslotnamelist`, or any message that will impact the presets, it might cause the [pattrstorage] to get out of sync. In case something like that happens, you can send the `resync` message to the [jsui].
 
 ## Known bugs
-- Text in list layout is blurry (but not the dragged slot)
+- Some interactions should be ignored when no pattrstorage is linked
 
 ## Desired features (for someday)
 - No need for a patch cord (programmatically create a [send]/[receive] pair?)
