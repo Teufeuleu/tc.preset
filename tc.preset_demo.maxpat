@@ -475,7 +475,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 231.0, 833.0, 125.0, 22.0 ],
+					"patching_rect" : [ 227.0, 845.0, 125.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -494,7 +494,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 16.0, 457.0, 150.0, 33.0 ],
+					"patching_rect" : [ 30.0, 523.5, 150.0, 33.0 ],
 					"text" : "Usefull when making changes to the js file"
 				}
 
@@ -506,7 +506,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 15.0, 496.0, 151.0, 22.0 ],
+					"patching_rect" : [ 29.0, 562.5, 151.0, 22.0 ],
 					"text" : "loadbang, pattrstorage test"
 				}
 
@@ -529,7 +529,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 446.0, 37.5, 505.0, 100.0 ],
+					"patching_rect" : [ 120.0, 27.0, 505.0, 100.0 ],
 					"text" : "In order to use that custom jsui, you need to:\n1. bind the jsui to a named pattrstorage, either by setting the pattrstorage name as the jsui jsarguments attribute, or by sending a message to the jsui starting by \"pattrstorage\" followed by the pattrstorage name (prefered). You can re-send this message manually at any time to re-sync the jsui with the pattstorage (in case you send some messages to the pattrstorage that doesn't trigger an output). An empty \"pattrstorage\" message to the jsui will unbind it.\n2. Connect the pattrstorage outlet to the jsui inlet."
 				}
 
@@ -659,7 +659,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 169.0, 68.5, 29.5, 22.0 ],
+					"patching_rect" : [ 169.0, 374.0, 29.5, 22.0 ],
 					"text" : "t l l"
 				}
 
@@ -758,7 +758,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 169.0, 37.5, 133.0, 22.0 ],
+					"patching_rect" : [ 169.0, 343.0, 133.0, 22.0 ],
 					"text" : "recallmulti 1.5 2.1 3 5.2"
 				}
 
@@ -769,7 +769,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 72.0, 829.0, 135.0, 22.0 ],
+					"patching_rect" : [ 72.0, 845.0, 135.0, 22.0 ],
 					"text" : "print jsui_out @popup 1"
 				}
 
@@ -781,7 +781,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 341.5, 37.5, 73.0, 22.0 ],
+					"patching_rect" : [ 16.0, 38.0, 73.0, 22.0 ],
 					"text" : "pattrstorage"
 				}
 
@@ -793,7 +793,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 428.0, 805.0, 93.0, 22.0 ],
+					"patching_rect" : [ 417.0, 803.0, 93.0, 22.0 ],
 					"text" : "prepend setlock"
 				}
 
@@ -806,7 +806,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 428.0, 774.0, 24.0, 24.0 ],
+					"patching_rect" : [ 417.0, 772.0, 24.0, 24.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 119.0, 62.5, 24.0, 24.0 ]
 				}
@@ -846,7 +846,7 @@
 					"numoutlets" : 4,
 					"outlettype" : [ "", "int", "", "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 309.0, 774.0, 100.0, 50.0 ],
+					"patching_rect" : [ 302.0, 772.0, 100.0, 50.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 146.0, 63.5, 119.0, 22.0 ]
 				}
@@ -861,7 +861,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "int", "", "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 191.0, 788.0, 100.0, 22.0 ],
+					"patching_rect" : [ 187.0, 800.0, 100.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 1.0, 63.5, 116.0, 22.0 ]
 				}
@@ -888,7 +888,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 72.0, 37.5, 50.0, 22.0 ]
+					"patching_rect" : [ 72.0, 343.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -899,7 +899,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 72.0, 68.5, 74.0, 22.0 ],
+					"patching_rect" : [ 72.0, 374.0, 74.0, 22.0 ],
 					"text" : "recall 1 4 $1"
 				}
 
@@ -936,7 +936,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 341.5, 65.5, 95.0, 22.0 ],
+					"patching_rect" : [ 16.0, 66.0, 95.0, 22.0 ],
 					"text" : "pattrstorage test"
 				}
 
@@ -953,7 +953,7 @@
 					"numoutlets" : 4,
 					"outlettype" : [ "", "", "", "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 72.0, 637.0, 375.0, 132.0 ],
+					"patching_rect" : [ 72.0, 637.0, 364.0, 124.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 1.0, 103.0, 269.0, 77.0 ]
 				}
@@ -1011,7 +1011,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 72.0, 108.5, 176.0, 22.0 ],
+					"patching_rect" : [ 72.0, 414.0, 176.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"client_rect" : [ 100, 100, 519, 600 ],
 						"parameter_enable" : 0,
@@ -1194,7 +1194,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
-					"midpoints" : [ 240.5, 865.0, 57.0, 865.0, 57.0, 102.0, 81.5, 102.0 ],
+					"midpoints" : [ 236.5, 884.0, 57.0, 884.0, 57.0, 405.0, 81.5, 405.0 ],
 					"source" : [ "obj-34", 0 ]
 				}
 

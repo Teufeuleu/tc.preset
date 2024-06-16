@@ -196,15 +196,7 @@ function draw_slot(id, scale, cont) {
         // cont.rectangle_rounded(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, 4, 4);
 
           // slot name
-        var text = id;
-        // If slot is locked, add brackets around its number
-        if (slots[id][5] == 1) {
-            text = '[' + text + ']';
-        }
-        // If slot has a name, append it to the preset name
-        if (slots[id][4] != null) {
-            text += ': ' + slots[id][4];
-        }
+        var text = format_slot_name(id);
 
         draw_text_bubble(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, text, cont);
         // cont.fill();
@@ -264,7 +256,6 @@ function draw_text_bubble(x, y, w, h, text, cont) {
     cont.rectangle_rounded(x, y, w, h, 4, 4);
     cont.fill();
 
-    text = text.toString();
     var text_dim = cont.text_measure(text);
 
     var txt_pos_x = margin + slot_size + 2 * spacing;
@@ -274,6 +265,21 @@ function draw_text_bubble(x, y, w, h, text, cont) {
     cont.move_to(txt_pos_x, txt_pos_y);
     cont.show_text(text.toString());
 }
+
+function format_slot_name(id) {
+    var text = id;
+    // If slot is locked, add brackets around its number
+    if (slots[id][5] == 1) {
+        text = '[' + text + ']';
+    }
+    // If slot has a name, append it to the preset name
+    if (slots[id][4] != null) {
+        text += ': ' + slots[id][4];
+    }
+    text = text.toString();
+    return text;
+}
+format_slot_name.local = 1;
 
 function paint_base() {
     // We draw all slots (empty and stored ones) so we don't have to for every redraw
@@ -299,34 +305,8 @@ function paint_base() {
                     set_source_rgba(empty_slot_color);
                 }
                 draw_slot(i, 1, mg);
-                // fill();
             }
         }
-
-        // if (layout == 0) {
-        //     for (var i = 1; i <= slots_count_display; i++) {
-        //         if (slots[i][4] != null) {
-        //             set_source_rgba(stored_slot_color);
-        //         } else {
-        //             set_source_rgba(empty_slot_color);
-        //         }
-        //         draw_slot_bubble(i, 1, mg);
-        //         fill();
-        //     }
-        // } else {
-            
-        //     for (var i = 1; i <= slots_count_display; i++) {
-        //         if (slots[i][4] != null) {
-        //             set_source_rgba(stored_slot_color);
-        //         } else {
-        //             set_source_rgba(empty_slot_color);
-        //         }
-        //         draw_slot(i, 1, mg);
-        //         // fill();
-
-                
-        //     }
-        // }
 	}
     update_umenu();
 	base_drawing = new Image(mg);
@@ -345,21 +325,21 @@ function paint()
 		set_line_width(1);
 		
 		// Active slot
-		if (active_slot > 0 && active_slot <= slots_count_display && is_dragging == 0) {
+		if (is_dragging == 0 && active_slot > 0 && active_slot <= slots_count_display) {
 			set_source_rgba(active_slot_color);
 			draw_slot_bubble(slots[active_slot][0], slots[active_slot][1], slot_size, slot_size);
 			fill();
 		}
 
         // Previous active slot
-		if (previous_active_slot > 0 && previous_active_slot <= slots_count_display) {
+		if (is_dragging == 0 && previous_active_slot > 0 && previous_active_slot <= slots_count_display) {
 			set_source_rgba(active_slot_color);
 			draw_slot_bubble(slots[previous_active_slot][0], slots[previous_active_slot][1], slot_size, slot_size);
 			stroke();
 		}
 
 		// Interpolated slots
-        if (display_interp && is_interpolating) {
+        if (is_dragging == 0 && display_interp && is_interpolating) {
             
             for (var i = 1; i <= slots_count_display; i++) {
                 var interp = slots[i][6];
@@ -378,13 +358,11 @@ function paint()
 			if (shift_hold) {
 				if (option_hold) {
 					// About to delete
-                    post("about to delete\n");
 					set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.8);
 					draw_slot_bubble(slots[last_hovered][0] + 1, slots[last_hovered][1] + 1, slot_size-2, slot_size-2);
 					fill();
 				} else {
 					// About to store
-                    post("about to stàre\n");
 					set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], 0.7);
 					draw_slot_bubble(slots[last_hovered][0] + 1, slots[last_hovered][1] + 1, slot_size-2, slot_size-2);
 					fill();
@@ -397,15 +375,7 @@ function paint()
 
             if (layout == 0) {
                 //Text (slot number and name)
-                var text = last_hovered;
-                if (slots[last_hovered][5] == 1) {
-                    text = '[' + text + ']';
-                }
-
-                if (slots[last_hovered][4] != null) {
-                    text += ': ' + slots[last_hovered][4];
-                }
-                text = text.toString();
+                var text = format_slot_name(last_hovered);
                 select_font_face(font_name);
                 set_font_size(font_size);
                 var text_dim = text_measure(text);
@@ -492,7 +462,7 @@ paint.local = 1;
 function anything() {
     // Here just to avoid error messages in case pattrstorage sends unhandled message, like when  using getstoredvalue, getsubscriptionlist, getalias, etc.
 
-    // Handle the "delete" messages here because it is a reserevd word in js and cannot be used as a function name.
+    // Handle the "delete" messages here because we can't declare a "function delete" (it is a reserved word in js and cannot be used as a function name.
     if (messagename == "delete") {
         var v = arrayfromargs(arguments)[0];
             v = Math.floor(v);
@@ -765,7 +735,8 @@ function find_pattrstorage(name) {
     pattrstorage_obj = this.patcher.getnamed(name);
     if (pattrstorage_obj !== null) {
         pattrstorage_name = name;
-        // slots_clear();
+        slots_clear();
+        // this.patcher.hiddenconnect(pattrstorage_obj, 0, this.box, 0);
         to_pattrstorage("getslotlist");
         to_pattrstorage("getlockedslots");
     } else {
