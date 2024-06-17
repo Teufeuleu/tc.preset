@@ -40,18 +40,6 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"id" : "obj-9",
-					"maxclass" : "message",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 465.0, 630.0, 127.0, 22.0 ],
-					"text" : "fontname \"Arial Black\""
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-65",
 					"linecount" : 6,
 					"maxclass" : "comment",
@@ -69,7 +57,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 573.0, 537.5, 150.0, 47.0 ],
+					"patching_rect" : [ 573.0, 538.0, 150.0, 47.0 ],
 					"text" : "Enable to scroll through your presets! (Only work in list mode currently)"
 				}
 
@@ -105,7 +93,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 360.5, 546.0, 150.0, 33.0 ],
+					"patching_rect" : [ 361.0, 546.0, 150.0, 33.0 ],
 					"text" : "Choose to display presets as a grid (0) or a list (1)!"
 				}
 
@@ -142,7 +130,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 333.5, 550.0, 24.0, 24.0 ]
+					"patching_rect" : [ 334.0, 550.0, 24.0, 24.0 ]
 				}
 
 			}
@@ -153,7 +141,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 333.5, 583.0, 57.0, 22.0 ],
+					"patching_rect" : [ 334.0, 583.0, 57.0, 22.0 ],
 					"text" : "layout $1"
 				}
 
@@ -165,7 +153,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 858.0, 316.0, 188.0, 74.0 ],
+					"patching_rect" : [ 645.0, 290.0, 188.0, 74.0 ],
 					"text" : "Makes displayed previous active slot and interpolation status to ignore slot 0.  Can be usefull when using slot 0 as a temporary step for interpolation."
 				}
 
@@ -178,7 +166,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 601.0, 261.0, 24.0, 24.0 ]
+					"patching_rect" : [ 388.0, 235.0, 24.0, 24.0 ]
 				}
 
 			}
@@ -190,7 +178,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 858.0, 261.0, 24.0, 24.0 ]
+					"patching_rect" : [ 645.0, 235.0, 24.0, 24.0 ]
 				}
 
 			}
@@ -487,7 +475,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 227.0, 845.0, 125.0, 22.0 ],
+					"patching_rect" : [ 227.5, 845.0, 125.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -501,24 +489,26 @@
 			}
 , 			{
 				"box" : 				{
+					"hidden" : 1,
 					"id" : "obj-28",
 					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 30.0, 523.5, 150.0, 33.0 ],
+					"patching_rect" : [ 34.5, 458.0, 150.0, 33.0 ],
 					"text" : "Usefull when making changes to the js file"
 				}
 
 			}
 , 			{
 				"box" : 				{
+					"hidden" : 1,
 					"id" : "obj-17",
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 29.0, 562.5, 151.0, 22.0 ],
+					"patching_rect" : [ 33.5, 497.0, 151.0, 22.0 ],
 					"text" : "loadbang, pattrstorage test"
 				}
 
@@ -541,7 +531,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 120.0, 27.0, 505.0, 100.0 ],
+					"patching_rect" : [ 176.0, 20.0, 505.0, 100.0 ],
 					"text" : "In order to use that custom jsui, you need to:\n1. bind the jsui to a named pattrstorage, either by setting the pattrstorage name as the jsui jsarguments attribute, or by sending a message to the jsui starting by \"pattrstorage\" followed by the pattrstorage name (prefered). You can re-send this message manually at any time to re-sync the jsui with the pattstorage (in case you send some messages to the pattrstorage that doesn't trigger an output). An empty \"pattrstorage\" message to the jsui will unbind it.\n2. Connect the pattrstorage outlet to the jsui inlet."
 				}
 
@@ -564,7 +554,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 601.0, 448.0, 99.0, 22.0 ],
+					"patching_rect" : [ 403.0, 408.0, 99.0, 22.0 ],
 					"text" : "display_interp $1"
 				}
 
@@ -577,7 +567,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 601.0, 413.0, 24.0, 24.0 ]
+					"patching_rect" : [ 403.0, 373.0, 24.0, 24.0 ]
 				}
 
 			}
@@ -590,7 +580,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 507.0, 414.0, 50.0, 22.0 ]
+					"patching_rect" : [ 309.0, 374.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -601,7 +591,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 507.0, 448.0, 81.0, 22.0 ],
+					"patching_rect" : [ 309.0, 408.0, 81.0, 22.0 ],
 					"text" : "slot_round $1"
 				}
 
@@ -613,7 +603,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 601.0, 316.0, 241.0, 60.0 ],
+					"patching_rect" : [ 388.0, 290.0, 241.0, 60.0 ],
 					"text" : "When enabled, sends writeagain to pattrstrage when a preset has been stored/renamed/deleted/moved/(un)locked, keeping the json file always up to date"
 				}
 
@@ -624,7 +614,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 464.0, 316.0, 129.0, 20.0 ],
+					"patching_rect" : [ 251.0, 290.0, 129.0, 20.0 ],
 					"text" : "Lock/unlock active slot"
 				}
 
@@ -636,7 +626,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 464.0, 296.0, 63.0, 22.0 ],
+					"patching_rect" : [ 251.0, 270.0, 63.0, 22.0 ],
 					"text" : "setlock $1"
 				}
 
@@ -649,7 +639,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 464.0, 260.0, 24.0, 24.0 ]
+					"patching_rect" : [ 251.0, 234.0, 24.0, 24.0 ]
 				}
 
 			}
@@ -659,7 +649,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 350.0, 316.0, 104.0, 20.0 ],
+					"patching_rect" : [ 137.0, 290.0, 104.0, 20.0 ],
 					"text" : "Lock/unlock slot 2"
 				}
 
@@ -671,7 +661,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 169.0, 374.0, 29.5, 22.0 ],
+					"patching_rect" : [ 169.0, 559.0, 29.5, 22.0 ],
 					"text" : "t l l"
 				}
 
@@ -683,7 +673,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 690.0, 448.0, 219.0, 74.0 ],
+					"patching_rect" : [ 504.0, 408.0, 230.0, 74.0 ],
 					"text" : "...and: bgcolor, empty_slot_color, stored_slot_color, interp_slot_color, active_slot_color, fontname, fontsize, text_bg_color, text_color\n(see the jsui attributes in the inspector)"
 				}
 
@@ -697,7 +687,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 270.0, 414.0, 50.0, 22.0 ]
+					"patching_rect" : [ 72.0, 374.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -708,7 +698,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 270.0, 448.0, 83.0, 22.0 ],
+					"patching_rect" : [ 72.0, 408.0, 83.0, 22.0 ],
 					"text" : "bubblesize $1"
 				}
 
@@ -722,7 +712,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 433.0, 414.0, 50.0, 22.0 ]
+					"patching_rect" : [ 235.0, 374.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -733,7 +723,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 433.0, 448.0, 62.0, 22.0 ],
+					"patching_rect" : [ 235.0, 408.0, 62.0, 22.0 ],
 					"text" : "margin $1"
 				}
 
@@ -747,7 +737,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 363.0, 414.0, 50.0, 22.0 ]
+					"patching_rect" : [ 165.0, 374.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -758,7 +748,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 362.0, 448.0, 67.0, 22.0 ],
+					"patching_rect" : [ 164.0, 408.0, 67.0, 22.0 ],
 					"text" : "spacing $1"
 				}
 
@@ -770,7 +760,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 169.0, 343.0, 133.0, 22.0 ],
+					"patching_rect" : [ 169.0, 528.0, 133.0, 22.0 ],
 					"text" : "recallmulti 1.5 2.1 3 5.2"
 				}
 
@@ -793,7 +783,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 16.0, 38.0, 73.0, 22.0 ],
+					"patching_rect" : [ 72.0, 31.0, 73.0, 22.0 ],
 					"text" : "pattrstorage"
 				}
 
@@ -832,7 +822,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 350.0, 256.0, 24.0, 24.0 ]
+					"patching_rect" : [ 137.0, 230.0, 24.0, 24.0 ]
 				}
 
 			}
@@ -843,7 +833,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 350.0, 292.0, 57.0, 22.0 ],
+					"patching_rect" : [ 137.0, 266.0, 57.0, 22.0 ],
 					"text" : "lock 2 $1"
 				}
 
@@ -860,15 +850,14 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 302.0, 772.0, 100.0, 50.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 146.0, 63.5, 119.0, 22.0 ],
-					"text" : "<(unnamed)>"
+					"presentation_rect" : [ 146.0, 63.5, 119.0, 22.0 ]
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"id" : "obj-8",
-					"items" : [ "1 <(unnamed)>", ",", "2 <(unnamed)>" ],
+					"items" : "<empty>",
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -887,7 +876,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 285.0, 165.0, 507.0, 87.0 ],
+					"patching_rect" : [ 72.0, 139.0, 507.0, 87.0 ],
 					"text" : "Pattrstorage messages that doesn't trigger output and need to be sent to the jsui instead:\n- store (send to jsui only)\n- recallmulti (send to pattrstorage first for timing accuracy, then to  jsui)\n- slotname (send \"setslotname\" or \"text\" to jsui instead, will rename active slot)\n- lock (or setlock to lock/unlock of the active slot)\n- some other. I've not tested them all. "
 				}
 
@@ -901,7 +890,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 72.0, 343.0, 50.0, 22.0 ]
+					"patching_rect" : [ 72.0, 528.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -912,7 +901,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 72.0, 374.0, 74.0, 22.0 ],
+					"patching_rect" : [ 72.0, 559.0, 74.0, 22.0 ],
 					"text" : "recall 1 4 $1"
 				}
 
@@ -924,7 +913,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 285.0, 292.0, 45.0, 22.0 ],
+					"patching_rect" : [ 72.0, 266.0, 45.0, 22.0 ],
 					"text" : "store 5"
 				}
 
@@ -949,7 +938,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 16.0, 66.0, 95.0, 22.0 ],
+					"patching_rect" : [ 72.0, 59.0, 95.0, 22.0 ],
 					"text" : "pattrstorage test"
 				}
 
@@ -957,7 +946,7 @@
 , 			{
 				"box" : 				{
 					"border" : 0,
-					"embedstate" : [ [ "text_bg_color", 1, 1, 1, 0.5 ], [ "autowriteagain", 0 ], [ "layout", 1 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "spacing", 4 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 50 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "bubblesize", 20 ], [ "displayinterp", 1 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "scrollable", 1 ], [ "margin", 4 ], [ "fontsize", 14 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "slot_round", 0 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "fontname", "Arial" ] ],
+					"embedstate" : [ [ "text_bg_color", 1, 1, 1, 0.5 ], [ "autowriteagain", 0 ], [ "layout", 1 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "spacing", 4 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 50 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "bubblesize", 20 ], [ "displayinterp", 1 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "scrollable", 0 ], [ "margin", 4 ], [ "fontsize", 14 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "slot_round", 0 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "fontname", "Arial" ] ],
 					"filename" : "tc.preset.js",
 					"id" : "obj-10",
 					"jsarguments" : [ "test" ],
@@ -979,7 +968,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 285.0, 262.0, 45.0, 22.0 ],
+					"patching_rect" : [ 72.0, 236.0, 45.0, 22.0 ],
 					"text" : "store 4"
 				}
 
@@ -991,7 +980,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "" ],
-					"patching_rect" : [ 464.5, 664.0, 40.0, 22.0 ],
+					"patching_rect" : [ 465.0, 664.0, 40.0, 22.0 ],
 					"restore" : [ -0.857142857142857, -0.228571428571429, 0.314285714285714, 0.314285714285714, -0.171428571428571, -0.714285714285714, -0.942857142857143, 0.142857142857143, 0.485714285714286, 0.314285714285714, -0.057142857142857, -0.457142857142857, -0.771428571428571, -0.971428571428571, -1.0, -0.8 ],
 					"saved_object_attributes" : 					{
 						"parameter_enable" : 0,
@@ -1024,7 +1013,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 72.0, 414.0, 176.0, 22.0 ],
+					"patching_rect" : [ 72.0, 599.0, 176.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"client_rect" : [ 100, 100, 519, 600 ],
 						"parameter_enable" : 0,
@@ -1046,7 +1035,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 601.0, 292.0, 122.0, 22.0 ]
+					"patching_rect" : [ 388.0, 266.0, 122.0, 22.0 ]
 				}
 
 			}
@@ -1059,7 +1048,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 858.0, 292.0, 121.0, 22.0 ]
+					"patching_rect" : [ 645.0, 266.0, 121.0, 22.0 ]
 				}
 
 			}
@@ -1109,6 +1098,8 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
+					"midpoints" : [ 81.5, 93.0, 15.0, 93.0, 15.0, 624.0, 81.5, 624.0 ],
 					"source" : [ "obj-12", 0 ]
 				}
 
@@ -1116,6 +1107,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-15", 0 ]
 				}
 
@@ -1130,6 +1122,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-17", 0 ]
 				}
 
@@ -1137,6 +1130,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-18", 0 ]
 				}
 
@@ -1151,6 +1145,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-20", 0 ]
 				}
 
@@ -1158,6 +1153,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-21", 0 ]
 				}
 
@@ -1207,7 +1203,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
-					"midpoints" : [ 236.5, 884.0, 57.0, 884.0, 57.0, 405.0, 81.5, 405.0 ],
+					"midpoints" : [ 237.0, 884.0, 57.0, 884.0, 57.0, 592.0, 81.5, 592.0 ],
 					"source" : [ "obj-34", 0 ]
 				}
 
@@ -1215,6 +1211,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-35", 0 ]
 				}
 
@@ -1236,6 +1233,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-40", 0 ]
 				}
 
@@ -1257,6 +1255,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-44", 0 ]
 				}
 
@@ -1264,6 +1263,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-45", 0 ]
 				}
 
@@ -1271,6 +1271,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-46", 0 ]
 				}
 
@@ -1278,6 +1279,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-47", 0 ]
 				}
 
@@ -1292,6 +1294,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-5", 0 ]
 				}
 
@@ -1313,6 +1316,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-57", 0 ]
 				}
 
@@ -1334,6 +1338,8 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
+					"midpoints" : [ 81.5, 54.0, 15.0, 54.0, 15.0, 624.0, 81.5, 624.0 ],
 					"source" : [ "obj-63", 0 ]
 				}
 
@@ -1341,6 +1347,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-7", 0 ]
 				}
 
@@ -1376,14 +1383,8 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-10", 0 ],
+					"hidden" : 1,
 					"source" : [ "obj-87", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-10", 0 ],
-					"source" : [ "obj-9", 0 ]
 				}
 
 			}

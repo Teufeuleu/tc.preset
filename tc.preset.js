@@ -39,6 +39,7 @@ mgraphics.autofill = 0;
 // LOOK
 var slot_size = 20;
 var slot_round = 0;
+var slot_round_ratio = 0;
 
 var margin = 4;
 var spacing = 4;
@@ -67,13 +68,13 @@ var min_rows = 50;          // Minimum number of rows to display is scrollable i
 var pattrstorage_name, pattrstorage_obj = null;
 
 var columns, rows = 0;
-var slots = [];
-var slots_highest = 0; // Highest filled preset slot number
-var slots_count_display = 0;
-var filled_slots = [];
+var slots = [];                 // Stores on screen box, name, lock and interpolation state for all slots
+var slots_highest = 0;          // Highest filled preset slot number
+var slots_count_display = 0;    // Number of slots to be displayed
+var filled_slots = [];          // List of stored slots
 
-var active_slot = 0;
-var previous_active_slot = 0;
+var active_slot = 0;            //Last recalled slot
+var previous_active_slot = 0;   //Previously recalled slot
 var previous_target = 0;
 
 var ui_width = box.rect[2] - box.rect[0];
@@ -210,7 +211,7 @@ function draw_slot_bubble(x, y, w, h, cont) {
 
     // I assume rectange is faster to draw than rectangle_rounded. Btw rectangle_rounded is wacky when showing interpolation. Maybe *interp on  the first slot_round could solve this?
     if (slot_round) {
-        cont.rectangle_rounded(x, y, w, h, slot_round, slot_round);
+        cont.rectangle_rounded(x, y, w, h, slot_round_ratio * w, slot_round_ratio * h);
     } else {
         cont.rectangle(x, y, w, h);
     }    
@@ -355,10 +356,11 @@ function paint()
                 // If the text is too big or a slot is being dragged, display the text on top of the next slot.
                 // Otherwise, it gets displayed on the hovered slot.
 
-                var bg_txt_pos_x = text_dim[0] > slot_size || is_dragging ? slots[last_hovered][0] + slot_size + half_spacing : slots[last_hovered][0] - half_spacing;
-                var bg_txt_pos_y = text_dim[1] > slot_size || is_dragging ? slots[last_hovered][1] + (slot_size - text_dim[1]) / 2  - half_spacing : slots[last_hovered][1] - half_spacing;
-                var bg_txt_dim_w = text_dim[0] > slot_size ? text_dim[0] + spacing : slot_size + spacing;
-                var bg_txt_dim_h = text_dim[1] > slot_size ? text_dim[1] + spacing : slot_size + spacing;
+                var bg_txt_dim_w = text_dim[0] > slot_size ? text_dim[0] + 4 : slot_size + 4;
+                var bg_txt_dim_h = text_dim[1] > slot_size ? text_dim[1] + 4 : slot_size + 4;
+                var bg_txt_pos_x = text_dim[0] > slot_size || is_dragging ? slots[last_hovered][0] + slot_size + 2: slots[last_hovered][0] - 2;
+                var bg_txt_pos_y = text_dim[1] > slot_size || is_dragging ? slots[last_hovered][1] - 2 : slots[last_hovered][1] - 2;
+                
 
                 // If there is not enough place, text is displayed on the left
                 if (bg_txt_pos_x + bg_txt_dim_w > ui_width) {
@@ -366,7 +368,7 @@ function paint()
                 }
 
                 var txt_pos_x = text_dim[0] > slot_size ? bg_txt_pos_x + half_spacing : bg_txt_pos_x + (bg_txt_dim_w / 2) - (text_dim[0]/2);
-                var txt_pos_y = bg_txt_pos_y + (bg_txt_dim_h - spacing + text_dim[1]) / 2 ;
+                var txt_pos_y = bg_txt_pos_y + (bg_txt_dim_h + text_dim[1]) / 2 - text_dim[1]*0.18;
 
                 // Bubble background
                 set_source_rgba(text_bg_color);
@@ -447,7 +449,9 @@ function anything() {
                 to_pattrstorage("getslotlist");
                 paint_base();
                 set_active_slot(active_slot);
-                outlet(0, "delete", v);
+                if (!is_dragging) {
+                    outlet(0, "delete", v);
+                }
                 trigger_writeagain();
             }
         }
@@ -747,7 +751,7 @@ function set_active_slot(int) {
     } else {
         active_slot = int;
     }
-    outlet(0, "previous", previous_active_slot);
+    // outlet(0, "previous", previous_active_slot);
     if (menu_number_only) {
         outlet(1, "setsymbol", active_slot);
     } else {
@@ -836,67 +840,69 @@ onclick.local = 1;
 
 function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
 {
-    y -=  y_offset;
-	if (is_dragging == 0 && last_hovered > 0 && slots[last_hovered][4] !== null) {
-        var dist_from_start = Math.sqrt((x-last_x)*(x-last_x)+(y-last_y)*(y-last_y));
-        if (dist_from_start > 10) {
-            is_dragging = 1;
-            drag_slot = last_hovered;
-            paint_base();
-        }
-
-	} else if (is_dragging == 1) {
-        last_hovered = get_slot_index(x, y);
-        last_x = x;
-	    last_y = y;
-        if (!but) {
-            // Wehen to button is released, the dragging ceases
-            if (last_hovered > 0 && last_hovered != drag_slot) {
-                var cur_active_slot = active_slot;
-                var offset = ((last_hovered <= drag_slot) && slots[last_hovered][4] != null) ? 1 : 0;
-                var drag_slot_lock = slots[drag_slot][5];
-                // If the slot we wan to drag is locked, we need to temporarily unlock it.
-                if (drag_slot_lock) {
-                    lock(drag_slot, 0);
-                }
-                // If new slot is empty we just move the drag preset here. If it's not, we move al next slots to the right
-                if (slots[last_hovered][4] !== null) {
-                    to_pattrstorage("insert", last_hovered);
-                }
-                
-                to_pattrstorage("copy", drag_slot + offset, last_hovered);
-                to_pattrstorage("delete", drag_slot + offset);
-                
-                slots_clear();
-                to_pattrstorage("getslotlist");
-                
-                to_pattrstorage("getlockedslots");
-                if (cur_active_slot == drag_slot) {
-                    active_slot = last_hovered;
-                } 
-                // If the dragged slot was locked, relock it.
-                if (drag_slot_lock) {
-                    lock(last_hovered, 1);
-                }
-                is_dragging = 0;
-                drag_slot = -1;
+    if (pattrstorage_name != null) {
+        y -=  y_offset;
+        if (is_dragging == 0 && last_hovered > 0 && slots[last_hovered][4] !== null) {
+            var dist_from_start = Math.sqrt((x-last_x)*(x-last_x)+(y-last_y)*(y-last_y));
+            if (dist_from_start > 10) {
+                is_dragging = 1;
+                drag_slot = last_hovered;
                 paint_base();
-                outlet(0, "drag", drag_slot, last_hovered, offset);
-                set_active_slot(last_hovered);
-                
-                trigger_writeagain();
-
-            } else { // Drag released but not somewhere we can throw a slot in
-                is_dragging = 0;
-                drag_slot = -1;
-                paint_base();
-                // mgraphics.redraw();
             }
-            
-        } else {
-            mgraphics.redraw();
+
+        } else if (is_dragging == 1) {
+            last_hovered = get_slot_index(x, y);
+            last_x = x;
+            last_y = y;
+            if (!but) {
+                // Wehen to button is released, the dragging ceases
+                if (last_hovered > 0 && last_hovered != drag_slot) {
+                    var cur_active_slot = active_slot;
+                    var offset = ((last_hovered <= drag_slot) && slots[last_hovered][4] != null) ? 1 : 0;
+                    var drag_slot_lock = slots[drag_slot][5];
+                    // If the slot we wan to drag is locked, we need to temporarily unlock it.
+                    if (drag_slot_lock) {
+                        lock(drag_slot, 0);
+                    }
+                    // If new slot is empty we just move the drag preset here. If it's not, we move al next slots to the right
+                    if (slots[last_hovered][4] !== null) {
+                        to_pattrstorage("insert", last_hovered);
+                    }
+                    
+                    to_pattrstorage("copy", drag_slot + offset, last_hovered);
+                    to_pattrstorage("delete", drag_slot + offset);
+                    
+                    slots_clear();
+                    to_pattrstorage("getslotlist");
+                    
+                    to_pattrstorage("getlockedslots");
+                    if (cur_active_slot == drag_slot) {
+                        active_slot = last_hovered;
+                    } 
+                    // If the dragged slot was locked, relock it.
+                    if (drag_slot_lock) {
+                        lock(last_hovered, 1);
+                    }
+                    outlet(0, "drag", drag_slot, last_hovered, offset);
+                    is_dragging = 0;
+                    drag_slot = -1;
+                    paint_base();
+                    set_active_slot(last_hovered);
+                    
+                    trigger_writeagain();
+
+                } else { // Drag released but not somewhere we can throw a slot in
+                    is_dragging = 0;
+                    drag_slot = -1;
+                    paint_base();
+                    // mgraphics.redraw();
+                }
+                
+            } else {
+                mgraphics.redraw();
+            }
         }
-	}
+    }
 }
 ondrag.local = 1;
 
@@ -945,6 +951,7 @@ function getslotround() {
 }
 function setslotround(v){
 	slot_round = Math.max(0, Math.min(slot_size, v));
+    slot_round_ratio = slot_round / slot_size;
 	calc_rows_columns();
 }
 
@@ -1035,7 +1042,11 @@ function getfontsize() {
 }
 function setfontsize(v){
 	font_size = Math.max(2, v);
-	mgraphics.redraw();
+	if (layout == 1) {
+        paint_base();
+    } else {
+        mgraphics.redraw();
+    }
 }
 
 declareattribute("fontname", "getfontname", "setfontname", 1);
@@ -1046,7 +1057,11 @@ function setfontname(v){
 	var fontlist = mgraphics.getfontlist();
 	if (fontlist.indexOf(v) > -1) {
 		font_name = v.toString();
-		mgraphics.redraw();
+        if (layout == 1) {
+            paint_base();
+        } else {
+            mgraphics.redraw();
+        }
 	} else {
 		error("Font not found.\n");
 	}	
