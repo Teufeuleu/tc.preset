@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/gpl-3.0.txt>.
 */
 
-autowatch = 0;
+autowatch = 1;
 // When developping, autowatch = 1 isn't enough. You also need to manually call the loadbang function, and then re-binding the pattrstorage.
 // A "loadbang, pattrstorage test" message does the trick.
 
@@ -55,14 +55,26 @@ var interp_slot_color = [1.0, 1.0, 1.0, 0.8];
 var text_bg_color = [1,1,1, 0.5];
 var text_color = [0.129, 0.129, 0.129, 1];
 
+var color_1 = [0.743, 0.41, 0.501, 1]; // Color set for the filled slots. I don't like how this is declared. More info in color_wheel() declaration
+var color_2 = [0.679, 0.405, 0.669,1];
+var color_3 = [0.527, 0.459, 0.756, 1];
+var color_4 = [0.367, 0.542, 0.712, 1];
+var color_5 = [0.283, 0.606, 0.559, 1];
+var color_6 = [0.316, 0.616, 0.377, 1];
+var color_wheel_default = [color_1, color_2, color_3, color_4, color_5, color_6];
+var color_wheel_custom = color_wheel_default.slice();
+var color_wheel_size = 6;
+
 // FEEL
-var layout = 1;
+var layout = 0;             // 0: grid mode (same as [preset]). 1: list mode
 var display_interp = 1;     // Enable/disable the UI feedback when interpolating between presets
 var ignore_slot_zero = 1;   // Makes previous_active_slot and interpolation display to ignore slot 0. Can be usefull when using slot 0 as a temporary step for interpolation.
 var auto_writeagain = 0;    // When enabled, will send a "writeagain" to pattrstorage any time a preset is stored/deleted/moved/renamed/(un)locked
 var menu_number_only = 0;   // Populates the umenu connected to 2nd outlet with stored preset number only, instead of number and name
 var scrollable = 1;         // Defines weither the object can be scrolled or not
-var min_rows = 50;          // Minimum number of rows to display is scrollable is enabled
+var min_rows = 50;          // Minimum number of rows to display if scrollable is enabled
+var color_mode = 0;         // Change the way the filled slots (stored presets) color is handeld. 0: stored_slot_color. 1: looping through color_1 to color_6
+var select_mode = 0;        // 0: single click to select and recall the slot. 1: single click to select the slot, double click to recall it.
 
 // (WORK)
 var pattrstorage_name, pattrstorage_obj = null;
@@ -75,7 +87,8 @@ var filled_slots = [];          // List of stored slots
 
 var active_slot = 0;            //Last recalled slot
 var previous_active_slot = 0;   //Previously recalled slot
-var previous_target = 0;
+var previous_target = 0;        //Here to deal with ongoing interpolations
+var selected_slot = 0;          //Last selected slot. Relevant especially when select_mode = 1. Otherwise it is the same as active_slot
 
 var ui_width = box.rect[2] - box.rect[0];
 var ui_height = box.rect[3] - box.rect[1];
@@ -251,6 +264,7 @@ format_slot_name.local = 1;
 
 function paint_base() {
     // We draw all slots (empty and stored ones) so we don't have to for every redraw
+
     is_painting_base = 1;
 
     // Background
@@ -269,7 +283,11 @@ function paint_base() {
         for (var i = 1; i <= slots_count_display; i++) {
             if (i != drag_slot) { //We mask the slot that is currently dragged as it is drawn at the mouse position already
                 if (slots[i][4] != null) {
-                    set_source_rgba(stored_slot_color);
+                    if (color_mode) {
+                        set_source_rgba(color_wheel_custom[i % color_wheel_size]);
+                    } else {
+                        set_source_rgba(stored_slot_color);
+                    }
                 } else {
                     set_source_rgba(empty_slot_color);
                 }
@@ -303,16 +321,40 @@ function paint()
 		// Active slot
 		if (is_dragging == 0 && active_slot > 0 && active_slot <= slots_count_display) {
 			set_source_rgba(active_slot_color);
-			draw_slot_bubble(slots[active_slot][0], slots[active_slot][1], slot_size, slot_size);
-			fill();
+            if (color_mode) {
+                draw_slot_bubble(slots[active_slot][0]+1.5, slots[active_slot][1]+1.5, slot_size-3, slot_size-3);
+                set_line_width(3);
+                stroke();
+            } else {
+                draw_slot_bubble(slots[active_slot][0], slots[active_slot][1], slot_size, slot_size);
+			    fill();
+            }
 		}
 
         // Previous active slot
 		if (is_dragging == 0 && previous_active_slot > 0 && previous_active_slot <= slots_count_display) {
-			set_source_rgba(active_slot_color);
-			draw_slot_bubble(slots[previous_active_slot][0], slots[previous_active_slot][1], slot_size, slot_size);
-			stroke();
+			// set_source_rgba(active_slot_color);
+			// draw_slot_bubble(slots[previous_active_slot][0]+0.75, slots[previous_active_slot][1]+0.75, slot_size-1.5, slot_size-1.5);
+            // set_line_width(1.5);
+			// stroke();
+            set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], active_slot_color[3] * 0.5);
+            if (color_mode) {
+                draw_slot_bubble(slots[previous_active_slot][0]+1.5, slots[previous_active_slot][1]+1.5, slot_size-3, slot_size-3);
+                set_line_width(3);
+                stroke();
+            } else {
+                draw_slot_bubble(slots[previous_active_slot][0], slots[previous_active_slot][1], slot_size, slot_size);
+			    fill();
+            }
 		}
+
+        // Selected slot
+        if (select_mode && selected_slot > 0 && selected_slot <= slots_count_display) {
+            set_source_rgba(active_slot_color);
+            set_line_width(1);
+            draw_slot_bubble(slots[selected_slot][0] - 0.5, slots[selected_slot][1] - 0.5, slot_size + 1, slot_size + 1);
+            stroke();
+        }
 
 		// Interpolated slots
         if (is_dragging == 0 && display_interp && is_interpolating) {
@@ -427,6 +469,51 @@ function paint()
 }
 paint.local = 1;
 
+function color_wheel() {
+    // Rather than using an array of colors, each color has its own variable, so they can be declared as attributes and saved with the patch
+    // But that makes the code sooo ugly...
+    var args = arrayfromargs(arguments);
+    if (args.length == 0) {
+        color_wheel_custom = [];
+        color_wheel_custom = color_wheel_default.slice();
+        color_1 = color_wheel_default[0];
+        color_2 = color_wheel_default[1];
+        color_3 = color_wheel_default[2];
+        color_4 = color_wheel_default[3];
+        color_5 = color_wheel_default[4];
+        color_6 = color_wheel_default[5];
+    } else if (args.length == 5) {
+        var n = args[0];
+        var col = [args[1], args[2], args[3], args[4]]
+        if (n > 0 && n < 7) {
+            switch (n) {
+                case 1:
+                    color_1 = col;
+                    break;
+                case 2:
+                    color_2 = col;
+                    break;
+                case 3:
+                    color_3 = col;
+                    break;
+                case 4:
+                    color_4 = col;
+                    break;
+                case 5:
+                    color_5 = col;
+                    break;
+                case 6:
+                    color_6 = col;
+                    break;
+            }
+            color_wheel_custom[n - 1] = col;
+        } else {
+            error('color_wheel: index out of range\n');
+        }
+    }
+    paint_base();
+}
+
 function anything() {
     // Here just to avoid error messages in case pattrstorage sends unhandled message, like when  using getstoredvalue, getsubscriptionlist, getalias, etc.
 
@@ -494,27 +581,23 @@ function slotlist() {
             to_pattrstorage("getslotname", filled_slots[i]);
         }
     }
-    // paint_base(); 
 }
 
 function slotname() {
 	var args = arrayfromargs(arguments);
     if (args[0] > 0 && args[1] != "(undefined)") {
-
 		slots[args[0]][4] = args[1];
-
 	}
-	
 }
 
 function setslotname() {
     // Because [pattrstorage] doesn't output anything when renaming presets with "slotname", we use a custom "setslotname" instead, that will rename the active preset
     if (active_slot > 0) {
         var sname = arrayfromargs(arguments).join(' ');
-        slotname(active_slot, sname);
-        to_pattrstorage("slotname", active_slot, sname);
+        slotname(selected_slot, sname);
+        to_pattrstorage("slotname", selected_slot, sname);
         update_umenu();
-        set_active_slot(active_slot);
+        select(selected_slot);
         trigger_writeagain();
         if (layout == 1) {
             paint_base();
@@ -641,7 +724,7 @@ function store(v) {
             }
             
             outlet(0, "store", v);
-            if (v != 0) {
+            if (v) {
                 trigger_writeagain();
             }
         }
@@ -649,7 +732,7 @@ function store(v) {
 }
 
 function setlock(v) {
-    lock(active_slot, v);
+    lock(selected_slot, v);
 }
 
 function lock() {
@@ -723,6 +806,23 @@ function to_pattrstorage() {
     }
 }
 
+function select(v) {
+    if (filled_slots.indexOf(v) > -1) {
+        selected_slot = v;
+        if (menu_number_only) {
+            outlet(1, "setsymbol", selected_slot);
+        } else {
+            outlet(1, "setsymbol", selected_slot + ' ' + slots[selected_slot][4]);
+        }
+        if (selected_slot != 0) {
+            outlet(2, "set", slots[selected_slot][4]);
+        } else  {
+            outlet(2, "set");
+        }
+        outlet(3, "set", slots[selected_slot][5]);
+    }
+}
+
 function slots_clear() {
     slots[0] = [0, 0, 0, 0, "(tmp)", 0, -1];
 	for (var i = 1; i < slots.length; i++) {
@@ -752,17 +852,7 @@ function set_active_slot(int) {
         active_slot = int;
     }
     // outlet(0, "previous", previous_active_slot);
-    if (menu_number_only) {
-        outlet(1, "setsymbol", active_slot);
-    } else {
-        outlet(1, "setsymbol", active_slot + ' ' + slots[active_slot][4]);
-    }
-    if (active_slot != 0) {
-        outlet(2, "set", slots[active_slot][4]);
-    } else  {
-        outlet(2, "set");
-    }
-    outlet(3, "set", slots[active_slot][5]);
+    select(active_slot);
 }
 set_active_slot.local = 1;
 
@@ -817,6 +907,9 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
 {
 	if (last_hovered > -1 && pattrstorage_name != null) {
 		var output = "recall";
+        if (select_mode) {
+            output = "select";
+        }
 		if (shift) {
 			output = "store";
 			if (option) {
@@ -828,7 +921,12 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
         if (output == "store") {
             store(last_hovered);
         } else {
-            to_pattrstorage(output, last_hovered);
+            if (output == "select") {
+                select(last_hovered);
+                // mgraphics.redraw();
+            } else {
+                to_pattrstorage(output, last_hovered);
+            }
         }
 	}
 	
@@ -837,12 +935,45 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
 }
 onclick.local = 1;
 
+function ondblclick(x,y,but,cmd,shift,capslock,option,ctrl)
+{
+	if (last_hovered > -1 && pattrstorage_name != null && filled_slots.indexOf(last_hovered) > -1) {
+        to_pattrstorage("recall", last_hovered);
+		// var output = "recall";
+        // if (select_mode) {
+        //     output = "select";
+        // }
+		// if (shift) {
+		// 	output = "store";
+		// 	if (option) {
+		// 		output = "delete";
+		// 	}
+		// } else if (slots[last_hovered][4] == null) {
+		// 	return;
+		// }
+        // if (output == "store") {
+        //     store(last_hovered);
+        // } else {
+        //     if (output == "select") {
+        //         select(last_hovered);
+        //         // mgraphics.redraw();
+        //     } else {
+        //         to_pattrstorage(output, last_hovered);
+        //     }
+        // }
+	}
+	
+	last_x = x;
+	last_y = y - y_offset;
+}
+ondblclick.local = 1;
 
 function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
 {
     if (pattrstorage_name != null) {
         y -=  y_offset;
         if (is_dragging == 0 && last_hovered > 0 && slots[last_hovered][4] !== null) {
+            // To prevent mistakes, is_dragging is set to 1 only when dragging for more than 10 pixels
             var dist_from_start = Math.sqrt((x-last_x)*(x-last_x)+(y-last_y)*(y-last_y));
             if (dist_from_start > 10) {
                 is_dragging = 1;
@@ -858,7 +989,9 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                 // Wehen to button is released, the dragging ceases
                 if (last_hovered > 0 && last_hovered != drag_slot) {
                     var cur_active_slot = active_slot;
+                    var cur_prev_active_slot = previous_active_slot;
                     var offset = ((last_hovered <= drag_slot) && slots[last_hovered][4] != null) ? 1 : 0;
+                    var offset_others = slots[last_hovered][4] != null ? 1 : 0;
                     var drag_slot_lock = slots[drag_slot][5];
                     // If the slot we wan to drag is locked, we need to temporarily unlock it.
                     if (drag_slot_lock) {
@@ -874,11 +1007,24 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                     
                     slots_clear();
                     to_pattrstorage("getslotlist");
-                    
                     to_pattrstorage("getlockedslots");
+
+                    // All this just to keep trace of the active and previous active slots
                     if (cur_active_slot == drag_slot) {
                         active_slot = last_hovered;
-                    } 
+                    } else if (last_hovered == cur_active_slot) {
+                        active_slot = cur_active_slot + 1;
+                    } else if (cur_active_slot > last_hovered) {
+                        active_slot += offset_others;
+                    }
+                    if (cur_prev_active_slot == drag_slot) {
+                        previous_active_slot = last_hovered;
+                    } else if (cur_prev_active_slot == last_hovered){
+                        previous_active_slot = cur_prev_active_slot + 1;
+                    } else if (cur_prev_active_slot > last_hovered) {
+                        previous_active_slot += offset_others;
+                    }
+
                     // If the dragged slot was locked, relock it.
                     if (drag_slot_lock) {
                         lock(last_hovered, 1);
@@ -887,18 +1033,19 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                     is_dragging = 0;
                     drag_slot = -1;
                     paint_base();
-                    set_active_slot(last_hovered);
+
+                    select(last_hovered);                   
                     
                     trigger_writeagain();
 
-                } else { // Drag released but not somewhere we can throw a slot in
+                } else {
+                    // Drag released but not somewhere we can throw a slot in
                     is_dragging = 0;
                     drag_slot = -1;
                     paint_base();
-                    // mgraphics.redraw();
                 }
-                
             } else {
+                // Click still hold, we keep dragging
                 mgraphics.redraw();
             }
         }
@@ -941,7 +1088,11 @@ function getslotsize() {
 	return slot_size;
 }
 function setslotsize(v){
-	slot_size = Math.max(2, v);
+    if (arguments.length) {
+        slot_size = Math.max(2, v);
+    } else {
+        slot_size = 20;
+    }
 	calc_rows_columns();
 }
 
@@ -950,7 +1101,11 @@ function getslotround() {
 	return slot_round;
 }
 function setslotround(v){
-	slot_round = Math.max(0, Math.min(slot_size, v));
+    if (arguments.length) {
+        slot_round = Math.max(0, Math.min(slot_size, v));
+    } else {
+        slot_round = 0;
+    }
     slot_round_ratio = slot_round / slot_size;
 	calc_rows_columns();
 }
@@ -960,7 +1115,11 @@ function getmargin() {
 	return margin;
 }
 function setmargin(v){
-	margin = Math.max(0, v);
+    if (arguments.length) {
+        margin = Math.max(0, v);
+    } else {
+        margin = 4;
+    }
 	calc_rows_columns();
 }
 
@@ -969,7 +1128,11 @@ function getspacing() {
 	return spacing;
 }
 function setspacing(v){
-	spacing = Math.max(1, v);
+    if (arguments.length) {
+        spacing = Math.max(1, v);
+    } else {
+        spacing = 4;
+    }
 	calc_rows_columns();
 }
 
@@ -978,7 +1141,13 @@ function getbgcolor() {
 	return background_color;
 }
 function setbgcolor(){
-	background_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    if (arguments.length == 4) {
+        background_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    } else if (arguments.length == 0) {
+        background_color = [0.2, 0.2, 0.2, 1];
+    } else {
+        error('bgcolor: wrong number of arguments\n');
+    }
 	paint_base();
 }
 
@@ -987,7 +1156,13 @@ function getemptycolor() {
 	return empty_slot_color;
 }
 function setemptycolor(){
-	empty_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    if (arguments.length == 4) {
+        empty_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    } else if (arguments.length == 0) {
+        empty_slot_color = [0.349, 0.349, 0.349, 1];
+    } else {
+        error('empty_slot_color: wrong number of arguments\n');
+    }
 	paint_base();
 }
 
@@ -996,7 +1171,13 @@ function getactiveslotcolor() {
 	return active_slot_color;
 }
 function setactiveslotcolor(){
-	active_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    if (arguments.length == 4) {
+        active_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    } else if (arguments.length == 0) {
+        active_slot_color = [0.808, 0.898, 0.910, 1];
+    } else {
+        error('active_slot_color: wrong number of arguments\n');
+    }
 	mgraphics.redraw();
 }
 
@@ -1005,7 +1186,13 @@ function getstoredslotcolor() {
 	return stored_slot_color;
 }
 function setstoredslotcolor(){
-	stored_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    if (arguments.length == 4) {
+        stored_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    } else if (arguments.length == 0) {
+        stored_slot_color = [0.502, 0.502, 0.502, 1];
+    } else {
+        error('stored_slot_color: wrong number of arguments\n');
+    }
 	paint_base();
 }
 
@@ -1014,7 +1201,13 @@ function getinterpslotcolor() {
 	return interp_slot_color;
 }
 function setinterpslotcolor(){
-	interp_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    if (arguments.length == 4) {
+        interp_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    } else if (arguments.length == 0) {
+        interp_slot_color = [1.0, 1.0, 1.0, 0.8];
+    } else {
+        error('interp_slot_color: wrong number of arguments\n');
+    }
 	mgraphics.redraw();
 }
 
@@ -1023,7 +1216,13 @@ function gettextbgcolor() {
 	return text_bg_color;
 }
 function settextbgcolor(){
-	text_bg_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    if (arguments.length == 4) {
+        text_bg_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    } else if (arguments.length == 0) {
+        text_bg_color = [1,1,1, 0.5];
+    } else {
+        error('text_bg_color: wrong number of arguments\n');
+    }
 	mgraphics.redraw();
 }
 
@@ -1032,7 +1231,13 @@ function gettextcolor() {
 	return text_color;
 }
 function settextcolor(){
-	text_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    if (arguments.length == 4) {
+        text_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    } else if (arguments.length == 0) {
+        text_color = [0.129, 0.129, 0.129, 1];
+    } else {
+        error('text_color: wrong number of arguments\n');
+    }
 	mgraphics.redraw();
 }
 
@@ -1041,7 +1246,11 @@ function getfontsize() {
 	return font_size;
 }
 function setfontsize(v){
-	font_size = Math.max(2, v);
+    if (arguments.length) {
+        font_size = Math.max(2, v);
+    } else {
+        font_size = 14;
+    }
 	if (layout == 1) {
         paint_base();
     } else {
@@ -1054,17 +1263,21 @@ function getfontname() {
 	return font_name;
 }
 function setfontname(v){
-	var fontlist = mgraphics.getfontlist();
-	if (fontlist.indexOf(v) > -1) {
-		font_name = v.toString();
-        if (layout == 1) {
-            paint_base();
+    if (arguments.length) {
+        var fontlist = mgraphics.getfontlist();
+        if (fontlist.indexOf(v) > -1) {
+            font_name = v.toString();
         } else {
-            mgraphics.redraw();
+            error("Font not found.\n");
         }
-	} else {
-		error("Font not found.\n");
-	}	
+    } else {
+        font_name = 'Arial';
+    }
+    if (layout == 1) {
+        paint_base();
+    } else {
+        mgraphics.redraw();
+    }
 }
 
 declareattribute("autowriteagain", "getautowriteagain", "setautowriteagain", 1);
@@ -1141,5 +1354,116 @@ function setmin_rows(v){
     }
     if (scrollable) {
         calc_rows_columns();   
+    }
+}
+
+declareattribute("select_mode", "getselect_mode", "setselect_mode", 1);
+function getselect_mode() {
+	return select_mode;
+}
+function setselect_mode(v){
+	if (v == 1) {
+        select_mode = 1;
+    } else {
+        select_mode = 0;
+    }
+    mgraphics.redraw();
+}
+
+declareattribute("color_mode", "getcolor_mode", "setcolor_mode", 1);
+function getcolor_mode() {
+	return color_mode;
+}
+function setcolor_mode(v){
+	if (v == 1) {
+        color_mode = 1;
+    } else {
+        color_mode = 0;
+    }
+    paint_base();
+}
+
+declareattribute("color_1", "getcolor1", "setcolor1", 1);
+function getcolor1() {
+	return color_1;
+}
+function setcolor1(){
+    if (arguments.length == 4) {
+        color_wheel(1, arguments[0], arguments[1], arguments[2], arguments[3]);
+    } else if (arguments.length == 0) {
+        color_wheel(1, 0.743, 0.41, 0.501, 1);
+    } else {
+        error('color_1: wrong number of arguments\n');
+    }
+}
+
+declareattribute("color_2", "getcolor2", "setcolor2", 1);
+function getcolor2() {
+	return color_2;
+}
+function setcolor2(){
+    if (arguments.length == 4) {
+        color_wheel(2, arguments[0], arguments[1], arguments[2], arguments[3]);
+    } else if (arguments.length == 0) {
+        color_wheel(0.679, 0.405, 0.669,1);
+    } else {
+        error('color_2: wrong number of arguments\n');
+    }
+}
+
+declareattribute("color_3", "getcolor3", "setcolor3", 1);
+function getcolor3() {
+	return color_3;
+}
+function setcolor3(){
+    if (arguments.length == 4) {
+        color_wheel(3, arguments[0], arguments[1], arguments[2], arguments[3]);
+    } else if (arguments.length == 0) {
+        color_wheel(3, 0.527, 0.459, 0.756, 1);
+    } else {
+        error('color_3: wrong number of arguments\n');
+    }
+}
+
+declareattribute("color_4", "getcolor4", "setcolor4", 1);
+function getcolor4() {
+	return color_4;
+}
+function setcolor4(){
+    if (arguments.length == 4) {
+        color_wheel(4, arguments[0], arguments[1], arguments[2], arguments[3]);
+    } else if (arguments.length == 0) {
+        color_wheel(4, 0.367, 0.542, 0.712, 1);
+    } else {
+        error('color_4: wrong number of arguments\n');
+    }
+}
+
+declareattribute("color_5", "getcolor5", "setcolor5", 1);
+function getcolor5() {
+	return color_5;
+}
+function setcolor5(){
+    if (arguments.length == 4) {
+        color_wheel(5, arguments[0], arguments[1], arguments[2], arguments[3]);
+    } else if (arguments.length == 0) {
+        color_wheel(5, 0.283, 0.606, 0.559, 1);
+    } else {
+        error('color_5: wrong number of arguments\n');
+    }
+}
+
+
+declareattribute("color_6", "getcolor6", "setcolor6", 1);
+function getcolor6() {
+	return color_6;
+}
+function setcolor6(){
+    if (arguments.length == 4) {
+        color_wheel(6, arguments[0], arguments[1], arguments[2], arguments[3]);
+    } else if (arguments.length == 0) {
+        color_wheel(6, 0.316, 0.616, 0.377, 1);
+    } else {
+        error('color_6: wrong number of arguments\n');
     }
 }
