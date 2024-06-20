@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 6,
-			"revision" : 2,
+			"revision" : 3,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 100.0, 854.0, 848.0 ],
+		"rect" : [ 310.0, 100.0, 854.0, 848.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,42 @@
 		"subpatcher_template" : "",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-31",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 245.5, 565.0, 89.0, 22.0 ],
+					"text" : "storagewindow"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-25",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 422.0, 598.0, 45.0, 22.0 ],
+					"text" : "store 3"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-14",
+					"maxclass" : "message",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 360.5, 586.0, 29.5, 22.0 ],
+					"text" : "init"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-128",
 					"items" : [ "Grid", ",", "List" ],
@@ -69,7 +105,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 959.0, 908.0, 131.0, 33.0 ],
+					"patching_rect" : [ 959.0, 908.0, 133.0, 33.0 ],
 					"text" : "Set a given color (from 1 to 6)"
 				}
 
@@ -82,7 +118,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 830.0, 927.0, 123.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"text" : "color_wheel 3 0 1 1 1"
 				}
 
@@ -129,7 +164,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 928.0, 780.0, 150.0, 87.0 ],
+					"patching_rect" : [ 928.0, 780.0, 151.0, 87.0 ],
 					"text" : "When color mode is set to cycle, stored presets are shown in colors from color_1 to color_6, cyclically depending on their slot number."
 				}
 
@@ -303,7 +338,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 6,
-							"revision" : 2,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -967,7 +1002,7 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-8",
-					"items" : [ "0 (tmp)", ",", "1 <(unnamed)>", ",", "2 <(unnamed)>", ",", "3 <(unnamed)>", ",", "4 <(unnamed)>", ",", "5 <(unnamed)>", ",", "6 <(unnamed)>", ",", "7 onze", ",", "8 up", ",", "9 <(unnamed)>", ",", "10 oui", ",", "11 <(unnamed)>", ",", "12 <(unnamed)>", ",", "13 <(unnamed)>", ",", "14 <(unnamed)>", ",", "15 <(unnamed)>" ],
+					"items" : [ "6 <(unnamed)>", ",", "19 <(unnamed)>", ",", "39 <(unnamed)>" ],
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,
@@ -987,7 +1022,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 72.0, 139.0, 507.0, 87.0 ],
-					"text" : "Pattrstorage messages that doesn't trigger output and need to be sent to the jsui instead:\n- store (send to jsui only)\n- recallmulti (send to pattrstorage first for timing accuracy, then to  jsui)\n- slotname (send \"setslotname\" or \"text\" to jsui instead, will rename active slot)\n- lock (or setlock to lock/unlock of the active slot)\n- some other. I've not tested them all. "
+					"text" : "Pattrstorage messages that doesn't trigger output and need to be sent to the jsui instead:\n- store (send to jsui only)\n- recallmulti (send to pattrstorage first for timing accuracy, then to  jsui)\n- slotname (send \"setslotname\" or \"text\" to jsui instead, will rename selected slot)\n- lock (or setlock to lock/unlock of the active slot)\n- some other. I've not tested them all. "
 				}
 
 			}
@@ -1056,18 +1091,17 @@
 , 			{
 				"box" : 				{
 					"border" : 0,
-					"embedstate" : [ [ "autowriteagain", 0 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "slot_round", 0 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "layout", 0 ], [ "select_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_mode", 0 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "bubblesize", 20 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "margin", 4 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "fontsize", 14 ], [ "scrollable", 1 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "fontname", "Arial" ], [ "ignoreslotzero", 1 ], [ "spacing", 4 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "min_rows", 50 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "displayinterp", 1 ] ],
+					"embedstate" : [ [ "layout", 0 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 50 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "spacing", 4 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "displayinterp", 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "slot_round", 0 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "autowriteagain", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "color_mode", 0 ], [ "margin", 4 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 14 ], [ "select_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "bubblesize", 20 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "scrollable", 1 ], [ "fontname", "Arial" ], [ "pattrstorage", "test" ] ],
 					"filename" : "tc.preset.js",
 					"id" : "obj-10",
-					"jsarguments" : [ "test" ],
 					"maxclass" : "jsui",
 					"numinlets" : 1,
 					"numoutlets" : 4,
 					"outlettype" : [ "", "", "", "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 72.0, 637.0, 364.0, 124.0 ],
+					"patching_rect" : [ 72.0, 636.0, 364.0, 125.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 1.0, 103.0, 269.0, 77.0 ]
+					"presentation_rect" : [ 1.0, 103.0, 293.0, 149.0 ]
 				}
 
 			}
@@ -1125,10 +1159,10 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 72.0, 599.0, 176.0, 22.0 ],
 					"saved_object_attributes" : 					{
-						"client_rect" : [ 27, 158, 514, 944 ],
+						"client_rect" : [ 1450, 76, 2131, 1323 ],
 						"parameter_enable" : 0,
 						"parameter_mappable" : 0,
-						"storage_rect" : [ 25, 107, 816, 991 ]
+						"storage_rect" : [ 583, 69, 1034, 197 ]
 					}
 ,
 					"text" : "pattrstorage test @savemode 0",
@@ -1337,6 +1371,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-10", 0 ],
+					"source" : [ "obj-14", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-11", 0 ],
 					"source" : [ "obj-16", 0 ]
 				}
@@ -1390,6 +1431,13 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-10", 0 ],
+					"source" : [ "obj-25", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-18", 0 ],
 					"source" : [ "obj-26", 0 ]
 				}
@@ -1406,6 +1454,13 @@
 				"patchline" : 				{
 					"destination" : [ "obj-2", 0 ],
 					"source" : [ "obj-3", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-1", 0 ],
+					"source" : [ "obj-31", 0 ]
 				}
 
 			}
