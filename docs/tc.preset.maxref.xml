@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+
+<c74object name='tc.preset' category='jsui, preset, pattrstorage'>
+
+	<digest>
+		A jsui replacement for the preset object.
+	</digest>
+	<description>
+		tc.preset is a jsui clone of the preset object, but loaded with more features, such as preset organization through drag and drop, display as a scrollable list, auto-rewrite the saved JSON/XML file after any change.
+		Contrary to the preset object, tc.preset has to be used in conjonction with a pattrstorage object.<modification class=""></modification>
+	</description>
+
+
+	<!--METADATA-->
+
+	<metadatalist>
+		<metadata name='author'>Théophile Clet</metadata>
+		<metadata name='tag'>preset</metadata>
+		<metadata name='tag'>pattrstorage</metadata>
+        <metadata name='tag'>jsui</metadata>
+	</metadatalist>
+
+
+	<!--ARGUMENTS-->
+
+	<objarglist>
+
+		<objarg name='pattrstorage' optional='0' type='symbol'>
+			<digest>Name of the pattrstorage to control</digest>
+			<description>Name of the pattrstorage this object should be linked to.</description>
+		</objarg>
+
+	</objarglist>
+
+
+	<!--MESSAGES-->
+
+	<methodlist>
+		<!-- <method name="int">
+			<digest>Function depends on inlet</digest>
+			<description>Function depends on inlet</description>
+		</method>
+		<method name="float">
+			<digest>Function depends on inlet</digest>
+			<description>Function depends on inlet</description>
+		</method>
+		<method name="bang">
+			<digest>Function depends on inlet</digest>
+			<description>Function depends on inlet</description>
+		</method>
+        <method name="list">
+			<digest>Function depends on inlet</digest>
+			<description>Function depends on inlet</description>
+		</method> -->
+		<method name="pattrstorage">
+			<digest>Link to named pattrstorage object</digest>
+			<description>The word 'pattrstorage' followed by the name of an existing pattrstorage links the jsui to that pattrstorage.
+				Make sure that pattrstorage outlet is connected to the jsui left inlet prior to send the message.
+				If the word `pattrstorage`is sent alone, the jsui is unlinked from any pattrstorage.
+			</description>
+		</method>
+		<method name="resync">
+			<digest>Resync the jsui to the pattrstorage</digest>
+			<description>The word 'resync' will repopulate the jsui with the current preset list from the pattrstorage. It is usefull in case you add/remove/edit presets without using the jsui.
+			</description>
+		</method>
+		<method name="setlock">
+			<digest>Lock or unlock selected preset</digest>
+			<description>The word 'setlock' followed by a 0 or a 1 respectively unlocks or locks the currently selected preset in the jsui.
+				Note that if select_mode is set to 1, the selected preset is not necessarily the last recalled one.
+			</description>
+		</method>
+		<method name="setslotname">
+			<digest>Set the name of the selected preset</digest>
+			<description>The word 'setslotname' followed by a symbol sets that symbol as the name of the currently selected preset in the jsui.
+				Note that if select_mode is set to 1, the selected preset is not necessarily the last recalled one.
+			</description>
+		</method>
+		<method name="text">
+			<digest>Set the name of the selected preset</digest>
+			<description>Same as setslotname. Allows to connect the leftmost outlet of a textedit to the jsui and use it as an interface to rename the selected presets.
+			</description>
+		</method>
+	</methodlist>
+
+
+	<!--ATTRIBUTES-->
+
+	<attributelist>
+
+		<attribute name='bubblesize' get='1' set='1'  type='float' size='1' >
+			<digest>Slot size</digest>
+			<description>Size of the preset slots</description>
+		</attribute>
+
+	</attributelist>
+
+
+	<!--RELATED-->
+
+	<seealsolist>
+		<seealso name='pattrstorage' />
+		<seealso name='preset' />
+		<seealso name='jsui' />
+	</seealsolist>
+
+
+</c74object>
