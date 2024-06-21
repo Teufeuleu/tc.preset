@@ -23,32 +23,32 @@
 
 	<!--ARGUMENTS-->
 
-	<objarglist>
+	<!-- <objarglist>
 
 		<objarg name='pattrstorage' optional='0' type='symbol'>
 			<digest>Name of the pattrstorage to control</digest>
 			<description>Name of the pattrstorage this object should be linked to.</description>
 		</objarg>
 
-	</objarglist>
+	</objarglist> -->
 
 
 	<!--MESSAGES-->
 
 	<methodlist>
-		<!-- <method name="int">
-			<digest>Function depends on inlet</digest>
-			<description>Function depends on inlet</description>
+		<method name="int">
+			<digest>Recall numbered preset</digest>
+			<description>Sending any integer will trigger the preset of the same number</description>
 		</method>
 		<method name="float">
-			<digest>Function depends on inlet</digest>
-			<description>Function depends on inlet</description>
+			<digest>Interpolate between presets</digest>
+			<description>Recalls the data from the preset specified by float. If the number falls between two whole numbers (e.g. 1.5), the pattrstorage object will interpolate between the data stored in the preset corresponding to the integer portion of the float and the data stored at the preset numbered one higher (e.g. 1.5 will cause pattrstorage to interpolate 50% between presets 1 and 2). See the interp message for more information about interpolation modes.</description>
 		</method>
 		<method name="bang">
-			<digest>Function depends on inlet</digest>
-			<description>Function depends on inlet</description>
+			<digest>Recall last recalled preset</digest>
+			<description>When a bang is received, the last triggered preset is triggered again.</description>
 		</method>
-        <method name="list">
+        <!-- <method name="list">
 			<digest>Function depends on inlet</digest>
 			<description>Function depends on inlet</description>
 		</method> -->
@@ -87,7 +87,14 @@
 	<!--ATTRIBUTES-->
 
 	<attributelist>
-
+		<attribute name='active_slot_color' get='1' set='1'  type='list' size='4' >
+			<digest>Active slot color</digest>
+			<description>Color of the last recalled preset</description>
+		</attribute>
+		<attribute name='autowriteagain' get='1' set='1'  type='int' size='1' >
+			<digest>Automatic writeagain</digest>
+			<description>When set to 1, the jsui will automatically send a "writeagain" message to its linked pattrstorage anytime a preset have been stored, moved, renamed, (un)locked or deleted, saving any change into the preset file immediately.</description>
+		</attribute>
 		<attribute name='bubblesize' get='1' set='1'  type='float' size='1' >
 			<digest>Slot size</digest>
 			<description>Size of the preset slots</description>
