@@ -37,7 +37,7 @@ mgraphics.relative_coords = 0;
 mgraphics.autofill = 0;
 
 // LOOK
-var slot_size = 20;
+var slot_size = 14;
 var slot_round = 0;
 var slot_round_ratio = 0;
 
@@ -108,6 +108,12 @@ var drag_slot = -1;     // Stores the slot that's being dragged
 
 var has_loaded = false;
 
+// RESIZING
+// 64x64 is the default jsui size. We use that to know if the object has just been created,
+// in which case we resize it to a more convenient size to start with.
+if (ui_width == 64 && ui_height == 64) {
+    box.setboxattr("patching_rect", box.rect[0], box.rect[1], 130, 58);
+}
 // Allows for dynamic resizing even in presentation mode (addressing the limitation of onresize())
 var pres_rect = new MaxobjListener(this.box,"presentation_rect",get_prect);
 function get_prect(prect) {
@@ -118,9 +124,9 @@ if (jsarguments.length>1) { // Depreciated, use "pattrstorage" attribute instead
     pattrstorage_name = jsarguments[1];
 }
 
+// FUNCTIONS
 function loadbang() {
     has_loaded = true;
-    post("loadbang\n");
     outlet(2, "set");
     find_pattrstorage(pattrstorage_name);    
 	calc_rows_columns();
@@ -313,13 +319,12 @@ paint_base.local = 1;
 
 function paint()
 {
-    // post("redraw\n");
-
     // Handling Presentation mode enable/disable
     var cur_size = mgraphics.size;
     if (cur_size[0] != ui_width || cur_size[1] != ui_height) {
         onresize(cur_size[0], cur_size[1]);
     } else {
+        // post("redraw\n");
         with (mgraphics) {
             select_font_face(font_name);
             set_font_size(font_size);
@@ -565,6 +570,17 @@ function anything() {
                 trigger_writeagain();
             }
         }
+    } else {
+        // Passthrough to pattrstorage 
+        var args = arrayfromargs(arguments);
+        args.unshift(messagename);
+        to_pattrstorage.apply(null, args);
+
+        // If the called function messes with presets, we resync the jsui
+        var mess_with_presets = ['insert', 'lockall', 'read', 'readagain', 'remove', 'renumber'];
+        if (mess_with_presets.indexOf(messagename) > -1 ) {
+            resync();
+        }
     }
 }
 
@@ -809,7 +825,11 @@ function read() {
 
 function resync() {
     set_active_slot(0);
+    slots_clear();
+    to_pattrstorage("getslotlist");
+    to_pattrstorage("getlockedslots");
     calc_rows_columns();
+
 }
 
 function find_pattrstorage(name) {
@@ -893,11 +913,12 @@ function update_umenu() {
         outlet(1, "clear");
         
         for (var i=0; i < filled_slots.length; i++) {
-            var txt = filled_slots[i].toString();
+            var nb = filled_slots[i];
+            var txt = null;
             if (!menu_number_only) {
-                txt += ' ' + slots[filled_slots[i]][4];
+                txt = slots[filled_slots[i]][4];
             }
-            outlet(1, "append", txt);
+            outlet(1, "append", nb, txt);
         }
     }
 }
@@ -1086,7 +1107,6 @@ function onresize(w,h)
     ui_width = w;
     ui_height = h;
 	calc_rows_columns();
-    // loadbang();
     to_pattrstorage("getslotlist");
 	paint_base();
 }
@@ -1339,7 +1359,7 @@ function setignoreslotzero(v){
     }
 }
 
-declareattribute("displayinterp", "getdisplayinterp", "setdisplayinterp", 1);
+declareattribute("display_interp", "getdisplayinterp", "setdisplayinterp", 1);
 function getdisplayinterp() {
 	return display_interp;
 }
