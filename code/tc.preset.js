@@ -849,11 +849,7 @@ function to_pattrstorage() {
 function select(v) {
     if (filled_slots.indexOf(v) > -1) {
         selected_slot = v;
-        if (menu_number_only) {
-            outlet(1, "setsymbol", selected_slot);
-        } else {
-            outlet(1, "setsymbol", selected_slot + ' ' + slots[selected_slot][4]);
-        }
+        set_umenu(selected_slot);
         if (selected_slot != 0) {
             outlet(2, "set", slots[selected_slot][4]);
         } else  {
@@ -899,6 +895,7 @@ set_active_slot.local = 1;
 function update_umenu() {
     if (pattrstorage_obj !== null) {
         outlet(1, "clear");
+        outlet(1, "setcheck", 8226);
         
         for (var i=0; i < filled_slots.length; i++) {
             var nb = filled_slots[i];
@@ -911,6 +908,17 @@ function update_umenu() {
     }
 }
 update_umenu.local = 1;
+
+function set_umenu(v) {
+    outlet(1, "clearchecks");
+    var item = filled_slots.indexOf(v);
+    outlet(1, "checkitem", item);
+    if (menu_number_only) {
+        outlet(1, "setsymbol", v);
+    } else {
+        outlet(1, "setsymbol", v + ' ' + slots[v][4]);
+    }
+}
 
 function trigger_writeagain() {
     if (auto_writeagain && !is_dragging) {
