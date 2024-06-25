@@ -114,8 +114,8 @@ if (jsarguments.length>1) { // Depreciated, use "pattrstorage" attribute instead
 
 // FUNCTIONS
 function loadbang() {
+    // post("loadbang\n");
     has_loaded = true;
-    outlet(2, "set");
     find_pattrstorage(pattrstorage_name);    
 	calc_rows_columns();
 }
@@ -173,7 +173,6 @@ function calc_rows_columns() {
             slots[i] = [0, 0, 0, 0, null, 0, -1];
         }
     }
-	// outlet(0, "init");
 	paint_base(); 
 }
 calc_rows_columns.local = 1;
@@ -586,10 +585,6 @@ function msg_float(v) {
     to_pattrstorage("recall", s, s+1, i);
 }
 
-function init() {
-    loadbang();
-}
-
 function pattrstorage(v) {
     find_pattrstorage(v);
     paint_base();
@@ -835,13 +830,16 @@ function find_pattrstorage(name) {
         previous_active_slot = 0;
         selected_slot = 0;
         slots_clear();
-        // error("Pattrstorage", name, "doesn't exist.\n");
+        if (name != undefined) {
+            error("Pattrstorage", name, "doesn't exist.\n");
+        }
     }
 }
 find_pattrstorage.local = 1;
 
 function to_pattrstorage() {
     if (pattrstorage_obj !== null) {
+        // post('To pattrstorage:', arrayfromargs(arguments), '\n');
         pattrstorage_obj.message(arrayfromargs(arguments));
     }
 }
@@ -1139,13 +1137,26 @@ function setpattrstorage(v){
     } else  {
         pattrstorage_name = arrayfromargs(arguments)[0];
     }
+    // post('set_pattrstorage', pattrstorage_name, '\n');
+
     // If the loadbang already occured once, we need to retrigger here
     if (has_loaded) {
-        find_pattrstorage(pattrstorage_name);
         loadbang();
+    } else {
+        // Otherwise, we have no way to know how we're here in the code
+        // (was it just an attribute change? or maybe the object got copy-pasted with already set attribute, or it is being instantiated at patch load with saved attributes)
+        // So we have to delay the loadbang to make sure it will work in any case
+        // and won't be triggered before this or other objects are being instantiated completely.
+        var init_tsk = new Task(delayed_init);
+        init_tsk.schedule(200);
     }
-    // Otherwise, we just wait for the patch to call loadbang automatically at the end of its startup routine.
 }
+
+function delayed_init() {
+    loadbang();
+    arguments.callee.task.freepeer();
+}
+delayed_init.local = 1;
 
 declareattribute("bubblesize", "getslotsize", "setslotsize", 1);
 function getslotsize() {
