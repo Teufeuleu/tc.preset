@@ -7,7 +7,7 @@
 	</digest>
 	<description>
 		tc.preset is a jsui clone of the preset object, but loaded with more features, such as preset organization through drag and drop, display as a scrollable list, auto-rewrite the saved JSON/XML file after any change.
-		Contrary to the preset object, tc.preset has to be used in conjonction with a pattrstorage object.<modification class=""></modification>
+		Contrary to the preset object, tc.preset doesn't work alone and has to be used in conjonction with a pattrstorage object.<modification class=""></modification>
 	</description>
 
 
@@ -52,6 +52,13 @@
 			<digest>Function depends on inlet</digest>
 			<description>Function depends on inlet</description>
 		</method> -->
+		<method name="color_wheel">
+			<digest>Set the slot colors</digest>
+			<description>The message "color_wheel", followed by an integer and four float, defines one of the 6 available slot colors when color_mode is enabled.
+				The integer argument, between 1 and 6, defines which color in being modifier, and next the four floats define the color in the RGBA format.
+				The message "color_wheel" without argument resets the six colors to their default values.
+			</description>
+		</method>
 		<method name="pattrstorage">
 			<digest>Link to named pattrstorage object</digest>
 			<description>The word 'pattrstorage' followed by the name of an existing pattrstorage links the jsui to that pattrstorage.
@@ -81,6 +88,7 @@
 			<description>Same as setslotname. Allows to connect the leftmost outlet of a textedit to the jsui and use it as an interface to rename the selected presets.
 			</description>
 		</method>
+		
 	</methodlist>
 
 
@@ -95,11 +103,90 @@
 			<digest>Automatic writeagain</digest>
 			<description>When set to 1, the jsui will automatically send a "writeagain" message to its linked pattrstorage anytime a preset have been stored, moved, renamed, (un)locked or deleted, saving any change into the preset file immediately.</description>
 		</attribute>
+		<attribute name='bgcolor' get='1' set='1'  type='list' size='4' >
+			<digest>Background color</digest>
+			<description>Sets the background color of the object in RGBA format</description>
+		</attribute>
 		<attribute name='bubblesize' get='1' set='1'  type='float' size='1' >
 			<digest>Slot size</digest>
 			<description>Size of the preset slots</description>
 		</attribute>
-
+		<attribute name='color_mode' get='1' set='1'  type='int' size='1' >
+			<digest>Color mode</digest>
+			<description>When set to 0, all preset slots have the same color (same as the preset object). When set to 1, stored preset slots are colored. See color_1 to color_6 as well as the color_wheel message.</description>
+		</attribute>
+		<attribute name='color_1' get='1' set='1'  type='list' size='4' >
+			<digest>Slot color 1</digest>
+			<description>Slot color 1 in RGBA format. Sending this message without arguments resets the color to its default value. Has an effect only when color_mode is enabled.</description>
+		</attribute>
+		<attribute name='color_2' get='1' set='1'  type='list' size='4' >
+			<digest>Slot color 2</digest>
+			<description>Slot color 2 in RGBA format. Sending this message without arguments resets the color to its default value. Has an effect only when color_mode is enabled.</description>
+		</attribute>
+		<attribute name='color_3' get='1' set='1'  type='list' size='4' >
+			<digest>Slot color 3</digest>
+			<description>Slot color 3 in RGBA format. Sending this message without arguments resets the color to its default value. Has an effect only when color_mode is enabled.</description>
+		</attribute>
+		<attribute name='color_4' get='1' set='1'  type='list' size='4' >
+			<digest>Slot color 4</digest>
+			<description>Slot color 4 in RGBA format. Sending this message without arguments resets the color to its default value. Has an effect only when color_mode is enabled.</description>
+		</attribute>
+		<attribute name='color_5' get='1' set='1'  type='list' size='4' >
+			<digest>Slot color 5</digest>
+			<description>Slot color 5 in RGBA format. Sending this message without arguments resets the color to its default value. Has an effect only when color_mode is enabled.</description>
+		</attribute>
+		<attribute name='color_6' get='1' set='1'  type='list' size='4' >
+			<digest>Slot color 6</digest>
+			<description>Slot color 6 in RGBA format. Sending this message without arguments resets the color to its default value. Has an effect only when color_mode is enabled.</description>
+		</attribute>
+		<attribute name='display_interp' get='1' set='1'  type='int' size='1' >
+			<digest>Display interpolation</digest>
+			<description>When set to 1, the jsui will display the ongoing interpolation between presets when a recall message with three arguments or a recallmulti message with at least one argument are sent to the linked pattrstorage.
+				Notice that the recallmutli message needs to be sent both the pattrstorage and the jsui.</description>
+		</attribute>
+		<attribute name='empty_slot_color' get='1' set='1'  type='list' size='4' >
+			<digest>Empty slot color</digest>
+			<description>Sets the empty slot color of the object in RGBA format</description>
+		</attribute>
+		<attribute name='layout' get='1' set='1'  type='int' size='1' >
+			<digest>How presets are displayed</digest>
+			<description>When set to 0, the jsui mimics the default preset object: slots are displayed in a grid. When set to 1, they are displayed as a vertical list, with the preset slots on the left and their name on the right.</description>
+		</attribute>
+		<attribute name='margin' get='1' set='1'  type='float' size='1' >
+			<digest>Object margin</digest>
+			<description>Defines the size, in pixels, of the margin between the jsui border and the preset slots.</description>
+		</attribute>
+		<attribute name='min_rows' get='1' set='1'  type='int' size='1' >
+			<digest>Minimum number of rows to display</digest>
+			<description>Defines the minimum number of rows to display if scrollable is enabled and layout is set to 1.
+				If a preset is stored in a slot with a higher value than min_row, then min_row is ignored and presets are displayed up to the highest stored one.
+			</description>
+		</attribute>
+		<attribute name='scrollable' get='1' set='1'  type='int' size='1' >
+			<digest>Scroll through your presets</digest>
+			<description>When set to 1, you can through the jsui to see all your presets, or at least up to the slot number defined by the min_rows attributes. Currently only works with the list layout.
+			</description>
+		</attribute>
+		<attribute name='select_mode' get='1' set='1'  type='int' size='1' >
+			<digest>Preset selection mode</digest>
+			<description>When set to 1, a single click on a stored preset selects it without recalling it. It allows to drag it, set its name and lock state while keeping the last recalled preset active.
+				You need to double-click on a stored preset to recall it. If set to 0, stored presets are recalled by a single click (default preset object behavior).
+			</description>
+		</attribute>
+		<attribute name='slot_round' get='1' set='1'  type='float' size='1' >
+			<digest>Slot corner rounding</digest>
+			<description>Defines the rounding of the slots corners. A value of zero means square corners. A value equal or superior to half the bubblesize makes the slots as a circle.
+			</description>
+		</attribute>
+		<attribute name='spacing' get='1' set='1'  type='float' size='1' >
+			<digest>Slot spacing</digest>
+			<description>Defines the spacing, in pixels, between slot bubbles.
+			</description>
+		</attribute>
+		<attribute name='stored_slot_color' get='1' set='1'  type='list' size='4' >
+			<digest>Stored slot color</digest>
+			<description>Sets the stored preset color of the object in RGBA format</description>
+		</attribute>
 	</attributelist>
 
 

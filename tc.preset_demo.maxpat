@@ -994,15 +994,14 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 302.0, 772.0, 100.0, 50.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 146.0, 63.5, 119.0, 22.0 ],
-					"text" : "<(unnamed)>"
+					"presentation_rect" : [ 146.0, 63.5, 119.0, 22.0 ]
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"id" : "obj-8",
-					"items" : [ "6 <(unnamed)>", ",", "19 <(unnamed)>", ",", "39 <(unnamed)>" ],
+					"items" : "<empty>",
 					"maxclass" : "umenu",
 					"numinlets" : 1,
 					"numoutlets" : 3,

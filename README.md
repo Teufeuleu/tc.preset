@@ -32,15 +32,13 @@ A [jsui] replacement for the [preset] object in Cycling'74 Max.
     - `recall`: send to [pattrstorage] only
     - `recallmulti`, `slotname`: send to [pattrstorage] first (for better timing), then to the [jsui]
     - `store`: send to [jsui] only
-- Some messages to pattrstorage causes the jsui to be out of sync (`clear`, `insert`, `lockall`, `read`, `readagain`, `remove`, `renumber`). If you use any of these messages, make sure to then send a `resync` to the jsui.
+- Some messages to pattrstorage causes the jsui to be out of sync (`insert`, `lockall`, `read`, `readagain`, `remove`, `renumber`). If you use any of these messages, make sure to then send a `resync` to the jsui.
 - The js program send a lot of message to the [pattrstorage] (using `maxobj.message()`syntax, so without patch cord), which in return send (using a patch cord) a lot of messages required for the [jsui] to stay in sync. Using one of the above messages incorrectly, or sending `getslotlist`, `getslotnamelist`, or any message that will impact the presets might cause the [pattrstorage] to get out of sync. In case something like that happens, you can send the `resync` message to the [jsui].
 
 ## Desired features (for someday, if ever)
 - No need for a patch cord (programmatically create a [send]/[receive] pair?)
 - Ability to lock/unlock and rename directly in the jsui without the need of external objects
 - Ability to target a [pattrstorage] in a different patcher level
-- Accept more pattrstorage messages: (`clear`, `insert`, `lockall`, `read`, `readagain`, `remove`, `renumber`), and act as a passthrough for the ones that don't affect the presets.
-- Authoring (make a Max package out of this and create `maxref.xml` files)
 
 ## Known bugs
 - With slot_round > 0, interpolation visualization is a bit wacky
