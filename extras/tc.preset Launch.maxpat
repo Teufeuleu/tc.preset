@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 59.0, 119.0, 483.0, 443.0 ],
+		"rect" : [ 391.0, 289.0, 483.0, 443.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -21,16 +21,16 @@
 		"gridsnaponopen" : 1,
 		"objectsnaponopen" : 1,
 		"statusbarvisible" : 2,
-		"toolbarvisible" : 1,
-		"lefttoolbarpinned" : 0,
-		"toptoolbarpinned" : 0,
-		"righttoolbarpinned" : 0,
-		"bottomtoolbarpinned" : 0,
+		"toolbarvisible" : 0,
+		"lefttoolbarpinned" : 2,
+		"toptoolbarpinned" : 2,
+		"righttoolbarpinned" : 2,
+		"bottomtoolbarpinned" : 2,
 		"toolbars_unpinned_last_save" : 0,
 		"tallnewobj" : 0,
 		"boxanimatetime" : 200,
-		"enablehscroll" : 1,
-		"enablevscroll" : 1,
+		"enablehscroll" : 0,
+		"enablevscroll" : 0,
 		"devicewidth" : 0.0,
 		"description" : "",
 		"digest" : "",
@@ -60,7 +60,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 166.5, 373.0, 150.0, 47.0 ],
-					"presentation_linecount" : 3,
 					"text" : "GPL 3.0\n© Théophile Clet, 2024\nClick here to support",
 					"textcolor" : [ 0.0, 0.0, 0.0, 0.5 ],
 					"textjustification" : 1
@@ -81,7 +80,7 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "scrollable", 1 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_mode", 0 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "bubblesize", 14 ], [ "spacing", 4 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "min_rows", 50 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 14 ], [ "display_interp", 1 ], [ "fontname", "Arial" ], [ "select_mode", 0 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "layout", 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "slot_round", 0 ], [ "autowriteagain", 0 ] ],
+					"embedstate" : [ [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "autowriteagain", 0 ], [ "layout", 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_mode", 0 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "slot_round", 0 ], [ "margin", 4 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "fontsize", 14 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "scrollable", 1 ], [ "fontname", "Arial" ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 50 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "display_interp", 1 ], [ "bubblesize", 14 ], [ "spacing", 4 ], [ "select_mode", 0 ] ],
 					"filename" : "tc.preset",
 					"id" : "obj-8",
 					"maxclass" : "jsui",
@@ -135,7 +134,7 @@
 			}
 , 			{
 				"box" : 				{
-					"embedstate" : [ [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "scrollable", 1 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_mode", 0 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "bubblesize", 14 ], [ "spacing", 4 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "min_rows", 50 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 14 ], [ "display_interp", 1 ], [ "fontname", "Arial" ], [ "select_mode", 0 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "layout", 0 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "slot_round", 0 ], [ "autowriteagain", 0 ] ],
+					"embedstate" : [ [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "autowriteagain", 0 ], [ "layout", 0 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_mode", 0 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "slot_round", 0 ], [ "margin", 4 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "fontsize", 14 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "scrollable", 1 ], [ "fontname", "Arial" ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 50 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "display_interp", 1 ], [ "bubblesize", 14 ], [ "spacing", 4 ], [ "select_mode", 0 ] ],
 					"filename" : "tc.preset",
 					"id" : "obj-3",
 					"maxclass" : "jsui",
@@ -207,7 +206,7 @@
 		"dependency_cache" : [ 			{
 				"name" : "tc.preset.js",
 				"bootpath" : "~/Documents/Max 8/Packages/tc.preset/code",
-				"patcherrelativepath" : "../../../Max 8/Packages/tc.preset/code",
+				"patcherrelativepath" : "../code",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
