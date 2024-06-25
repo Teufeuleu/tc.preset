@@ -19,10 +19,13 @@ A [jsui] replacement for the [preset] object in Cycling'74 Max.
 - Select mode: simple click selects the slot, double click recalls it (allows for organizing presets without recalling them)
 - Color mode: ability to color sstored presets with 6 customizable colors  (currently colors are only assigned automatically depending on slot number)
 
+## How to install
+- [Download](https://github.com/Teufeuleu/tc.preset/archive/refs/heads/main.zip) this repository (and please consider donating on the [gumroad page](https://glucose47.gumroad.com/l/tc_preset) if you like this package)
+- Unzip the downloaded file and place the tc.preset folder in your Max Library package.
+- Restart Max
 
 ## How to use
-- Place `tc.preset.js` in the same directory as your patch, or somewhere in the Max search path
-- Create a [`jsui @filename tc.preset.js`].
+- In your Max patch, reate a [`tc.preset`] object (or a more lenghty [`jsui @filename tc.preset.js`])
 - Connect the [pattrstorage] outlet to the [jsui] inlet
 - Set the jsui attribute named "pattrstorage" to the name of the pattrstorage you just connected (or send a message like "pattrstorage my_pattrstorage_name")
 
