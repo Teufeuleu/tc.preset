@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/gpl-3.0.txt>.
 */
 
-autowatch = 1;
+autowatch = 0;
 // When developping, autowatch = 1 isn't enough. You also need to manually call the loadbang function, and then re-binding the pattrstorage.
 // A "loadbang, pattrstorage test" message does the trick.
 
@@ -107,18 +107,6 @@ var is_dragging = 0;    // Drag flag
 var drag_slot = -1;     // Stores the slot that's being dragged
 
 var has_loaded = false;
-
-// RESIZING
-// 64x64 is the default jsui size. We use that to know if the object has just been created,
-// in which case we resize it to a more convenient size to start with.
-if (ui_width == 64 && ui_height == 64) {
-    box.setboxattr("patching_rect", box.rect[0], box.rect[1], 130, 58);
-}
-// Allows for dynamic resizing even in presentation mode (addressing the limitation of onresize())
-var pres_rect = new MaxobjListener(this.box,"presentation_rect",get_prect);
-function get_prect(prect) {
-    onresize(prect.value[2], prect.value[3])
-}
 
 if (jsarguments.length>1) { // Depreciated, use "pattrstorage" attribute instead of jsarguments.
     pattrstorage_name = jsarguments[1];
@@ -1102,6 +1090,7 @@ function onwheel(x, y, wheel_inc_x, wheel_inc_y, cmd, shift, caps, opt, ctrl)
 }
 onwheel.local = 1;
 
+// RESIZING
 function onresize(w,h)
 {
     ui_width = w;
@@ -1111,6 +1100,18 @@ function onresize(w,h)
 	paint_base();
 }
 onresize.local = 1;
+
+// 64x64 is the default jsui size. We use that to know if the object has just been created,
+// in which case we resize it to a more convenient size to start with.
+if (ui_width == 64 && ui_height == 64) {
+    box.setboxattr("patching_rect", box.rect[0], box.rect[1], 130, 58);
+}
+// Allows for dynamic resizing even in presentation mode (addressing the limitation of onresize())
+var pres_rect = new MaxobjListener(this.box,"presentation_rect",get_prect);
+function get_prect(prect) {
+    onresize(prect.value[2], prect.value[3])
+}
+get_prect.local = 1;
 
 // ATTRIBUTES DECLARATION
 declareattribute("pattrstorage", "getpattrstorage", "setpattrstorage", 1);

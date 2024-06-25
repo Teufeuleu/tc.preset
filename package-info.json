@@ -6,7 +6,7 @@
 	"authors" : [  ],
 	"description" : "A jsui replacement for the preset object",
 	"tags" : ["preset", "pattrstorage", "jsui"],
-	"website" : "",
+	"website" : "https://github.com/Teufeuleu/tc.preset/",
 	"extends" : "",
 	"extensible" : 0,
 	"max_version_min" : "8.6.2",
@@ -24,5 +24,5 @@
 
 	}
 ,
-	"homepatcher" : "tc.preset_demo.maxpat"
+	"homepatcher" : "tc.preset Launch.maxpat"
 }
