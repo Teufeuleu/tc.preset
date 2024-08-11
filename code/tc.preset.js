@@ -107,6 +107,10 @@ var is_dragging = 0;    // Drag flag
 var drag_slot = -1;     // Stores the slot that's being dragged
 var requested_slot = -1; // Keep track of which slot we're waiting a value for (used in get_all_preset_colors)
 
+var color_mode_candidate = 0;
+var is_listening_to_subscriptionlist = 0;
+var is_listening_to_clientlist = 0;
+
 var has_loaded = false;
 
 if (jsarguments.length>1) { // Depreciated, use "pattrstorage" attribute instead of jsarguments.
@@ -558,7 +562,7 @@ function color_wheel() {
     paint_base();
 }
 
-function color() {
+function setcolor() {
     if (preset_color_pattr_exist()) {
         var args = arrayfromargs(arguments);
         var nb_args = args.length;
@@ -586,8 +590,15 @@ function color() {
 }
 
 function preset_color_pattr_exist() {
-    if (!this.patcher.getnamed("preset_color")) {
+    var obj = this.patcher.getnamed("preset_color")
+    if (!obj) {
         error("preset_color pattr not found.\n");
+        return false;
+    } else if (obj.maxclass != "pattr"){
+        error("preset_color named object is not a pattr object.\n");
+        return false
+    } else if (obj.getattr('invisible') == 1) {
+        error("preset_color has been found but has invisible attribute set to 1\n");
         return false;
     } else {
         return true;
@@ -613,12 +624,13 @@ get_all_preset_colors.local = 1;
 
 function get_preset_color(s) {
     requested_slot = s;
-    to_pattrstorage("getstoredvalue", "preset_color", requested_slot);
+    to_pattrstorage("getstoredvalue", "preset_color", s);
 }
 get_preset_color.local = 1;
 
 function preset_color() {
     var args = arrayfromargs(arguments);
+    // post(pattrstorage_name, "preset_color", args, '----- args.length: ', args.length, '----- requested_slot: ', requested_slot,'\n');
     if (args.length == 5) {
         var col = Math.max(0, Math.floor(args[0])) % color_wheel_size;
         slots[requested_slot].color_index = col;
@@ -914,6 +926,37 @@ function read() {
     var state = args[1];
     if (state) {
         pattrstorage(pattrstorage_name);
+    }
+}
+
+function subscriptionlist() {
+    var client = arrayfromargs(arguments)[0];
+    if (is_listening_to_subscriptionlist) {
+        if (client == "preset_color") {
+            // [pattr preset_color] subscribed
+            // post("preset_color pattr object found and subscribed to bound pattrstorage. Switching to color mode", color_mode_candidate, '\n');
+            is_listening_to_subscriptionlist = 0;
+            color_mode = color_mode_candidate;
+            paint_base();
+        } else if (client == "done") {
+            error("A [pattr preset_color] object has been found but it isn't subscribed to your pattrstorage. Please add it to your subscribelist and try changing color mode again.\n")
+            is_listening_to_subscriptionlist = 0;
+        }
+    }
+}
+
+function clientlist() {
+    var client = arrayfromargs(arguments)[0];
+    if (is_listening_to_clientlist) {
+        if (client == "preset_color") {
+            // post("preset_color pattr object found and client to bound pattrstorage. Switching to color mode", color_mode_candidate, '\n');
+            is_listening_to_clientlist = 0;
+            color_mode = color_mode_candidate;
+            paint_base();
+        } else if (client == "done") {
+            error("A [pattr preset_color] object has been found but seems to be invisible to the pattrstorage.\n")
+            is_listening_to_clientlist = 0;
+        }
     }
 }
 
@@ -1561,12 +1604,34 @@ function getcolor_mode() {
 	return color_mode;
 }
 function setcolor_mode(v){
-	if (v > 0) {
-        color_mode = Math.floor(v);
+    v = Math.floor(v);
+    v = Math.max(0, Math.min(3, v));
+    // For color modes 2 and 3 (free and custom),
+    // we need to ensure there's a [pattr preset_color] somewhere to store the preset color
+    if (v >= 2 ) {
+        if (!preset_color_pattr_exist()) {
+            v = 0;
+            color_mode = v;
+            paint_base();
+        } else {
+            if (pattrstorage_obj != null && pattrstorage_obj.getattr('subscribemode') == 1) {
+                // If the pattrstorage is in subscribe mode, we need to query its subscription list,
+                // ...and wait for the result to continue (see function subscribelist) 
+                post(pattrstorage_name, "subscribe mode detected. Checking for subscribed 'preset_color' client.\n");
+                is_listening_to_subscriptionlist = 1;
+                color_mode_candidate = v;
+                to_pattrstorage("getsubscriptionlist");
+            } else {
+                // If not in subscribe mode
+                is_listening_to_clientlist = 1;
+                color_mode_candidate = v;
+                to_pattrstorage("getclientlist");
+            }
+        }
     } else {
-        color_mode = 0;
+        color_mode = v;
+        paint_base();
     }
-    paint_base();
 }
 
 declareattribute("color_1", "getcolor1", "setcolor1", 1);
