@@ -73,7 +73,7 @@ var auto_writeagain = 0;    // When enabled, will send a "writeagain" to pattrst
 var menu_number_only = 0;   // Populates the umenu connected to 2nd outlet with stored preset number only, instead of number and name
 var scrollable = 1;         // Defines weither the object can be scrolled or not
 var min_rows = 50;          // Minimum number of rows to display if scrollable is enabled
-var color_mode = 0;         // Change the way the filled slots (stored presets) color is handeld. 0: stored_slot_color. 1: looping through color_1 to color_6
+var color_mode = 0;         // Change the way the filled slots (stored presets) color is handeld. 0: stored_slot_color. 1: looping through color_1 to color_6. 2: Freely assign colors 1 to 6. 3: Set any color to any preset
 var select_mode = 0;        // 0: single click to select and recall the slot. 1: single click to select the slot, double click to recall it.
 
 // (WORK)
@@ -149,7 +149,6 @@ function slot(left, top, right, bottom, name, lock, interp, color_index, color_c
         this.color_custom = stored_slot_color;
     }
 }
-
 
 function loadbang() {
     // post("loadbang\n");
@@ -522,6 +521,7 @@ function color_wheel() {
     // But that makes the code sooo ugly...
     var args = arrayfromargs(arguments);
     if (args.length == 0) {
+        // Reset to default
         color_wheel_custom = [];
         color_wheel_custom = color_wheel_default.slice();
         color_1 = color_wheel_default[0];
@@ -531,6 +531,7 @@ function color_wheel() {
         color_5 = color_wheel_default[4];
         color_6 = color_wheel_default[5];
     } else if (args.length == 5) {
+        // Set color
         var n = args[0];
         var col = [args[1], args[2], args[3], args[4]]
         if (n > 0 && n < 7) {
@@ -1606,7 +1607,7 @@ function getcolor_mode() {
 function setcolor_mode(v){
     v = Math.floor(v);
     v = Math.max(0, Math.min(3, v));
-    // For color modes 2 and 3 (free and custom),
+    // For color modes 2 and 3 (select and custom),
     // we need to ensure there's a [pattr preset_color] somewhere to store the preset color
     if (v >= 2 ) {
         if (!preset_color_pattr_exist()) {

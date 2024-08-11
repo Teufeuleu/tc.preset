@@ -53,10 +53,21 @@
 			<description>Function depends on inlet</description>
 		</method> -->
 		<method name="color_wheel">
-			<digest>Set the slot colors</digest>
+			<digest>Define color wheel colors</digest>
 			<description>The message "color_wheel", followed by an integer and four float, defines one of the 6 available slot colors when color_mode is enabled.
-				The integer argument, between 1 and 6, defines which color in being modifier, and next the four floats define the color in the RGBA format.
+				The integer argument, between 1 and 6, defines which color in being modified, and next the four floats define the color in the RGBA format.
 				The message "color_wheel" without argument resets the six colors to their default values.
+			</description>
+		</method>
+		<method name="setcolor">
+			<digest>Set the preset colors</digest>
+			<description>The message "setcolor" allows to set the color of a preset as shown when in color_mode 2 (select) or 3 (custom).
+				With 1 or 2 integer arguments, it allows to set a preset color as seen in color mode 2. With 4 float arguments or 1 integer followed by 4 floats, it allows to set a preset color for the color mode 3.
+				With 1 integer argument, the currently selected preset color wheel's color is set to the argument's value.
+				With two integer arguments, the preset number defined by first argument is set to color wheel's color defined by the second argument.
+				With 4 float arguments, the currently selected preset is set to a custom color defined by the four arguments (in RGBA format).
+				With 1 integer followed by 4 float arguments, the preset number defined by first argument is set to a custom color defined by the four arguments (in RGBA format).
+				The integer argument, between 1 and 6, defines which color in being modifier, and next the four floats define the color in the RGBA format.
 			</description>
 		</method>
 		<method name="pattrstorage">
@@ -113,7 +124,13 @@
 		</attribute>
 		<attribute name='color_mode' get='1' set='1'  type='int' size='1' >
 			<digest>Color mode</digest>
-			<description>When set to 0, all preset slots have the same color (same as the preset object). When set to 1, stored preset slots are colored. See color_1 to color_6 as well as the color_wheel message.</description>
+			<description>When set to 0, all preset slots have the same color (same as the preset object) defined by the stored_slot_color attribute.
+				When set to 1, stored preset slots are colored according to one of the six colors of the color wheel, in a repeating pattern.
+				In mode 2, stored preset colors can be freely set to one of the six colors of the color wheel.
+				In mode 3, stored preset color can be set to any color in RGBA format. 
+				To define colors of the color wheel for modes 1 and 2, see color_1 to color_6 as well as the color_wheel message.
+				To define preset color as in mode 2 or 3, see the setcolor message. Modes 2 and 3 require a pattr object named 'preset_color' to be at the same patcher level as the tc.preset object.
+			</description>
 		</attribute>
 		<attribute name='color_1' get='1' set='1'  type='list' size='4' >
 			<digest>Slot color 1</digest>
