@@ -105,11 +105,13 @@ var shift_hold, option_hold = 0;
 var is_interpolating = 0;
 var is_dragging = 0;    // Drag flag
 var drag_slot = -1;     // Stores the slot that's being dragged
-var requested_slot = -1; // Keep track of which slot we're waiting a value for (used in get_all_preset_colors)
 
-var color_mode_candidate = 0;
-var is_listening_to_subscriptionlist = 0;
-var is_listening_to_clientlist = 0;
+// Keeping track of various variables for dealing with color modes
+var requested_slot = -1; // Which slot we're waiting a value for (used in get_all_preset_colors)
+var color_mode_candidate = 0; // Which color mode we're aiming
+var is_listening_to_subscriptionlist = 0; //Filters out received subscriptionlist messages when not updating slot color values
+var is_listening_to_clientlist = 0; //Filters out received clientlist messages when not updating slot color values
+var color_pattr;
 
 var has_loaded = false;
 
@@ -591,17 +593,21 @@ function setcolor() {
 }
 
 function preset_color_pattr_exist() {
-    var obj = this.patcher.getnamed("preset_color")
+    var obj = this.patcher.getnamed("preset_color");
     if (!obj) {
         error("preset_color pattr not found.\n");
+        color_pattr = 0;
         return false;
     } else if (obj.maxclass != "pattr"){
         error("preset_color named object is not a pattr object.\n");
-        return false
+        color_pattr = 0;
+        return false;
     } else if (obj.getattr('invisible') == 1) {
         error("preset_color has been found but has invisible attribute set to 1\n");
+        color_pattr = 0;
         return false;
     } else {
+        color_pattr = obj;
         return true;
     }
 }
@@ -637,10 +643,12 @@ function preset_color() {
         slots[requested_slot].color_index = col;
         slots[requested_slot].color_custom = [args[1], args[2], args[3], args[4]];
     } else if (args.length == 4) {
+        slots[requested_slot].color_index = 0;
         slots[requested_slot].color_custom = args;
     } else if (args.length == 1) {
         var col = Math.max(0, Math.floor(args)) % color_wheel_size;
         slots[requested_slot].color_index = col;
+        slots[requested_slot].color_custom = stored_slot_color;
     }
 }
 
@@ -857,6 +865,11 @@ function store(v) {
             error('cannot overwrite locked slot ' + v + '\n');
         } else {
             var recalc_rows_flag = scrollable && v > slots_highest;
+
+            if (color_pattr) {
+                //Initialize preset color to default for new preset
+                color_pattr.message(0);
+            }
 
             to_pattrstorage("store", v);
             to_pattrstorage("getslotlist");
@@ -1172,7 +1185,7 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
             last_x = x;
             last_y = y;
             if (!but) {
-                // Wehen to button is released, the dragging ceases
+                // When the button is released, the dragging ceases
                 if (last_hovered > 0 && last_hovered != drag_slot) {
                     var cur_active_slot = active_slot;
                     var cur_prev_active_slot = previous_active_slot;
