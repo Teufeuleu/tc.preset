@@ -105,6 +105,7 @@ var shift_hold, option_hold = 0;
 var is_interpolating = 0;
 var is_dragging = 0;    // Drag flag
 var drag_slot = -1;     // Stores the slot that's being dragged
+var is_writing = 0;
 
 // Keeping track of various variables for dealing with color modes
 var requested_slot = -1; // Which slot we're waiting a value for (used in get_all_preset_colors)
@@ -929,14 +930,20 @@ function lockedslots() {
 }
 
 function write() {
-    var args = arrayfromargs(arguments);
-    var filename = args[0];
-    var state = args[1];
-    if (state) {
-        post(pattrstorage_name + ' pattrstorage: ' + filename + ' updated\n');
+    if (is_writing) {
+        is_writing = 0;
+        var args = arrayfromargs(arguments);
+        var filename = args[0];
+        var state = args[1];
+        if (state) {
+            post(pattrstorage_name + ' pattrstorage: ' + filename + ' updated\n');
+        } else {
+            error(pattrstorage_name + ': error while writing ' + filename + '\n');
+        }
     } else {
-        error(pattrstorage_name + ': error while writing ' + filename + '\n');
+        error("Send your write messages directly to the pattrstorage instead.\n");
     }
+    
 }
 
 function read() {
@@ -1091,6 +1098,7 @@ function set_umenu(v) {
 
 function trigger_writeagain() {
     if (auto_writeagain && !is_dragging) {
+        is_writing = 1;
         to_pattrstorage("writeagain");
 
     }
