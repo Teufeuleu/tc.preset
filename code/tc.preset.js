@@ -570,25 +570,28 @@ function setcolor() {
         var args = arrayfromargs(arguments);
         var nb_args = args.length;
         var slot_nb = selected_slot;
-        if (nb_args == 1) {
-            // Set the color index of the currently selected slot (for when color_mode is 2)
-            slots[selected_slot].color_index = Math.floor(args);
-        } else if (nb_args == 2) {
-            // Set the color index to the 2nd argument for the slot number defined by the 1st argument
-            slot_nb = Math.floor(args[0]);
-            slots[slot_nb].color_index = Math.floor(args[1]);
-        } else if (nb_args == 4) {
-            // Set the custom color of the currently selected slot (for when color_mode is 3)
-            slots[selected_slot].color_custom = [args[0], args[1], args[2], args[3]];
-        } else if (nb_args == 5) {
-            // Set the custom color for the slot number defined by the 1st argument to the color defined by following arguments in rgba format.
-            slot_nb = Math.floor(args[0]);
-            slots[slot_nb].color_custom = [args[1], args[2], args[3], args[4]];
-        } else {
+        if (nb_args < 1 && nb_args > 5) {
             error("color: wrong number of arguments.");
+        } else  {
+            if (nb_args == 1) {
+                // Set the color index of the currently selected slot (for when color_mode is 2)
+                slots[selected_slot].color_index = Math.floor(args);
+            } else if (nb_args == 2) {
+                // Set the color index to the 2nd argument for the slot number defined by the 1st argument
+                slot_nb = Math.floor(args[0]);
+                slots[slot_nb].color_index = Math.floor(args[1]);
+            } else if (nb_args == 4) {
+                // Set the custom color of the currently selected slot (for when color_mode is 3)
+                slots[selected_slot].color_custom = [args[0], args[1], args[2], args[3]];
+            } else if (nb_args == 5) {
+                // Set the custom color for the slot number defined by the 1st argument to the color defined by following arguments in rgba format.
+                slot_nb = Math.floor(args[0]);
+                slots[slot_nb].color_custom = [args[1], args[2], args[3], args[4]];
+            }
+            update_preset_color_pattr(slot_nb);
+            paint_base();
+            trigger_writeagain();
         }
-        update_preset_color_pattr(slot_nb);
-        paint_base();
     }
 }
 
@@ -886,6 +889,7 @@ function store(v) {
             
             outlet(0, "store", v);
             if (v) {
+                // We writagain only if stored preset is > 0
                 trigger_writeagain();
             }
         }
