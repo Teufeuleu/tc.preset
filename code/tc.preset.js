@@ -776,57 +776,62 @@ function recall() {
         is_interpolating = 0;
         set_active_slot(args[0]);
         outlet(0, 'recall', args[0]);
-	} else {
-		var src_slot = args[0];
-		var trg_slot = args[1];
-
-        for (var i = 0; i < filled_slots.length; i++) {
-            slots[filled_slots[i]].interp = -1;
-        }
-
-        if (slots[src_slot].name != null && slots[trg_slot].name != null) {
-
-            if (ignore_slot_zero == 1 && src_slot == 0) {
-                // Set src_slot as if we were interpolating from the last recalled preset different than 0
-                // This way we can monitor which preset we come from even if we used preset 0 as intermediary preset
-                if (previous_target != active_slot) {
-                    // If the last target preset was through interpollation or direct recall
-                    src_slot = previous_active_slot;
-                } else {
-                    src_slot = active_slot;
-                }
+	} else if (args.length == 2) {
+		if (typeof(args[0]) == 'number') {
+            var src_slot = args[0];
+            var trg_slot = args[1];
+    
+            for (var i = 0; i < filled_slots.length; i++) {
+                slots[filled_slots[i]].interp = -1;
             }
-            var interp = Math.min( 1, Math.max(0, args[2]));
-            if (interp == 0.0) {
-                slots[src_slot].interp = -1;
-                slots[trg_slot].interp = -1;
-                is_interpolating = 0;
-                if (previous_target != active_slot) {
-                    previous_active_slot = active_slot;
-                } else if (args[0] != 0) {
-                    previous_active_slot = args[0];
-                } else {
-                    previous_active_slot = previous_target;
+    
+            if (slots[src_slot].name != null && slots[trg_slot].name != null) {
+    
+                if (ignore_slot_zero == 1 && src_slot == 0) {
+                    // Set src_slot as if we were interpolating from the last recalled preset different than 0
+                    // This way we can monitor which preset we come from even if we used preset 0 as intermediary preset
+                    if (previous_target != active_slot) {
+                        // If the last target preset was through interpollation or direct recall
+                        src_slot = previous_active_slot;
+                    } else {
+                        src_slot = active_slot;
+                    }
                 }
-                
-                set_active_slot(src_slot);
-            } else if (interp == 1.0) {
-                slots[src_slot].interp = -1;
-                slots[trg_slot].interp = -1;
-                is_interpolating = 0;
-                previous_target = trg_slot;
-                set_active_slot(trg_slot);
-                
-            } else {
-                slots[src_slot].interp = 1 - interp;
-                slots[trg_slot].interp = interp;
-                is_interpolating = 1;
-                active_slot = 0;
-                // set_active_slot(0);
+                var interp = Math.min( 1, Math.max(0, args[2]));
+                if (interp == 0.0) {
+                    slots[src_slot].interp = -1;
+                    slots[trg_slot].interp = -1;
+                    is_interpolating = 0;
+                    if (previous_target != active_slot) {
+                        previous_active_slot = active_slot;
+                    } else if (args[0] != 0) {
+                        previous_active_slot = args[0];
+                    } else {
+                        previous_active_slot = previous_target;
+                    }
+                    
+                    set_active_slot(src_slot);
+                } else if (interp == 1.0) {
+                    slots[src_slot].interp = -1;
+                    slots[trg_slot].interp = -1;
+                    is_interpolating = 0;
+                    previous_target = trg_slot;
+                    set_active_slot(trg_slot);
+                    
+                } else {
+                    slots[src_slot].interp = 1 - interp;
+                    slots[trg_slot].interp = interp;
+                    is_interpolating = 1;
+                    active_slot = 0;
+                    // set_active_slot(0);
+                }
+    
+                outlet(0, "recall", src_slot, trg_slot, interp);
             }
-
-            outlet(0, "recall", src_slot, trg_slot, interp);
         }
+        // else {
+        //     //typeof(args[0]) == 'string', so user just recalled a single parameter.
+        // }
         
 	}
 	
