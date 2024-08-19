@@ -68,6 +68,7 @@
 				With 4 float arguments, the currently selected preset is set to a custom color defined by the four arguments (in RGBA format).
 				With 1 integer followed by 4 float arguments, the preset number defined by first argument is set to a custom color defined by the four arguments (in RGBA format).
 				The integer argument, between 1 and 6, defines which color in being modifier, and next the four floats define the color in the RGBA format.
+				With no argument, it resets colors for the select preset to default values.
 			</description>
 		</method>
 		<method name="pattrstorage">
