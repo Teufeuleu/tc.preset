@@ -140,6 +140,10 @@ function slot(left, top, right, bottom, name, lock, interp, color_index, color_c
         this.name = null;
         this.lock = 0;
         this.interp = -1;
+        this.init_color();
+    }
+
+    this.init_color = function() {
         this.color_index = 0;
         this.color_custom = stored_slot_color;
     }
@@ -574,7 +578,10 @@ function setcolor() {
         if (nb_args < 1 && nb_args > 5) {
             error("color: wrong number of arguments.");
         } else  {
-            if (nb_args == 1) {
+            if (nb_args == 0) {
+                // Reset colors of selected slot to default values
+                slots[selected_slot].init_color();
+            } else if (nb_args == 1) {
                 // Set the color index of the currently selected slot (for when color_mode is 2)
                 slots[selected_slot].color_index = Math.floor(args);
             } else if (nb_args == 2) {
