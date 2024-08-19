@@ -17,7 +17,7 @@ A [jsui] replacement for the [preset] object in Cycling'74 Max.
 - More look customization
 - Dynamically adapts to resize both in Edit and Presentation mode
 - Select mode: simple click selects the slot, double click recalls it (allows for organizing presets without recalling them)
-- Color mode: ability to color sstored presets with 6 customizable colors  (currently colors are only assigned automatically depending on slot number)
+- Color mode: various ways to colorize preset slots
 
 ## How to install
 - [Download](https://github.com/Teufeuleu/tc.preset/archive/refs/heads/main.zip) this repository (and please consider donating on the [gumroad page](https://glucose47.gumroad.com/l/tc_preset) if you like this package)
