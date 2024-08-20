@@ -1204,12 +1204,17 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                     var offset = ((last_hovered <= drag_slot) && slots[last_hovered].name != null) ? 1 : 0;
                     var offset_others = slots[last_hovered].name != null ? 1 : 0;
                     var drag_slot_lock = slots[drag_slot].lock;
+                    var recalc_rows_flag = 0
                     // If the slot we wan to drag is locked, we need to temporarily unlock it.
                     if (drag_slot_lock) {
                         lock(drag_slot, 0);
                     }
                     // If new slot is empty we just move the drag preset here. If it's not, we move al next slots to the right
                     if (slots[last_hovered].name !== null) {
+                        if (slots_highest == slots_count_display) {
+                            // If there's a stored preset in the last displayed slot, it will be pushed to a new row at insert, so we need to add a new row at redraw
+                            recalc_rows_flag = 1;
+                        }
                         to_pattrstorage("insert", last_hovered);
                     }
                     
@@ -1243,9 +1248,14 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                     outlet(0, "drag", drag_slot, last_hovered, offset);
                     is_dragging = 0;
                     drag_slot = -1;
-                    paint_base();
 
-                    select(last_hovered);                   
+                    select(last_hovered);
+
+                    if (recalc_rows_flag) {
+                        calc_rows_columns();
+                    } else {
+                        paint_base();
+                    }
                     
                     trigger_writeagain();
 
