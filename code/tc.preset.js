@@ -1189,8 +1189,6 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
             if (dist_from_start > 10) {
                 is_dragging = 1;
                 drag_slot = last_hovered;
-                last_x_drag = x;
-                last_y_drag = y+y_offset;
                 paint_base();
             }
 
