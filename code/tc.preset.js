@@ -71,8 +71,8 @@ var display_interp = 1;     // Enable/disable the UI feedback when interpolating
 var ignore_slot_zero = 1;   // Makes previous_active_slot and interpolation display to ignore slot 0. Can be usefull when using slot 0 as a temporary step for interpolation.
 var auto_writeagain = 0;    // When enabled, will send a "writeagain" to pattrstorage any time a preset is stored/deleted/moved/renamed/(un)locked
 var menu_number_only = 0;   // Populates the umenu connected to 2nd outlet with stored preset number only, instead of number and name
-var scrollable = 1;         // Defines weither the object can be scrolled or not
-var min_rows = 50;          // Minimum number of rows to display if scrollable is enabled
+var scrollable = 0;         // Defines weither the object can be scrolled or not
+var min_rows = 10;          // Minimum number of rows to display if scrollable is enabled
 var color_mode = 0;         // Change the way the filled slots (stored presets) color is handeld. 0: stored_slot_color. 1: looping through color_1 to color_6. 2: Freely assign colors 1 to 6. 3: Set any color to any preset
 var select_mode = 0;        // 0: single click to select and recall the slot. 1: single click to select the slot, double click to recall it.
 
@@ -101,6 +101,7 @@ var is_painting_base = 0;
 var half_slot_size, half_margin, half_spacing;
 var last_x, last_y, last_hovered = -1;
 var y_offset = 0; // handle scrolling
+var drag_scroll = 0; // handle scrolling when dragging outside of boundaries
 var shift_hold, option_hold = 0;
 var is_interpolating = 0;
 var is_dragging = 0;    // Drag flag
@@ -174,15 +175,17 @@ function calc_rows_columns() {
     if (layout == 0) {
         columns = Math.floor((ui_width - margin + spacing) / (slot_size + spacing));
         rows = Math.floor((ui_height - margin + spacing) / (slot_size + spacing));
-        slots_count_display = columns * rows;
+        if (scrollable) {
+            rows = Math.max(rows, Math.max(min_rows, Math.ceil(slots_highest/columns)));
+        }
     } else {
         columns = 1;
         rows = Math.floor((ui_height - margin + spacing) / (slot_size + spacing));
         if (scrollable) {
             rows = Math.max(rows, Math.max(min_rows, slots_highest));
         }
-        slots_count_display = columns * rows;
     }
+    slots_count_display = columns * rows;
         
     for (var i = 0; i < rows; i++) {
         var top = margin + i * (spacing+slot_size);
@@ -192,23 +195,15 @@ function calc_rows_columns() {
             var right = left + slot_size;
             var cur = 1 + i * columns + j;
 
-            // var prev_name = null;
-            // var prev_lock = 0;
-            // var prev_interp = -1;
             var prev_state = new slot();
             prev_state.init();
             if (typeof slots[cur] !== 'undefined') {
                 prev_state = slots[cur];
-                // prev_name = slots[cur].name;
-                // prev_lock = slots[cur].lock;
-                // prev_interp = slots[cur].interp;
             }
             slots[cur] = new slot(left, top, right, bottom, prev_state.name, prev_state.lock, prev_state.interp, prev_state.color_index, prev_state.color_custom);
         }
-
     }
 	
-
     if (slots_count_display < slots_highest) {
         for (var i = slots_count_display + 1; i <= slots_highest; i++) {
             slots[i] = new slot();
@@ -870,13 +865,13 @@ function recallmulti() {
 function store(v) {
     v = Math.floor(v);
     if (v >= 0) {
-        if (slots[v].lock > 0) {
+        if (slots[v] && slots[v].lock > 0) {
             error('cannot overwrite locked slot ' + v + '\n');
         } else {
             var recalc_rows_flag = scrollable && v > slots_highest;
 
             if (color_pattr) {
-                //Initialize preset color to default for new preset
+                //Initialize preset color pattr to default for new preset (otherwise, previously set color is used)
                 color_pattr.message(0);
             }
 
@@ -1194,13 +1189,13 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
             if (dist_from_start > 10) {
                 is_dragging = 1;
                 drag_slot = last_hovered;
+                last_x_drag = x;
+                last_y_drag = y+y_offset;
                 paint_base();
             }
 
         } else if (is_dragging == 1) {
             last_hovered = get_slot_index(x, y);
-            last_x = x;
-            last_y = y;
             if (!but) {
                 // When the button is released, the dragging ceases
                 if (last_hovered > 0 && last_hovered != drag_slot) {
@@ -1262,8 +1257,24 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                 }
             } else {
                 // Click still hold, we keep dragging
+                if (scrollable) {
+                    // Auto-scroll if mouse out of bounds
+                    if (y+y_offset < 0 && y-(last_y-drag_scroll) < 0) {
+                        drag_scroll = 2;
+                    } else if (y+y_offset > ui_height && y-(last_y-drag_scroll) > 0) {
+                        drag_scroll = -2;
+                    } else {
+                        drag_scroll = 0;
+                    }
+                    y_offset += drag_scroll;
+                    y_offset = Math.min(y_offset, 0);
+                    y_offset = Math.max(y_offset, -1 * (bg_height - ui_height));
+                }
+                
                 mgraphics.redraw();
             }
+            last_x = x;
+            last_y = y;
         }
     }
 }

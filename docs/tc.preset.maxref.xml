@@ -182,7 +182,7 @@
 		</attribute>
 		<attribute name='scrollable' get='1' set='1'  type='int' size='1' >
 			<digest>Scroll through your presets</digest>
-			<description>When set to 1, you can through the jsui to see all your presets, or at least up to the slot number defined by the min_rows attributes. Currently only works with the list layout.
+			<description>When set to 1, you can through the jsui to see all your presets, or at least up to the row defined by the min_rows attributes.
 			</description>
 		</attribute>
 		<attribute name='select_mode' get='1' set='1'  type='int' size='1' >
