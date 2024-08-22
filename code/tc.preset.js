@@ -1083,6 +1083,10 @@ function update_umenu() {
             }
             outlet(1, "append", nb, txt);
         }
+
+        if (layout == 1) {
+            set_umenu(selected_slot);
+        }
     }
 }
 update_umenu.local = 1;
