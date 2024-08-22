@@ -930,9 +930,9 @@ function lockedslots() {
 }
 
 function write() {
+    var args = arrayfromargs(arguments);
     if (is_writing) {
         is_writing = 0;
-        var args = arrayfromargs(arguments);
         var filename = args[0];
         var state = args[1];
         if (state) {
@@ -941,7 +941,9 @@ function write() {
             error(pattrstorage_name + ': error while writing ' + filename + '\n');
         }
     } else {
-        error("Send your write messages directly to the pattrstorage instead.\n");
+        if (args.length < 2) {
+            error("Send your write messages directly to the pattrstorage instead.\n");
+        }
     }
     
 }
