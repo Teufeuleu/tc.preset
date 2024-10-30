@@ -516,7 +516,7 @@ function paint()
         }
     }
 }
-paint.local = 1;
+paint.local = 0;
 
 function color_wheel() {
     // Rather than using an array of colors, each color has its own variable, so they can be declared as attributes and saved with the patch
