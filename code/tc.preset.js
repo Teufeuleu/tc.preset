@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/gpl-3.0.txt>.
 */
 
-autowatch = 1;
+autowatch = 0;
 // When developping, autowatch = 1 isn't enough. You also need to manually call the loadbang function, and then re-binding the pattrstorage.
 // A "loadbang, pattrstorage test" message does the trick.
 
