@@ -1107,7 +1107,7 @@ function update_filled_slots_dict() {
     for (var i = 0; i < filled_slots.length; i++) {
         if (i > 0) filled_slots_dict.append('filled_slots', '');
         var tmp_color_custom = slots[filled_slots[i]].color_custom;
-        filled_slots_dict.setparse('filled_slots[' + i + ']', 'slot:', filled_slots[i], 'name:', slots[filled_slots[i]].name, 'lock:', slots[filled_slots[i]].lock, 'color_index:', slots[filled_slots[i]].color_index, 'color_custom:', tmp_color_custom[0], tmp_color_custom[1], tmp_color_custom[2], tmp_color_custom[3]);
+        filled_slots_dict.setparse('filled_slots[' + i + ']', 'slot:', filled_slots[i], 'name:', '"' + slots[filled_slots[i]].name + '"', 'lock:', slots[filled_slots[i]].lock, 'color_index:', slots[filled_slots[i]].color_index, 'color_custom:', tmp_color_custom[0], tmp_color_custom[1], tmp_color_custom[2], tmp_color_custom[3]);
     }
     messnamed(pattrstorage_name + '_presets_dict', 'dictionary', filled_slots_dict.name);
 }
