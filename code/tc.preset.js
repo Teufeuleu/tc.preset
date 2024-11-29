@@ -75,6 +75,7 @@ var scrollable = 0;         // Defines weither the object can be scrolled or not
 var min_rows = 10;          // Minimum number of rows to display if scrollable is enabled
 var color_mode = 0;         // Change the way the filled slots (stored presets) color is handeld. 0: stored_slot_color. 1: looping through color_1 to color_6. 2: Freely assign colors 1 to 6. 3: Set any color to any preset
 var select_mode = 0;        // 0: single click to select and recall the slot. 1: single click to select the slot, double click to recall it.
+var send_name = "none";       // The global name to send presets dict name to (received by the [receive] object)
 
 // (WORK)
 var pattrstorage_name, pattrstorage_obj = null;
@@ -1109,7 +1110,8 @@ function update_filled_slots_dict() {
         var tmp_color_custom = slots[filled_slots[i]].color_custom;
         filled_slots_dict.setparse('filled_slots[' + i + ']', 'slot:', filled_slots[i], 'name:', '"' + slots[filled_slots[i]].name + '"', 'lock:', slots[filled_slots[i]].lock, 'color_index:', slots[filled_slots[i]].color_index, 'color_custom:', tmp_color_custom[0], tmp_color_custom[1], tmp_color_custom[2], tmp_color_custom[3]);
     }
-    messnamed(pattrstorage_name + '_presets_dict', 'dictionary', filled_slots_dict.name);
+    var tmp_send_name = send_name == "none" ? pattrstorage_name + '_presets_dict' : send_name;
+    messnamed(tmp_send_name, 'dictionary', filled_slots_dict.name);
 }
 update_filled_slots_dict.local = 1;
 
@@ -1793,6 +1795,18 @@ function setcolor6(){
         color_wheel(6, 0.316, 0.616, 0.377, 1);
     } else {
         error('color_6: wrong number of arguments\n');
+    }
+}
+
+declareattribute("send_name", "getsendname", "setsendname", 1);
+function getsendname() {
+	return send_name;
+}
+function setsendname(){
+    if (arguments.length > 0) {
+        send_name = arguments[0];
+    } else {
+       send_name = "none";
     }
 }
 
