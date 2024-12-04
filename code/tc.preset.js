@@ -765,16 +765,20 @@ function slotname() {
 
 function setslotname() {
     // Because [pattrstorage] doesn't output anything when renaming presets with "slotname", we use a custom "setslotname" instead, that will rename the active preset
-    if (active_slot > 0) {
-        var sname = arrayfromargs(arguments).join(' ');
-        slotname(selected_slot, sname);
-        to_pattrstorage("slotname", selected_slot, sname);
-        update_umenu();
-        update_filled_slots_dict();
-        select(selected_slot);
-        trigger_writeagain();
-        if (layout == 1) {
-            paint_base();
+    if (selected_slot > 0) {
+        if (slots[selected_slot].lock == 0) {
+            var sname = arrayfromargs(arguments).join(' ');
+            slotname(selected_slot, sname);
+            to_pattrstorage("slotname", selected_slot, sname);
+            update_umenu();
+            update_filled_slots_dict();
+            select(selected_slot);
+            trigger_writeagain();
+            if (layout == 1) {
+                paint_base();
+            }
+        } else {
+            error('Cannot set name of locked slot\n');
         }
     }
 }
@@ -919,6 +923,7 @@ function lock() {
         to_pattrstorage("lock", args[0], args[1]);
         to_pattrstorage("getlockedslots");
         outlet(0, "lock", args[0], args[1]);
+        update_filled_slots_dict();
         trigger_writeagain();
         if (layout == 1) {
             paint_base();
@@ -1103,13 +1108,23 @@ function update_umenu() {
 update_umenu.local = 1;
 
 function update_filled_slots_dict() {
+    // Creates a coll-compatible dict containing slot id, name, lock, color index and color_custom for all existing presets
+    // And sends the dict name to a receive.
     // Best would be to allow for single slot updates, but for that we need to be able to know which at index of filled_slot is a slot id.
-    filled_slots_dict.set('filled_slots');
+    filled_slots_dict.clear();
     for (var i = 0; i < filled_slots.length; i++) {
-        if (i > 0) filled_slots_dict.append('filled_slots', '');
-        var tmp_color_custom = slots[filled_slots[i]].color_custom;
-        filled_slots_dict.setparse('filled_slots[' + i + ']', 'slot:', filled_slots[i], 'name:', '"' + slots[filled_slots[i]].name + '"', 'lock:', slots[filled_slots[i]].lock, 'color_index:', slots[filled_slots[i]].color_index, 'color_custom:', tmp_color_custom[0], tmp_color_custom[1], tmp_color_custom[2], tmp_color_custom[3]);
+        var slot_index = filled_slots[i];
+        var tmp_color_custom = slots[slot_index].color_custom;
+        filled_slots_dict.set(slot_index, slots[slot_index].name, slots[slot_index].lock, slots[slot_index].color_index, tmp_color_custom[0], tmp_color_custom[1], tmp_color_custom[2], tmp_color_custom[3]);
     }
+
+    // Non coll-compatible, but with proper keys:
+    // filled_slots_dict.set('filled_slots');
+    // for (var i = 0; i < filled_slots.length; i++) {
+    //     if (i > 0) filled_slots_dict.append('filled_slots', '');
+    //     var tmp_color_custom = slots[filled_slots[i]].color_custom;
+    //     filled_slots_dict.setparse('filled_slots[' + i + ']', 'slot:', filled_slots[i], 'name:', '"' + slots[filled_slots[i]].name + '"', 'lock:', slots[filled_slots[i]].lock, 'color_index:', slots[filled_slots[i]].color_index, 'color_custom:', tmp_color_custom[0], tmp_color_custom[1], tmp_color_custom[2], tmp_color_custom[3]);
+    // }
     var tmp_send_name = send_name == "none" ? pattrstorage_name + '_presets_dict' : send_name;
     messnamed(tmp_send_name, 'dictionary', filled_slots_dict.name);
 }
