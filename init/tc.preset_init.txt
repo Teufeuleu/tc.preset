@@ -1,2 +1,2 @@
 max objectfile tc.preset tc.preset;
-max definesubstitution tc.preset jsui @filename tc.preset
+max definesubstitution tc.preset jsui @filename tc.preset;
