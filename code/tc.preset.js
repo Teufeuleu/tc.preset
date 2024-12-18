@@ -205,13 +205,6 @@ function calc_rows_columns() {
             slots[cur] = new slot(left, top, right, bottom, prev_state.name, prev_state.lock, prev_state.interp, prev_state.color_index, prev_state.color_custom);
         }
     }
-	
-    if (slots_count_display < slots_highest) {
-        for (var i = slots_count_display + 1; i <= slots_highest; i++) {
-            slots[i] = new slot();
-            slots[i].init();
-        }
-    }
 	paint_base(); 
 }
 calc_rows_columns.local = 1;
@@ -971,6 +964,11 @@ function read() {
     if (state) {
         pattrstorage(pattrstorage_name);
     }
+}
+
+// Given that v8ui has a new read method that cannot be overriden, we need to use [substitute read readfile] between [pattrstorage] and [tc.prest]
+function readfile(f, s) {
+    read(f, s);
 }
 
 function subscriptionlist() {
