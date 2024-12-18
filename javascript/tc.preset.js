@@ -1132,11 +1132,7 @@ function set_umenu(v) {
     outlet(1, "clearchecks");
     var item = filled_slots.indexOf(v);
     outlet(1, "checkitem", item);
-    if (menu_number_only) {
-        outlet(1, "setsymbol", v);
-    } else {
-        outlet(1, "setsymbol", v + ' ' + slots[v].name);
-    }
+    outlet(1, "set", item);
 }
 
 function trigger_writeagain() {
