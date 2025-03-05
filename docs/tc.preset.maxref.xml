@@ -78,6 +78,11 @@
 				If the word `pattrstorage`is sent alone, the jsui is unlinked from any pattrstorage.
 			</description>
 		</method>
+		<method name="recall_filled">
+			<digest>Recalls nth filled preset</digest>
+			<description>Recalls the nth filled preset. Example: 'recall_filled 3' will recall the third available filled preset from the preset list, regardless of its slot number.
+			</description>
+		</method>
 		<method name="resync">
 			<digest>Resync the jsui to the pattrstorage</digest>
 			<description>The word 'resync' will repopulate the jsui with the current preset list from the pattrstorage. It is usefull in case you add/remove/edit presets without using the jsui.
@@ -173,6 +178,10 @@
 		<attribute name='margin' get='1' set='1'  type='float' size='1' >
 			<digest>Object margin</digest>
 			<description>Defines the size, in pixels, of the margin between the jsui border and the preset slots.</description>
+		</attribute>
+		<attribute name='menu_mode' get='1' set='1'  type='int' size='1' >
+			<digest>Menu mode</digest>
+			<description>Populates the umenu connected to 2nd outlet with preset number and name (0), preset number only (1), or name only (2). See recall_filled when using mode 2</description>
 		</attribute>
 		<attribute name='min_rows' get='1' set='1'  type='int' size='1' >
 			<digest>Minimum number of rows to display</digest>

@@ -70,7 +70,7 @@ var layout = 0;             // 0: grid mode (same as [preset]). 1: list mode
 var display_interp = 1;     // Enable/disable the UI feedback when interpolating between presets
 var ignore_slot_zero = 1;   // Makes previous_active_slot and interpolation display to ignore slot 0. Can be usefull when using slot 0 as a temporary step for interpolation.
 var auto_writeagain = 0;    // When enabled, will send a "writeagain" to pattrstorage any time a preset is stored/deleted/moved/renamed/(un)locked
-var menu_number_only = 0;   // Populates the umenu connected to 2nd outlet with stored preset number only, instead of number and name
+var menu_mode = 0;          // Populates the umenu connected to 2nd outlet with preset number and name (0), preset number only (1), or name only (2)
 var scrollable = 0;         // Defines weither the object can be scrolled or not
 var min_rows = 10;          // Minimum number of rows to display if scrollable is enabled
 var color_mode = 0;         // Change the way the filled slots (stored presets) color is handeld. 0: stored_slot_color. 1: looping through color_1 to color_6. 2: Freely assign colors 1 to 6. 3: Set any color to any preset
@@ -842,6 +842,15 @@ function recall() {
 	mgraphics.redraw();
 }
 
+function recall_filled() {
+    // Recalling preset by its number in the filled_slots list. Useful when used menu_mode 2
+    var args = arrayfromargs(arguments);
+    var index = args[0];
+	if (index < filled_slots.length) {
+        to_pattrstorage('recall', filled_slots[args[0]]);
+    }
+}
+
 function recallmulti() {
     var args = arrayfromargs(arguments);
     var interp_slots = [];
@@ -1091,11 +1100,18 @@ function update_umenu() {
         
         for (var i=0; i < filled_slots.length; i++) {
             var nb = filled_slots[i];
-            var txt = null;
-            if (!menu_number_only) {
-                txt = slots[filled_slots[i]].name;
+            var txt = slots[filled_slots[i]].name;
+            switch(menu_mode){
+                case 0:
+                    outlet(1, "append", nb, txt);
+                    break;
+                case 1:
+                    outlet(1, "append", nb);
+                    break;
+                case 2:
+                    outlet(1, "append", txt);
+                    break;
             }
-            outlet(1, "append", nb, txt);
         }
 
         if (layout == 1) {
@@ -1594,6 +1610,17 @@ function setfontname(v){
         paint_base();
     } else {
         mgraphics.redraw();
+    }
+}
+
+declareattribute("menu_mode", "getmenu_mode", "setmenu_mode", 1);
+function getmenu_mode() {
+	return menu_mode;
+}
+function setmenu_mode(v){
+    if (arguments.length == 1) {
+        menu_mode = Math.min(Math.max(0, parseInt(v)), 2);
+        update_umenu();
     }
 }
 
