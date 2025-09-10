@@ -92,6 +92,9 @@ var previous_active_slot = 0;   //Previously recalled slot
 var previous_target = 0;        //Here to deal with ongoing interpolations
 var selected_slot = 0;          //Last selected slot. Relevant especially when select_mode = 1. Otherwise it is the same as active_slot
 
+var mess_with_presets = ['insert', 'lockall', 'read', 'readagain', 'remove', 'renumber']; // Received messages that can mess with presets and thus requiring a resync
+var to_ignore = ['active', 'alias', 'current', 'dump', 'edited', 'interp', 'priority', 'subscription', 'resolvealias']; // Messages that can come from psto and should be ignored to avoid feedback loops
+var to_passthrough = ['clear', 'client_close', 'client_window', 'fade', 'fillempty', 'getactive', 'getalias', 'getclientlist', 'getcurrent', 'getedited', 'getinterp', 'getlockedslots', 'getpriority', 'getslotlist', 'getslotnamelist', 'getstoredvalue', 'getsubscriptionlist', 'grab', 'locate', 'purge', 'readagain', 'setall', 'setstoredvalue', 'storage_close', 'storagewindow', 'storeagain', 'subscribe', 'unsubscribe', 'writeagain', 'writejson', 'writexml']; // Messages that can be passed to psto 
 var ui_width = box.rect[2] - box.rect[0];
 var ui_height = box.rect[3] - box.rect[1];
 var bg_width, bg_height = 0;
@@ -695,17 +698,22 @@ function anything() {
                 
             }
         }
-    } else {
-        // Passthrough to pattrstorage 
+    } else if (to_ignore.indexOf(messagename) > -1) {
+        // should be ignored by tc.preset (and sent to psto when applicable)
+        // active, alias, clientlist, current, edited, interp, priority, slotname, subscription, read, resolvealias, write
+        return
+    } else if (mess_with_presets.indexOf(messagename) > -1 ) {
+        // If the called function messes with presets, we resync the jsui
         var args = arrayfromargs(arguments);
         args.unshift(messagename);
         to_pattrstorage.apply(null, args);
-
-        // If the called function messes with presets, we resync the jsui
-        var mess_with_presets = ['insert', 'lockall', 'read', 'readagain', 'remove', 'renumber'];
-        if (mess_with_presets.indexOf(messagename) > -1 ) {
-            resync();
-        }
+        resync();
+    } else if (to_passthrough.indexOf(messagename) > -1) {
+        //Can be passed through without resync:
+        // clear, client_close, client_window, dump (require to ignore client value messages), fade, fillempty, getactive, getalias, getclientlist, getcurrent, getedited, getinterp, getlockedslots, getpriority, getslotlist, getslotnamelist, getstoredvalue, getsubscriptionlist, grab, locate, purge, readagain (will trigger resync by sending the read notif), setall, setstoredvalue, storage_close, storagewindow, storeagain, subscribe, unsubscribe, writeagain, writejson, writexml
+        var args = arrayfromargs(arguments);
+        args.unshift(messagename);
+        to_pattrstorage.apply(null, args);
     }
 }
 
