@@ -793,11 +793,10 @@ function recall() {
         trg_slot = Math.abs(args[1]);
         interp = Math.min( 1, Math.max(0, args[2]));
     }
-    for (var i = 0; i < filled_slots.length; i++) {
-        slots[filled_slots[i]].interp = -1;
-    }
     if (slots[src_slot].name != null && slots[trg_slot].name != null) {
-
+        for (var i = 0; i < filled_slots.length; i++) {
+            slots[filled_slots[i]].interp = -1;
+        }
         if (ignore_slot_zero == 1 && src_slot == 0) {
             // Set src_slot as if we were interpolating from the last recalled preset different than 0
             // This way we can monitor which preset we come from even if we used preset 0 as intermediary preset
