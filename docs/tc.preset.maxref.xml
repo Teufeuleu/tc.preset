@@ -6,7 +6,7 @@
 		A jsui replacement for the preset object.
 	</digest>
 	<description>
-		tc.preset is a jsui clone of the preset object, but loaded with more features, such as preset organization through drag and drop, display as a scrollable list, auto-rewrite the saved JSON/XML file after any change.
+		tc.preset is a jsui clone of the preset object, but loaded with more features, such as preset organization through drag and drop, display as a scrollable list, colored slots...
 		Contrary to the preset object, tc.preset doesn't work alone and has to be used in conjonction with a pattrstorage object.<modification class=""></modification>
 	</description>
 
@@ -116,7 +116,7 @@
 			<digest>Active slot color</digest>
 			<description>Color of the last recalled preset</description>
 		</attribute>
-		<attribute name='autowriteagain' get='1' set='1'  type='int' size='1' >
+		<attribute name='autowriteagain' get='1' set='1'  type='bool' size='1' >
 			<digest>Automatic writeagain</digest>
 			<description>When set to 1, the jsui will automatically send a "writeagain" message to its linked pattrstorage anytime a preset have been stored, moved, renamed, (un)locked or deleted, saving any change into the preset file immediately.</description>
 		</attribute>
@@ -162,7 +162,7 @@
 			<digest>Slot color 6</digest>
 			<description>Slot color 6 in RGBA format. Sending this message without arguments resets the color to its default value. Has an effect only when color_mode is enabled.</description>
 		</attribute>
-		<attribute name='display_interp' get='1' set='1'  type='int' size='1' >
+		<attribute name='display_interp' get='1' set='1'  type='bool' size='1' >
 			<digest>Display interpolation</digest>
 			<description>When set to 1, the jsui will display the ongoing interpolation between presets when a recall message with three arguments or a recallmulti message with at least one argument are sent to the linked pattrstorage.
 				Notice that the recallmutli message needs to be sent both the pattrstorage and the jsui.</description>
@@ -189,7 +189,16 @@
 				If a preset is stored in a slot with a higher value than min_row, then min_row is ignored and presets are displayed up to the highest stored one.
 			</description>
 		</attribute>
-		<attribute name='scrollable' get='1' set='1'  type='int' size='1' >
+		<attribute name='pattrstorage' get='1' set='1'  type='symbol' size='1' >
+			<digest>pattrstorage object to bind to</digest>
+			<description>Set the name of the [pattrstorage] to bind to. Its outlet must be connected to the [tc.preset] inlet.
+			</description>
+		</attribute>
+		<attribute name='recall_passthrough' get='1' set='1'  type='bool' size='1' >
+			<digest>Send recall messages to pattrstorage directly</digest>
+			<description>When enabled (default) recall messages triggered by clicking filled slots in tc.preset are sent directly to [pattrstorage]. When disabled, these recall messages are sent out of [tc.preset] left outlet and it's up to the user to pass them to [pattrstorage]. It can be usefull for triggering interpolations with custom logic.</description>
+		</attribute>
+		<attribute name='scrollable' get='1' set='1'  type='bool' size='1' >
 			<digest>Scroll through your presets</digest>
 			<description>When set to 1, you can through the jsui to see all your presets, or at least up to the row defined by the min_rows attributes.
 			</description>
@@ -214,6 +223,18 @@
 			<digest>Stored slot color</digest>
 			<description>Sets the stored preset color of the object in RGBA format</description>
 		</attribute>
+		<attribute name='ui_rename' get='1' set='1'  type='bool' size='1' >
+			<digest>Rename slots in UI</digest>
+			<description>Use the attached textedit, if any, to edit slot names directly in the JSUI frame when clicking a slot while holding the control key. When disabled, the textedit remains untouched but gets focused when clicking a slot while holding the control key.</description>
+		</attribute>
+		<attribute name='unique_names' get='1' set='1'  type='bool' size='1' >
+			<digest>Force slot names to be unique</digest>
+			<description>When enabled, force slot names to be unique when renaming slots by appending "bis" to them. Gets applied only to subsequently renamed presets.</description>
+		</attribute>
+		<attribute name='use_uid' get='1' set='1'  type='bool' size='1' >
+			<digest>Generate unique identifiers for each stored preset</digest>
+			<description>When enabled, each stored preset gets a unique identifier, following the preset when it gets renamed, moved and overwritten. Requires a [pattr preset_metadata] at the same patcher of [tc.preset]. This can be useful when doing some complex preset management.</description>
+		</attribute>
 	</attributelist>
 
 
@@ -222,6 +243,7 @@
 	<seealsolist>
 		<seealso name='pattrstorage' />
 		<seealso name='preset' />
+		<seealso name='v8ui' />
 		<seealso name='jsui' />
 	</seealsolist>
 
