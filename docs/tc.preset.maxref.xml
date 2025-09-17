@@ -167,6 +167,10 @@
 			<description>When set to 1, the jsui will display the ongoing interpolation between presets when a recall message with three arguments or a recallmulti message with at least one argument are sent to the linked pattrstorage.
 				Notice that the recallmutli message needs to be sent both the pattrstorage and the jsui.</description>
 		</attribute>
+		<attribute name='edited_color' get='1' set='1'  type='list' size='4' >
+			<digest>Edited Dot Color</digest>
+			<description>Defines the color of the dot shown on top of a slot when the corresponding preset is edited. See poll_edited attribute.</description>
+		</attribute>
 		<attribute name='empty_slot_color' get='1' set='1'  type='list' size='4' >
 			<digest>Empty slot color</digest>
 			<description>Sets the empty slot color of the object in RGBA format</description>
@@ -194,9 +198,13 @@
 			<description>Set the name of the [pattrstorage] to bind to. Its outlet must be connected to the [tc.preset] inlet.
 			</description>
 		</attribute>
-		<attribute name='recall_passthrough' get='1' set='1'  type='bool' size='1' >
+			<attribute name='recall_passthrough' get='1' set='1'  type='bool' size='1' >
 			<digest>Send recall messages to pattrstorage directly</digest>
 			<description>When enabled (default) recall messages triggered by clicking filled slots in tc.preset are sent directly to [pattrstorage]. When disabled, these recall messages are sent out of [tc.preset] left outlet and it's up to the user to pass them to [pattrstorage]. It can be usefull for triggering interpolations with custom logic.</description>
+		</attribute>
+		<attribute name='poll_edited' get='1' set='1'  type='bool' size='1' >
+			<digest>Regularly check if current preset is edited</digest>
+			<description>When set to a positive value, [tc.preset] will check if the last recalled preset has been edited by polling [pattrstorage] with the 'getedited' message every period of time defined by the value. For example, a value of 0.5 will result in a polling every half second. When a preset is edited, a dot appears on top of its slot.</description>
 		</attribute>
 		<attribute name='scrollable' get='1' set='1'  type='bool' size='1' >
 			<digest>Scroll through your presets</digest>

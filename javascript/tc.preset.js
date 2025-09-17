@@ -56,6 +56,7 @@ var stored_slot_color = [0.502, 0.502, 0.502, 1];
 var interp_slot_color = [1.0, 1.0, 1.0, 0.8];
 var text_bg_color = [1,1,1, 0.5];
 var text_color = [0.129, 0.129, 0.129, 1];
+var edited_color = [1, 0.49, 0.263, 1];
 
 var color_1 = [0.743, 0.41, 0.501, 1]; // Color set for the filled slots. I don't like how this is declared. More info in color_wheel() declaration
 var color_2 = [0.679, 0.405, 0.669,1];
@@ -82,6 +83,7 @@ var unique_names = false;   // When enabled, force names to be unique when renam
 var use_uid = 0;            // Generating UID for each presets when enabled. Requires a [pattr preset_metadata]
 var recall_passthrough = true;  // By default (true), clicking a slot sends a recall message directly to [pattrstorage], and the jsui left outlet outputs a recall message once the recall is done. When disabled, clicking a slot will send a recall message straight from the jsui left outlet, so it's up to the user to forward the message to pattrstorage. It can be usefull for triggering interpolations with custom logic.
 var ui_rename = false;       // Use the attached textedit, if any, to edit slot names directly in the JSUI frame when clicking a slot while holding the control key. When disabled, the textedit remains untouched but gets focused when clicking a slot while holding the control key.
+var poll_edited = 1;        // If >0, check if current preset is edited every X seconds defined by the variable value.
 
 // (WORK)
 var pattrstorage_name, pattrstorage_obj = null;
@@ -94,6 +96,7 @@ var filled_slots = [];          // List of stored slots
 var filled_slots_dict = new Dict();
 
 var active_slot = 0;            //Last recalled slot
+var active_slot_edited = false; //Active slot edited state flag. See run_edited_poll_task()
 var previous_active_slot = 0;   //Previously recalled slot
 var previous_target = 0;        //Here to deal with ongoing interpolations
 var selected_slot = 0;          //Last selected slot. Relevant especially when select_mode = 1. Otherwise it is the same as active_slot
@@ -132,6 +135,8 @@ var metadata_updated = false; // Flag to write presets file after filling possib
 var textedit_obj = null;
 var textedit_initstate = {};
 var is_typing_name = false;
+
+var poll_edited_task = new Task(do_poll_edited, this);
 
 var has_loaded = false;
 
@@ -288,7 +293,7 @@ function draw_slot_bubble(x, y, w, h, cont) {
         cont.rectangle_rounded(x, y, w, h, slot_round_ratio * w, slot_round_ratio * h);
     } else {
         cont.rectangle(x, y, w, h);
-    }    
+    }
 }
 draw_slot_bubble.local = 1;
 
@@ -416,7 +421,7 @@ function paint()
             }
 
              //Hide dragged slot
-             if (is_dragging) {
+            if (is_dragging) {
                 set_source_rgba(empty_slot_color);
                 draw_slot_bubble(slots[drag_slot].left, slots[drag_slot].top, slot_size, slot_size);
                 fill();
@@ -443,6 +448,14 @@ function paint()
                         fill();
                     }
                 }
+            }
+
+            //Edited dot
+            if (active_slot_edited && active_slot > 0 && selected_slot <= slots_count_display) {
+                post("draw edited dot\n");
+                set_source_rgba(edited_color);
+                ellipse(slots[active_slot].left + 1, slots[active_slot].top + 1, slot_size/3, slot_size/3);
+                fill();
             }
 
             // Hovered slot
@@ -913,20 +926,26 @@ function recall() {
             } else {
                 previous_active_slot = previous_target;
             }
-            
             set_active_slot(src_slot);
+            active_slot_edited = 0;
+            run_edited_poll_task();
         } else if (interp == 1.0) {
             slots[src_slot].interp = -1;
             slots[trg_slot].interp = -1;
             is_interpolating = 0;
             previous_target = trg_slot;
             set_active_slot(trg_slot);
-            
+            active_slot_edited = 0;
+            run_edited_poll_task();
         } else {
             slots[src_slot].interp = 1 - interp;
             slots[trg_slot].interp = interp;
             is_interpolating = 1;
             active_slot = 0;
+            // if (src_slot != trg_slot) {
+            //     active_slot_edited = 1;
+            //     cancel_edited_poll_task();
+            // }
         }
         if (recall_passthrough) {
             outlet(0, "recall", src_slot, trg_slot, interp);
@@ -968,6 +987,8 @@ function recallmulti() {
     }
 
     is_interpolating = 1;
+    active_slot_edited = 0;
+    run_edited_poll_task();
     mgraphics.redraw();
 
     outlet(0, "recallmulti", args);
@@ -1005,6 +1026,9 @@ function store(v) {
 
             to_pattrstorage("store", v);
             to_pattrstorage("getslotlist");
+
+            active_slot_edited = 0;
+            run_edited_poll_task();
 
             if (recalc_rows_flag) {
                 calc_rows_columns();
@@ -2111,6 +2135,63 @@ function setui_rename(v){
     ui_rename = v > 0;
     if (ui_rename) {
         find_textedit();
+    }
+}
+
+declareattribute("poll_edited", "getpoll_edited", "setpoll_edited", 1, {type: "float", min: 0, label: "Poll Edited State"});
+function getpoll_edited() {
+	return poll_edited;
+}
+function setpoll_edited(v){
+    poll_edited = v == 0 ? 0 : Math.max(0.1, Math.abs(v));
+    if (poll_edited > 0) {
+        run_edited_poll_task();
+    } else {
+        cancel_edited_poll_task();
+    }
+}
+
+function run_edited_poll_task() {
+    if (poll_edited_task.valid && !poll_edited_task.running && poll_edited > 0 && active_slot > 0) {
+        poll_edited_task.interval = poll_edited * 1000;
+        post("run task!\n");
+        poll_edited_task.repeat();
+    }
+}
+run_edited_poll_task.local = 1;
+
+function cancel_edited_poll_task() {
+    poll_edited_task.cancel();
+}
+cancel_edited_poll_task.local = 1;
+
+function do_poll_edited() {
+    post("do_poll_edited\n");
+    if (pattrstorage_obj != null) {
+        to_pattrstorage("getedited");
+    }
+}
+do_poll_edited.local = 1;
+
+declareattribute("edited_color", "getedited_color", "setedited_color", 1, {style: "rgba", label: "Edited Dot Color", category: "Appearance"});
+function getedited_color() {
+	return edited_color;
+}
+function setedited_color(){
+    if (arguments.length == 4) {
+        edited_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
+    } else if (arguments.length == 0) {
+        edited_color = [1, 0.49, 0.263, 1];
+    } else {
+        error('edited_color: wrong number of arguments\n');
+    }
+}
+
+function edited(v) {
+    active_slot_edited = v;
+    if (v == 1) {
+        cancel_edited_poll_task();
+        mgraphics.redraw();
     }
 }
 
