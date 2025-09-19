@@ -84,7 +84,7 @@ var use_uid = 0;            // Generating UID for each presets when enabled. Req
 var recall_passthrough = true;  // By default (true), clicking a slot sends a recall message directly to [pattrstorage], and the jsui left outlet outputs a recall message once the recall is done. When disabled, clicking a slot will send a recall message straight from the jsui left outlet, so it's up to the user to forward the message to pattrstorage. It can be usefull for triggering interpolations with custom logic.
 var ui_rename = false;       // Use the attached textedit, if any, to edit slot names directly in the JSUI frame when clicking a slot while holding the control key. When disabled, the textedit remains untouched but gets focused when clicking a slot while holding the control key.
 var poll_edited = 1;        // If >0, check if current preset is edited every X seconds defined by the variable value.
-var nbslot_edit = true;     // If nbslot_edit and scrollable are enabled, the last two visible slots are replaced by buttons to add or remove lines of slot.
+var nbslot_edit = false;     // If nbslot_edit and scrollable are enabled, the last two visible slots are replaced by buttons to add or remove lines of slot.
 
 // (WORK)
 var pattrstorage_name, pattrstorage_obj = null;
@@ -494,7 +494,6 @@ function paint()
 
             //Edited dot
             if (active_slot_edited && active_slot > 0 && selected_slot <= slots_count_display) {
-                post("draw edited dot\n");
                 set_source_rgba(edited_color);
                 ellipse(slots[active_slot].left + 1, slots[active_slot].top + 1, slot_size/3, slot_size/3);
                 fill();
@@ -502,7 +501,7 @@ function paint()
 
             // Hovered slot
             if (last_hovered > -1) {
-                if (shift_hold) {
+                if (shift_hold && last_hovered_is_preset_slot) {
                     if (option_hold) {
                         // About to delete
                         set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.8);
@@ -1486,14 +1485,32 @@ onidleout.local = 1;
 function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
 {
     if (scrollable && nbslot_edit) {
+        // Click "-"
         if (last_hovered == true_slots_count_display - 1) {
+            var tmp_min_rows = min_rows;
             setmin_rows(min_rows-1);
             y_offset = -1 * (bg_height - ui_height);
+            if (tmp_min_rows != min_rows) {
+                if (layout == 0) {
+                    last_hovered = last_hovered - columns;
+                } else {
+                    last_hovered = last_hovered - 1;
+                }
+            }
             mgraphics.redraw();
             return
+        // Click "+"
         } else if (last_hovered == true_slots_count_display) {
+            var tmp_min_rows = min_rows;
             setmin_rows(min_rows+1);
             y_offset = -1 * (bg_height - ui_height);
+            if (tmp_min_rows != min_rows) {
+                if (layout == 0) {
+                    last_hovered = last_hovered + columns;
+                } else {
+                    last_hovered = last_hovered + 1;
+                }
+            }
             mgraphics.redraw();
             return
         }
@@ -1501,7 +1518,7 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
     if (is_typing_name) {
         restore_textedit();
     }
-	if (last_hovered > -1 && pattrstorage_name != null) {
+	if (last_hovered > -1 && pattrstorage_name != null && last_hovered_is_preset_slot) {
 		var output = "recall";
         if (select_mode) {
             output = "select";
@@ -2227,7 +2244,6 @@ function setpoll_edited(v){
 function run_edited_poll_task() {
     if (poll_edited_task.valid && !poll_edited_task.running && poll_edited > 0 && active_slot > 0) {
         poll_edited_task.interval = poll_edited * 1000;
-        post("run task!\n");
         poll_edited_task.repeat();
     }
 }
@@ -2267,7 +2283,7 @@ function edited(v) {
     }
 }
 
-declareattribute("nbslot_edit", "getnbslot_edit", "setnbslot_edit", 1, {style: "onoff", label: "Rename In UI"});
+declareattribute("nbslot_edit", "getnbslot_edit", "setnbslot_edit", 1, {style: "onoff", label: "Add/remove rows of presets"});
 function getnbslot_edit() {
 	return nbslot_edit;
 }
