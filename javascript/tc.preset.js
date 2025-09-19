@@ -84,6 +84,7 @@ var use_uid = 0;            // Generating UID for each presets when enabled. Req
 var recall_passthrough = true;  // By default (true), clicking a slot sends a recall message directly to [pattrstorage], and the jsui left outlet outputs a recall message once the recall is done. When disabled, clicking a slot will send a recall message straight from the jsui left outlet, so it's up to the user to forward the message to pattrstorage. It can be usefull for triggering interpolations with custom logic.
 var ui_rename = false;       // Use the attached textedit, if any, to edit slot names directly in the JSUI frame when clicking a slot while holding the control key. When disabled, the textedit remains untouched but gets focused when clicking a slot while holding the control key.
 var poll_edited = 1;        // If >0, check if current preset is edited every X seconds defined by the variable value.
+var nbslot_edit = true;     // If nbslot_edit and scrollable are enabled, the last two visible slots are replaced by buttons to add or remove lines of slot.
 
 // (WORK)
 var pattrstorage_name, pattrstorage_obj = null;
@@ -92,6 +93,7 @@ var columns, rows = 0;
 var slots = [];                 // Stores on screen box, name, lock and interpolation state for all slots
 var slots_highest = 0;          // Highest filled preset slot number
 var slots_count_display = 0;    // Number of slots to be displayed
+var true_slots_count_display = 0; // Number of slots to be displayed, including 2 extra slots for nbslot_edit buttons used as buttons instead of preset slots
 var filled_slots = [];          // List of stored slots
 var filled_slots_dict = new Dict();
 
@@ -115,6 +117,7 @@ var is_painting_base = 0;
 
 var half_slot_size, half_margin, half_spacing;
 var last_x, last_y, last_hovered = -1;
+var last_hovered_is_preset_slot = false;
 var y_offset = 0; // handle scrolling
 var drag_scroll = 0; // handle scrolling when dragging outside of boundaries
 var shift_hold, option_hold = 0;
@@ -200,20 +203,36 @@ function calc_rows_columns() {
 
     slots[0] = new slot(0, 0, 0, 0, "(tmp)", 0, -1, 0, stored_slot_color); // Slot 0 is valid, but not represented in the GUI (and never saved by pattrstorage)
 
+    var minus_slots_carry = 0;
     if (layout == 0) {
         columns = Math.floor((ui_width - margin + spacing) / (slot_size + spacing));
         rows = Math.floor((ui_height - margin + spacing) / (slot_size + spacing));
         if (scrollable) {
             rows = Math.max(rows, Math.max(min_rows, Math.ceil(slots_highest/columns)));
+            min_rows = Math.max(rows, min_rows);
+            if (nbslot_edit) {
+                rows += columns >= 2 ? 1 : 2;
+                if (columns > 2) {
+                    minus_slots_carry = columns - 2;
+                }
+            }
         }
     } else {
         columns = 1;
         rows = Math.floor((ui_height - margin + spacing) / (slot_size + spacing));
+        min_rows = Math.max(rows, min_rows);
         if (scrollable) {
             rows = Math.max(rows, Math.max(min_rows, slots_highest));
+            if (nbslot_edit) {
+                rows += 2;
+            }
         }
     }
-    slots_count_display = columns * rows;
+    if (scrollable && nbslot_edit) {
+        
+    }
+    true_slots_count_display = columns * rows - minus_slots_carry;
+    slots_count_display = scrollable && nbslot_edit ? true_slots_count_display - 2 : true_slots_count_display;
         
     for (var i = 0; i < rows; i++) {
         var top = margin + i * (spacing+slot_size);
@@ -272,16 +291,39 @@ function draw_slot(id, scale, cont) {
 
           // slot name
         cont.set_font_size(font_size*scale);
-        var text = format_slot_name(id);
+        var text;
+        if (scrollable && nbslot_edit && (id > (true_slots_count_display - 2))) {
+            if (id == true_slots_count_display - 1) {
+                text = "remove slot";
+            } else {
+                text = "add slot";
+            }
+        } else {
+            text = format_slot_name(id);
+        }
 
         if (is_painting_base) {
             draw_text_bubble(bg_txt_pos_x * scale, bg_txt_pos_y * scale, bg_txt_dim_w * scale, bg_txt_dim_h * scale, text, cont);
 
         } else {
             draw_text_bubble(bg_txt_pos_x + offset, bg_txt_pos_y + offset, bg_txt_dim_w * scale, bg_txt_dim_h * scale, text, cont);
-        } 
+        }
     }
 
+    if (scrollable && nbslot_edit) {
+        cont.set_line_width(Math.floor(slot_size * 0.3));
+        if (id > true_slots_count_display - 2) {
+            cont.set_source_rgba(stored_slot_color);
+            cont.move_to((slots[id].left + slot_size * 0.1) * scale, (slots[id].top  + half_slot_size) * scale);
+            cont.rel_line_to(slot_size * 0.8 * scale, 0);
+            cont.stroke();
+        }
+        if (id > true_slots_count_display - 1) {
+            cont.move_to((slots[id].left + half_slot_size) * scale, (slots[id].top + slot_size * 0.1) * scale);
+            cont.rel_line_to(0, slot_size * 0.8 * scale);
+            cont.stroke();
+        }
+    }
 }
 draw_slot.local = 1;
 
@@ -347,7 +389,7 @@ function paint_base() {
         set_font_size(font_size);
 
 		// All slots
-        for (var i = 1; i <= slots_count_display; i++) {
+        for (var i = 1; i <= true_slots_count_display; i++) {
             if (i != drag_slot) { //We mask the slot that is currently dragged as it is drawn at the mouse position already
                 if (slots[i].name != null) {
                     if (color_mode == 1) {
@@ -481,7 +523,16 @@ function paint()
 
                 if (layout == 0) {
                     //Text (slot number and name)
-                    var text = format_slot_name(last_hovered);
+                    var text = null;
+                    if (scrollable && nbslot_edit && (last_hovered > (true_slots_count_display - 2))) {
+                        if (last_hovered == true_slots_count_display - 1) {
+                            text = "remove slot row";
+                        } else {
+                            text = "add slot row";
+                        }
+                    } else {
+                        text = format_slot_name(last_hovered);
+                    }
                     var text_dim = text_measure(text);
                     // If the text is too big or a slot is being dragged, display the text on top of the next slot.
                     // Otherwise, it gets displayed on the hovered slot.
@@ -1210,7 +1261,7 @@ slots_clear.local = 1;
 
 function get_slot_index(x, y) {
     // Returns which slot is hovered by the mouse
-	for (var i = 1; i <= slots_count_display; i++) {
+	for (var i = 1; i <= true_slots_count_display; i++) {
         if (layout === 0) {
             if (y > (slots[i].top - half_spacing) && y < (slots[i].bottom + half_spacing) && x > (slots[i].left - half_spacing) && x < (slots[i].right + half_spacing)) {
                 return i;
@@ -1413,6 +1464,7 @@ function onidle(x,y,but,cmd,shift,capslock,option,ctrl)
 		option_hold = option;
         redraw_flag = true;
     }
+    last_hovered_is_preset_slot = scrollable && nbslot_edit && last_hovered > (true_slots_count_display - 2) ? false : true;
     if (redraw_flag) {
         mgraphics.redraw();
     }
@@ -1433,6 +1485,19 @@ onidleout.local = 1;
 
 function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
 {
+    if (scrollable && nbslot_edit) {
+        if (last_hovered == true_slots_count_display - 1) {
+            setmin_rows(min_rows-1);
+            y_offset = -1 * (bg_height - ui_height);
+            mgraphics.redraw();
+            return
+        } else if (last_hovered == true_slots_count_display) {
+            setmin_rows(min_rows+1);
+            y_offset = -1 * (bg_height - ui_height);
+            mgraphics.redraw();
+            return
+        }
+    }
     if (is_typing_name) {
         restore_textedit();
     }
@@ -1509,9 +1574,13 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
 
         } else if (is_dragging == 1) {
             last_hovered = get_slot_index(x, y);
+            last_hovered_is_preset_slot = scrollable && nbslot_edit && last_hovered > (true_slots_count_display - 2) ? false : true;
+            if (!last_hovered_is_preset_slot) {
+                last_hovered = 0;
+            }
             if (!but) {
                 // When the button is released, the dragging ceases
-                if (last_hovered > 0 && last_hovered != drag_slot) {
+                if (last_hovered > 0 && last_hovered != drag_slot && last_hovered_is_preset_slot) {
                     var cur_active_slot = active_slot;
                     var cur_prev_active_slot = previous_active_slot;
                     var offset = ((last_hovered <= drag_slot) && slots[last_hovered].name != null) ? 1 : 0;
@@ -1637,6 +1706,10 @@ function get_prect(prect) {
     onresize(prect.value[2], prect.value[3])
 }
 get_prect.local = 1;
+
+function notifydeleted(){
+    poll_edited_task.freepeer();
+}
 
 // ATTRIBUTES DECLARATION
 // If loaded in JSUI, only the first 4 arguments passed in declareattribute() will be used (no attribute styling). V8UI will also use the latest object argument.
@@ -2166,7 +2239,6 @@ function cancel_edited_poll_task() {
 cancel_edited_poll_task.local = 1;
 
 function do_poll_edited() {
-    post("do_poll_edited\n");
     if (pattrstorage_obj != null) {
         to_pattrstorage("getedited");
     }
@@ -2193,6 +2265,16 @@ function edited(v) {
         cancel_edited_poll_task();
         mgraphics.redraw();
     }
+}
+
+declareattribute("nbslot_edit", "getnbslot_edit", "setnbslot_edit", 1, {style: "onoff", label: "Rename In UI"});
+function getnbslot_edit() {
+	return nbslot_edit;
+}
+function setnbslot_edit(v){
+    nbslot_edit = v > 0;
+    y_offset = 0;
+    calc_rows_columns();
 }
 
 // UTILITY
