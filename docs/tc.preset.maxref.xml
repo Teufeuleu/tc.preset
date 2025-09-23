@@ -194,10 +194,9 @@
 				In other words, min_rows is applied as long as scrollable is enabled, the objects size can fit more rows than min_row without scrolling (the size of a row being defined by bubblesize and margin), or a stored preset lives in a row above min_row.
 			</description>
 		</attribute>
-		</attribute>
-			<attribute name='nbslot_edit' get='1' set='1'  type='bool' size='1' >
+		<attribute name='nbslot_edit' get='1' set='1'  type='bool' size='1' >
 			<digest>Add/remove rows of presets</digest>
-			<description>When enabled, adds a "-" and "+" buttons at the end of the presets list which, when clicked, respectively remove or add a row of empty slot(s). The minimum number of rows is capped by min_rows.</description>
+			<description>When enabled and when scrollable is enabled too, adds a "-" and "+" buttons at the end of the presets list which, when clicked, respectively remove or add a row of empty slot(s). The minimum number of rows is capped by min_rows.</description>
 		</attribute>
 		<attribute name='pattrstorage' get='1' set='1'  type='symbol' size='1' >
 			<digest>pattrstorage object to bind to</digest>
