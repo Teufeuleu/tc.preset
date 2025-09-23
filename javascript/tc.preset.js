@@ -84,7 +84,7 @@ var use_uid = 0;            // Generating UID for each presets when enabled. Req
 var recall_passthrough = true;  // By default (true), clicking a slot sends a recall message directly to [pattrstorage], and the jsui left outlet outputs a recall message once the recall is done. When disabled, clicking a slot will send a recall message straight from the jsui left outlet, so it's up to the user to forward the message to pattrstorage. It can be usefull for triggering interpolations with custom logic.
 var ui_rename = false;       // Use the attached textedit, if any, to edit slot names directly in the JSUI frame when clicking a slot while holding the control key. When disabled, the textedit remains untouched but gets focused when clicking a slot while holding the control key.
 var poll_edited = 1;        // If >0, check if current preset is edited every X seconds defined by the variable value.
-var nbslot_edit = false;     // If nbslot_edit and scrollable are enabled, the last two visible slots are replaced by buttons to add or remove lines of slot.
+var nbslot_edit = true;     // If nbslot_edit and scrollable are enabled, the last two visible slots are replaced by buttons to add or remove lines of slot.
 
 // (WORK)
 var pattrstorage_name, pattrstorage_obj = null;
