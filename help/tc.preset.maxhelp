@@ -2,43 +2,17 @@
 	"patcher" : 	{
 		"fileversion" : 1,
 		"appversion" : 		{
-			"major" : 8,
-			"minor" : 6,
-			"revision" : 4,
+			"major" : 9,
+			"minor" : 0,
+			"revision" : 9,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
 		"rect" : [ 100.0, 100.0, 678.0, 580.0 ],
-		"bglocked" : 0,
-		"openinpresentation" : 0,
-		"default_fontsize" : 12.0,
-		"default_fontface" : 0,
-		"default_fontname" : "Arial",
-		"gridonopen" : 1,
 		"gridsize" : [ 15.0, 15.0 ],
-		"gridsnaponopen" : 1,
-		"objectsnaponopen" : 1,
-		"statusbarvisible" : 2,
-		"toolbarvisible" : 1,
-		"lefttoolbarpinned" : 0,
-		"toptoolbarpinned" : 0,
-		"righttoolbarpinned" : 0,
-		"bottomtoolbarpinned" : 0,
-		"toolbars_unpinned_last_save" : 0,
-		"tallnewobj" : 0,
-		"boxanimatetime" : 200,
-		"enablehscroll" : 1,
-		"enablevscroll" : 1,
-		"devicewidth" : 0.0,
-		"description" : "",
-		"digest" : "",
-		"tags" : "",
-		"style" : "",
-		"subpatcher_template" : "",
 		"showontab" : 1,
-		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
 					"id" : "obj-34",
@@ -49,42 +23,16 @@
 					"patcher" : 					{
 						"fileversion" : 1,
 						"appversion" : 						{
-							"major" : 8,
-							"minor" : 6,
-							"revision" : 4,
+							"major" : 9,
+							"minor" : 0,
+							"revision" : 9,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
 						"rect" : [ 59.0, 107.0, 640.0, 480.0 ],
-						"bglocked" : 0,
-						"openinpresentation" : 0,
-						"default_fontsize" : 12.0,
-						"default_fontface" : 0,
-						"default_fontname" : "Arial",
-						"gridonopen" : 1,
 						"gridsize" : [ 15.0, 15.0 ],
-						"gridsnaponopen" : 1,
-						"objectsnaponopen" : 1,
-						"statusbarvisible" : 2,
-						"toolbarvisible" : 1,
-						"lefttoolbarpinned" : 0,
-						"toptoolbarpinned" : 0,
-						"righttoolbarpinned" : 0,
-						"bottomtoolbarpinned" : 0,
-						"toolbars_unpinned_last_save" : 0,
-						"tallnewobj" : 0,
-						"boxanimatetime" : 200,
-						"enablehscroll" : 1,
-						"enablevscroll" : 1,
-						"devicewidth" : 0.0,
-						"description" : "",
-						"digest" : "",
-						"tags" : "",
-						"style" : "",
-						"subpatcher_template" : "",
-						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-3",
@@ -314,13 +262,6 @@
 					}
 ,
 					"patching_rect" : [ 186.5, 453.0, 49.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"description" : "",
-						"digest" : "",
-						"globalpatchername" : "",
-						"tags" : ""
-					}
-,
 					"text" : "p interp"
 				}
 
@@ -374,43 +315,17 @@
 					"patcher" : 					{
 						"fileversion" : 1,
 						"appversion" : 						{
-							"major" : 8,
-							"minor" : 6,
-							"revision" : 4,
+							"major" : 9,
+							"minor" : 0,
+							"revision" : 9,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
 						"rect" : [ 0.0, 26.0, 678.0, 554.0 ],
-						"bglocked" : 0,
-						"openinpresentation" : 0,
-						"default_fontsize" : 12.0,
-						"default_fontface" : 0,
-						"default_fontname" : "Arial",
-						"gridonopen" : 1,
 						"gridsize" : [ 15.0, 15.0 ],
-						"gridsnaponopen" : 1,
-						"objectsnaponopen" : 1,
-						"statusbarvisible" : 2,
-						"toolbarvisible" : 1,
-						"lefttoolbarpinned" : 0,
-						"toptoolbarpinned" : 0,
-						"righttoolbarpinned" : 0,
-						"bottomtoolbarpinned" : 0,
-						"toolbars_unpinned_last_save" : 0,
-						"tallnewobj" : 0,
-						"boxanimatetime" : 200,
-						"enablehscroll" : 1,
-						"enablevscroll" : 1,
-						"devicewidth" : 0.0,
-						"description" : "",
-						"digest" : "",
-						"tags" : "",
-						"style" : "",
-						"subpatcher_template" : "",
 						"showontab" : 1,
-						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
 								"box" : 								{
 									"fontface" : 1,
@@ -700,6 +615,7 @@
 								"box" : 								{
 									"id" : "obj-27",
 									"keymode" : 1,
+									"lines" : 1,
 									"maxclass" : "textedit",
 									"nosymquotes" : 1,
 									"numinlets" : 1,
@@ -814,13 +730,13 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "spacing", 4 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "select_mode", 0 ], [ "scrollable", 0 ], [ "bubblesize", 14 ], [ "margin", 4 ], [ "fontsize", 14 ], [ "color_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 10 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "fontname", "Arial" ], [ "pattrstorage", "test" ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "display_interp", 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "slot_round", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "autowriteagain", 0 ], [ "layout", 0 ] ],
+									"embedstate" : [ [ "bubblesize", 14 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "fontname", "Arial" ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "spacing", 4 ], [ "layout", 0 ], [ "send_name", "none" ], [ "scrollable", 0 ], [ "display_interp", 1 ], [ "ui_rename", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "slot_round", 0 ], [ "use_uid", 0 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "autowriteagain", 0 ], [ "min_rows", 10 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "color_mode", 0 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "nbslot_edit", 1 ], [ "menu_mode", 0 ], [ "unique_names", 0 ], [ "select_mode", 0 ], [ "pattrstorage", "test" ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "fontsize", 14 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "poll_edited", 0 ] ],
 									"filename" : "tc.preset.js",
 									"id" : "obj-10",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 4,
-									"outlettype" : [ "", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "", "", "", "", "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 10.0, 378.0, 257.0, 112.0 ]
 								}
@@ -1013,13 +929,6 @@
 					}
 ,
 					"patching_rect" : [ 231.0, 3.0, 73.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"description" : "",
-						"digest" : "",
-						"globalpatchername" : "",
-						"tags" : ""
-					}
-,
 					"text" : "p messages",
 					"varname" : "messages"
 				}
@@ -1049,43 +958,17 @@
 					"patcher" : 					{
 						"fileversion" : 1,
 						"appversion" : 						{
-							"major" : 8,
-							"minor" : 6,
-							"revision" : 4,
+							"major" : 9,
+							"minor" : 0,
+							"revision" : 9,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
 						"rect" : [ 0.0, 26.0, 678.0, 554.0 ],
-						"bglocked" : 0,
-						"openinpresentation" : 0,
-						"default_fontsize" : 12.0,
-						"default_fontface" : 0,
-						"default_fontname" : "Arial",
-						"gridonopen" : 1,
 						"gridsize" : [ 15.0, 15.0 ],
-						"gridsnaponopen" : 1,
-						"objectsnaponopen" : 1,
-						"statusbarvisible" : 2,
-						"toolbarvisible" : 1,
-						"lefttoolbarpinned" : 0,
-						"toptoolbarpinned" : 0,
-						"righttoolbarpinned" : 0,
-						"bottomtoolbarpinned" : 0,
-						"toolbars_unpinned_last_save" : 0,
-						"tallnewobj" : 0,
-						"boxanimatetime" : 200,
-						"enablehscroll" : 1,
-						"enablevscroll" : 1,
-						"devicewidth" : 0.0,
-						"description" : "",
-						"digest" : "",
-						"tags" : "",
-						"style" : "",
-						"subpatcher_template" : "",
 						"showontab" : 1,
-						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
 								"box" : 								{
 									"hidden" : 1,
@@ -1115,6 +998,7 @@
 								"box" : 								{
 									"id" : "obj-27",
 									"keymode" : 1,
+									"lines" : 1,
 									"maxclass" : "textedit",
 									"nosymquotes" : 1,
 									"numinlets" : 1,
@@ -1187,13 +1071,13 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "spacing", 4 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "select_mode", 1 ], [ "scrollable", 0 ], [ "bubblesize", 14 ], [ "margin", 4 ], [ "fontsize", 14 ], [ "color_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 10 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "fontname", "Arial" ], [ "pattrstorage", "test" ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "display_interp", 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "slot_round", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "autowriteagain", 0 ], [ "layout", 0 ] ],
+									"embedstate" : [ [ "bubblesize", 14 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "fontname", "Arial" ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "spacing", 4 ], [ "layout", 0 ], [ "send_name", "none" ], [ "scrollable", 0 ], [ "display_interp", 1 ], [ "ui_rename", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "slot_round", 0 ], [ "use_uid", 0 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "autowriteagain", 0 ], [ "min_rows", 10 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "color_mode", 0 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "nbslot_edit", 1 ], [ "menu_mode", 0 ], [ "unique_names", 0 ], [ "select_mode", 1 ], [ "pattrstorage", "test" ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "fontsize", 14 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "poll_edited", 0 ] ],
 									"filename" : "tc.preset.js",
 									"id" : "obj-10",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 4,
-									"outlettype" : [ "", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "", "", "", "", "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 10.0, 378.0, 257.0, 112.0 ]
 								}
@@ -1447,13 +1331,6 @@
 					}
 ,
 					"patching_rect" : [ 313.0, 2.0, 65.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"description" : "",
-						"digest" : "",
-						"globalpatchername" : "",
-						"tags" : ""
-					}
-,
 					"text" : "p behavior",
 					"varname" : "behavior"
 				}
@@ -1495,43 +1372,17 @@
 					"patcher" : 					{
 						"fileversion" : 1,
 						"appversion" : 						{
-							"major" : 8,
-							"minor" : 6,
-							"revision" : 4,
+							"major" : 9,
+							"minor" : 0,
+							"revision" : 9,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
 						"rect" : [ 0.0, 26.0, 678.0, 554.0 ],
-						"bglocked" : 0,
-						"openinpresentation" : 0,
-						"default_fontsize" : 12.0,
-						"default_fontface" : 0,
-						"default_fontname" : "Arial",
-						"gridonopen" : 1,
 						"gridsize" : [ 15.0, 15.0 ],
-						"gridsnaponopen" : 1,
-						"objectsnaponopen" : 1,
-						"statusbarvisible" : 2,
-						"toolbarvisible" : 1,
-						"lefttoolbarpinned" : 0,
-						"toptoolbarpinned" : 0,
-						"righttoolbarpinned" : 0,
-						"bottomtoolbarpinned" : 0,
-						"toolbars_unpinned_last_save" : 0,
-						"tallnewobj" : 0,
-						"boxanimatetime" : 200,
-						"enablehscroll" : 1,
-						"enablevscroll" : 1,
-						"devicewidth" : 0.0,
-						"description" : "",
-						"digest" : "",
-						"tags" : "",
-						"style" : "",
-						"subpatcher_template" : "",
 						"showontab" : 1,
-						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
 								"box" : 								{
 									"border" : 0,
@@ -1585,42 +1436,16 @@
 									"patcher" : 									{
 										"fileversion" : 1,
 										"appversion" : 										{
-											"major" : 8,
-											"minor" : 6,
-											"revision" : 4,
+											"major" : 9,
+											"minor" : 0,
+											"revision" : 9,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
 ,
 										"classnamespace" : "box",
 										"rect" : [ 59.0, 107.0, 640.0, 480.0 ],
-										"bglocked" : 0,
-										"openinpresentation" : 0,
-										"default_fontsize" : 12.0,
-										"default_fontface" : 0,
-										"default_fontname" : "Arial",
-										"gridonopen" : 1,
 										"gridsize" : [ 15.0, 15.0 ],
-										"gridsnaponopen" : 1,
-										"objectsnaponopen" : 1,
-										"statusbarvisible" : 2,
-										"toolbarvisible" : 1,
-										"lefttoolbarpinned" : 0,
-										"toptoolbarpinned" : 0,
-										"righttoolbarpinned" : 0,
-										"bottomtoolbarpinned" : 0,
-										"toolbars_unpinned_last_save" : 0,
-										"tallnewobj" : 0,
-										"boxanimatetime" : 200,
-										"enablehscroll" : 1,
-										"enablevscroll" : 1,
-										"devicewidth" : 0.0,
-										"description" : "",
-										"digest" : "",
-										"tags" : "",
-										"style" : "",
-										"subpatcher_template" : "",
-										"assistshowspatchername" : 0,
 										"boxes" : [ 											{
 												"box" : 												{
 													"comment" : "",
@@ -1889,13 +1714,6 @@
 									}
 ,
 									"patching_rect" : [ 307.0, 250.0, 125.0, 22.0 ],
-									"saved_object_attributes" : 									{
-										"description" : "",
-										"digest" : "",
-										"globalpatchername" : "",
-										"tags" : ""
-									}
-,
 									"text" : "p trigger_interpolation"
 								}
 
@@ -1928,6 +1746,7 @@
 								"box" : 								{
 									"id" : "obj-27",
 									"keymode" : 1,
+									"lines" : 1,
 									"maxclass" : "textedit",
 									"nosymquotes" : 1,
 									"numinlets" : 1,
@@ -1954,13 +1773,13 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "spacing", 4 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "select_mode", 0 ], [ "scrollable", 0 ], [ "bubblesize", 14 ], [ "margin", 4 ], [ "fontsize", 14 ], [ "color_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 10 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "fontname", "Arial" ], [ "pattrstorage", "mypat" ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "display_interp", 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "slot_round", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "autowriteagain", 0 ], [ "layout", 0 ] ],
+									"embedstate" : [ [ "bubblesize", 14 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "fontname", "Arial" ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "spacing", 4 ], [ "layout", 0 ], [ "send_name", "none" ], [ "scrollable", 0 ], [ "display_interp", 1 ], [ "ui_rename", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "slot_round", 0 ], [ "use_uid", 0 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "autowriteagain", 0 ], [ "min_rows", 10 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "color_mode", 0 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "nbslot_edit", 1 ], [ "menu_mode", 0 ], [ "unique_names", 0 ], [ "select_mode", 0 ], [ "pattrstorage", "mypat" ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "fontsize", 14 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "poll_edited", 0 ] ],
 									"filename" : "tc.preset.js",
 									"id" : "obj-10",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 4,
-									"outlettype" : [ "", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "", "", "", "", "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 260.0, 75.0, 201.0, 95.0 ]
 								}
@@ -2079,13 +1898,6 @@
 					}
 ,
 					"patching_rect" : [ 579.0, 2.0, 57.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"description" : "",
-						"digest" : "",
-						"globalpatchername" : "",
-						"tags" : ""
-					}
-,
 					"text" : "p snippet",
 					"varname" : "snippet"
 				}
@@ -2101,43 +1913,17 @@
 					"patcher" : 					{
 						"fileversion" : 1,
 						"appversion" : 						{
-							"major" : 8,
-							"minor" : 6,
-							"revision" : 4,
+							"major" : 9,
+							"minor" : 0,
+							"revision" : 9,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 100.0, 126.0, 678.0, 554.0 ],
-						"bglocked" : 0,
-						"openinpresentation" : 0,
-						"default_fontsize" : 12.0,
-						"default_fontface" : 0,
-						"default_fontname" : "Arial",
-						"gridonopen" : 1,
+						"rect" : [ 0.0, 26.0, 678.0, 554.0 ],
 						"gridsize" : [ 15.0, 15.0 ],
-						"gridsnaponopen" : 1,
-						"objectsnaponopen" : 1,
-						"statusbarvisible" : 2,
-						"toolbarvisible" : 1,
-						"lefttoolbarpinned" : 0,
-						"toptoolbarpinned" : 0,
-						"righttoolbarpinned" : 0,
-						"bottomtoolbarpinned" : 0,
-						"toolbars_unpinned_last_save" : 0,
-						"tallnewobj" : 0,
-						"boxanimatetime" : 200,
-						"enablehscroll" : 1,
-						"enablevscroll" : 1,
-						"devicewidth" : 0.0,
-						"description" : "",
-						"digest" : "",
-						"tags" : "",
-						"style" : "",
-						"subpatcher_template" : "",
 						"showontab" : 1,
-						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
 								"box" : 								{
 									"hidden" : 1,
@@ -2265,13 +2051,13 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "spacing", 4 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "select_mode", 0 ], [ "scrollable", 1 ], [ "bubblesize", 14 ], [ "margin", 4 ], [ "fontsize", 14 ], [ "color_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 10 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "fontname", "Arial" ], [ "pattrstorage", "test" ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "display_interp", 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "slot_round", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "autowriteagain", 0 ], [ "layout", 1 ] ],
+									"embedstate" : [ [ "bubblesize", 14 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "fontname", "Arial" ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "spacing", 4 ], [ "layout", 1 ], [ "send_name", "none" ], [ "scrollable", 1 ], [ "display_interp", 1 ], [ "ui_rename", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "slot_round", 0 ], [ "use_uid", 0 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "autowriteagain", 0 ], [ "min_rows", 10 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "color_mode", 0 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "nbslot_edit", 1 ], [ "menu_mode", 0 ], [ "unique_names", 0 ], [ "select_mode", 0 ], [ "pattrstorage", "test" ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "fontsize", 14 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "poll_edited", 0 ] ],
 									"filename" : "tc.preset.js",
 									"id" : "obj-10",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 4,
-									"outlettype" : [ "", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "", "", "", "", "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 10.0, 378.0, 257.0, 112.0 ]
 								}
@@ -2712,13 +2498,6 @@
 					}
 ,
 					"patching_rect" : [ 388.0, 2.0, 82.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"description" : "",
-						"digest" : "",
-						"globalpatchername" : "",
-						"tags" : ""
-					}
-,
 					"text" : "p appearance",
 					"varname" : "appearance"
 				}
@@ -2734,43 +2513,17 @@
 					"patcher" : 					{
 						"fileversion" : 1,
 						"appversion" : 						{
-							"major" : 8,
-							"minor" : 6,
-							"revision" : 4,
+							"major" : 9,
+							"minor" : 0,
+							"revision" : 9,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
 						"rect" : [ 0.0, 26.0, 678.0, 554.0 ],
-						"bglocked" : 0,
-						"openinpresentation" : 0,
-						"default_fontsize" : 12.0,
-						"default_fontface" : 0,
-						"default_fontname" : "Arial",
-						"gridonopen" : 1,
 						"gridsize" : [ 15.0, 15.0 ],
-						"gridsnaponopen" : 1,
-						"objectsnaponopen" : 1,
-						"statusbarvisible" : 2,
-						"toolbarvisible" : 1,
-						"lefttoolbarpinned" : 0,
-						"toptoolbarpinned" : 0,
-						"righttoolbarpinned" : 0,
-						"bottomtoolbarpinned" : 0,
-						"toolbars_unpinned_last_save" : 0,
-						"tallnewobj" : 0,
-						"boxanimatetime" : 200,
-						"enablehscroll" : 1,
-						"enablevscroll" : 1,
-						"devicewidth" : 0.0,
-						"description" : "",
-						"digest" : "",
-						"tags" : "",
-						"style" : "",
-						"subpatcher_template" : "",
 						"showontab" : 1,
-						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-15",
@@ -2816,42 +2569,16 @@
 									"patcher" : 									{
 										"fileversion" : 1,
 										"appversion" : 										{
-											"major" : 8,
-											"minor" : 6,
-											"revision" : 4,
+											"major" : 9,
+											"minor" : 0,
+											"revision" : 9,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
 ,
 										"classnamespace" : "box",
 										"rect" : [ 703.0, 163.0, 460.0, 440.0 ],
-										"bglocked" : 0,
-										"openinpresentation" : 0,
-										"default_fontsize" : 12.0,
-										"default_fontface" : 0,
-										"default_fontname" : "Arial",
-										"gridonopen" : 1,
 										"gridsize" : [ 15.0, 15.0 ],
-										"gridsnaponopen" : 1,
-										"objectsnaponopen" : 1,
-										"statusbarvisible" : 2,
-										"toolbarvisible" : 1,
-										"lefttoolbarpinned" : 0,
-										"toptoolbarpinned" : 0,
-										"righttoolbarpinned" : 0,
-										"bottomtoolbarpinned" : 0,
-										"toolbars_unpinned_last_save" : 0,
-										"tallnewobj" : 0,
-										"boxanimatetime" : 200,
-										"enablehscroll" : 1,
-										"enablevscroll" : 1,
-										"devicewidth" : 0.0,
-										"description" : "",
-										"digest" : "",
-										"tags" : "",
-										"style" : "",
-										"subpatcher_template" : "",
-										"assistshowspatchername" : 0,
 										"boxes" : [ 											{
 												"box" : 												{
 													"id" : "obj-21",
@@ -2898,42 +2625,16 @@
 													"patcher" : 													{
 														"fileversion" : 1,
 														"appversion" : 														{
-															"major" : 8,
-															"minor" : 6,
-															"revision" : 4,
+															"major" : 9,
+															"minor" : 0,
+															"revision" : 9,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
 ,
 														"classnamespace" : "box",
 														"rect" : [ 59.0, 119.0, 640.0, 480.0 ],
-														"bglocked" : 0,
-														"openinpresentation" : 0,
-														"default_fontsize" : 12.0,
-														"default_fontface" : 0,
-														"default_fontname" : "Arial",
-														"gridonopen" : 1,
 														"gridsize" : [ 15.0, 15.0 ],
-														"gridsnaponopen" : 1,
-														"objectsnaponopen" : 1,
-														"statusbarvisible" : 2,
-														"toolbarvisible" : 1,
-														"lefttoolbarpinned" : 0,
-														"toptoolbarpinned" : 0,
-														"righttoolbarpinned" : 0,
-														"bottomtoolbarpinned" : 0,
-														"toolbars_unpinned_last_save" : 0,
-														"tallnewobj" : 0,
-														"boxanimatetime" : 200,
-														"enablehscroll" : 1,
-														"enablevscroll" : 1,
-														"devicewidth" : 0.0,
-														"description" : "",
-														"digest" : "",
-														"tags" : "",
-														"style" : "",
-														"subpatcher_template" : "",
-														"assistshowspatchername" : 0,
 														"boxes" : [ 															{
 																"box" : 																{
 																	"comment" : "",
@@ -3069,13 +2770,6 @@
 													}
 ,
 													"patching_rect" : [ 156.0, 303.0, 92.0, 22.0 ],
-													"saved_object_attributes" : 													{
-														"description" : "",
-														"digest" : "",
-														"globalpatchername" : "",
-														"tags" : ""
-													}
-,
 													"text" : "p random_color"
 												}
 
@@ -3340,13 +3034,6 @@
 									}
 ,
 									"patching_rect" : [ 360.0, 197.0, 94.0, 22.0 ],
-									"saved_object_attributes" : 									{
-										"description" : "",
-										"digest" : "",
-										"globalpatchername" : "",
-										"tags" : ""
-									}
-,
 									"text" : "p custom_mode"
 								}
 
@@ -3372,42 +3059,16 @@
 									"patcher" : 									{
 										"fileversion" : 1,
 										"appversion" : 										{
-											"major" : 8,
-											"minor" : 6,
-											"revision" : 4,
+											"major" : 9,
+											"minor" : 0,
+											"revision" : 9,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
 ,
 										"classnamespace" : "box",
 										"rect" : [ 703.0, 163.0, 481.0, 436.0 ],
-										"bglocked" : 0,
-										"openinpresentation" : 0,
-										"default_fontsize" : 12.0,
-										"default_fontface" : 0,
-										"default_fontname" : "Arial",
-										"gridonopen" : 1,
 										"gridsize" : [ 15.0, 15.0 ],
-										"gridsnaponopen" : 1,
-										"objectsnaponopen" : 1,
-										"statusbarvisible" : 2,
-										"toolbarvisible" : 1,
-										"lefttoolbarpinned" : 0,
-										"toptoolbarpinned" : 0,
-										"righttoolbarpinned" : 0,
-										"bottomtoolbarpinned" : 0,
-										"toolbars_unpinned_last_save" : 0,
-										"tallnewobj" : 0,
-										"boxanimatetime" : 200,
-										"enablehscroll" : 1,
-										"enablevscroll" : 1,
-										"devicewidth" : 0.0,
-										"description" : "",
-										"digest" : "",
-										"tags" : "",
-										"style" : "",
-										"subpatcher_template" : "",
-										"assistshowspatchername" : 0,
 										"boxes" : [ 											{
 												"box" : 												{
 													"id" : "obj-1",
@@ -3714,13 +3375,6 @@
 									}
 ,
 									"patching_rect" : [ 261.0, 197.0, 87.0, 22.0 ],
-									"saved_object_attributes" : 									{
-										"description" : "",
-										"digest" : "",
-										"globalpatchername" : "",
-										"tags" : ""
-									}
-,
 									"text" : "p select_mode"
 								}
 
@@ -3747,42 +3401,16 @@
 									"patcher" : 									{
 										"fileversion" : 1,
 										"appversion" : 										{
-											"major" : 8,
-											"minor" : 6,
-											"revision" : 4,
+											"major" : 9,
+											"minor" : 0,
+											"revision" : 9,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
 ,
 										"classnamespace" : "box",
 										"rect" : [ 724.0, 259.0, 378.0, 380.0 ],
-										"bglocked" : 0,
-										"openinpresentation" : 0,
-										"default_fontsize" : 12.0,
-										"default_fontface" : 0,
-										"default_fontname" : "Arial",
-										"gridonopen" : 1,
 										"gridsize" : [ 15.0, 15.0 ],
-										"gridsnaponopen" : 1,
-										"objectsnaponopen" : 1,
-										"statusbarvisible" : 2,
-										"toolbarvisible" : 1,
-										"lefttoolbarpinned" : 0,
-										"toptoolbarpinned" : 0,
-										"righttoolbarpinned" : 0,
-										"bottomtoolbarpinned" : 0,
-										"toolbars_unpinned_last_save" : 0,
-										"tallnewobj" : 0,
-										"boxanimatetime" : 200,
-										"enablehscroll" : 1,
-										"enablevscroll" : 1,
-										"devicewidth" : 0.0,
-										"description" : "",
-										"digest" : "",
-										"tags" : "",
-										"style" : "",
-										"subpatcher_template" : "",
-										"assistshowspatchername" : 0,
 										"boxes" : [ 											{
 												"box" : 												{
 													"id" : "obj-10",
@@ -3931,13 +3559,6 @@
 									}
 ,
 									"patching_rect" : [ 167.0, 197.0, 83.0, 22.0 ],
-									"saved_object_attributes" : 									{
-										"description" : "",
-										"digest" : "",
-										"globalpatchername" : "",
-										"tags" : ""
-									}
-,
 									"text" : "p color_wheel"
 								}
 
@@ -3951,8 +3572,8 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 202.0, 265.0, 374.0, 79.0 ],
-									"text" : "For color modes 2 and 3 to work, you need to add a pattr object named 'preset_color' to your patch. If using subscribe mode, make sure to add preset_color to the pattrstorage's subscribe list.\nPreset color data will be stored just like your other parameters."
+									"patching_rect" : [ 202.0, 265.0, 389.0, 79.0 ],
+									"text" : "For color modes 2 and 3 to work, you need to add a pattr object named 'preset_metadata' to your patch. If using subscribe mode, make sure to add preset_metadata to the pattrstorage's subscribe list.\nPreset color data will be stored just like your other parameters."
 								}
 
 							}
@@ -3963,15 +3584,15 @@
 									"numinlets" : 1,
 									"numoutlets" : 3,
 									"outlettype" : [ "", "", "" ],
-									"patching_rect" : [ 338.0, 346.0, 102.0, 22.0 ],
-									"restore" : [ 0 ],
+									"patching_rect" : [ 322.0, 346.0, 126.0, 22.0 ],
+									"restore" : [ "{\"color\":[0,0.7050556385457685,0.10690711578119372,0.23966901936985963,1],\"uid\":0}" ],
 									"saved_object_attributes" : 									{
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
 									}
 ,
-									"text" : "pattr preset_color",
-									"varname" : "preset_color"
+									"text" : "pattr preset_metadata",
+									"varname" : "preset_metadata"
 								}
 
 							}
@@ -3996,7 +3617,7 @@
 									"numoutlets" : 3,
 									"outlettype" : [ "", "", "" ],
 									"patching_rect" : [ 322.0, 400.0, 40.0, 22.0 ],
-									"restore" : [ -0.51, -0.05, 0.22, 0.9, -0.21, -0.87, -0.33, -0.81, 0.41, -0.74, 0.67, -0.85, -0.15, -0.92, -0.6, 0.05 ],
+									"restore" : [ -0.01, 0.97, -0.95, -0.34, 0.56, 0.73, -0.23, -0.42, 0.71, -0.14, -0.25, -0.77, -0.38, 0.02, -0.6, 0.59 ],
 									"saved_object_attributes" : 									{
 										"parameter_enable" : 0,
 										"parameter_mappable" : 0
@@ -4032,42 +3653,16 @@
 									"patcher" : 									{
 										"fileversion" : 1,
 										"appversion" : 										{
-											"major" : 8,
-											"minor" : 6,
-											"revision" : 4,
+											"major" : 9,
+											"minor" : 0,
+											"revision" : 9,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
 ,
 										"classnamespace" : "box",
 										"rect" : [ 574.0, 280.0, 640.0, 480.0 ],
-										"bglocked" : 0,
-										"openinpresentation" : 0,
-										"default_fontsize" : 12.0,
-										"default_fontface" : 0,
-										"default_fontname" : "Arial",
-										"gridonopen" : 1,
 										"gridsize" : [ 15.0, 15.0 ],
-										"gridsnaponopen" : 1,
-										"objectsnaponopen" : 1,
-										"statusbarvisible" : 2,
-										"toolbarvisible" : 1,
-										"lefttoolbarpinned" : 0,
-										"toptoolbarpinned" : 0,
-										"righttoolbarpinned" : 0,
-										"bottomtoolbarpinned" : 0,
-										"toolbars_unpinned_last_save" : 0,
-										"tallnewobj" : 0,
-										"boxanimatetime" : 200,
-										"enablehscroll" : 1,
-										"enablevscroll" : 1,
-										"devicewidth" : 0.0,
-										"description" : "",
-										"digest" : "",
-										"tags" : "",
-										"style" : "",
-										"subpatcher_template" : "",
-										"assistshowspatchername" : 0,
 										"boxes" : [ 											{
 												"box" : 												{
 													"id" : "obj-10",
@@ -4320,13 +3915,6 @@
 									}
 ,
 									"patching_rect" : [ 232.0, 346.0, 34.0, 22.0 ],
-									"saved_object_attributes" : 									{
-										"description" : "",
-										"digest" : "",
-										"globalpatchername" : "",
-										"tags" : ""
-									}
-,
 									"text" : "p init"
 								}
 
@@ -4334,13 +3922,13 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "spacing", 4 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "select_mode", 0 ], [ "scrollable", 0 ], [ "bubblesize", 14 ], [ "margin", 4 ], [ "fontsize", 14 ], [ "color_mode", 1 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 10 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "fontname", "Arial" ], [ "pattrstorage", "colors" ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "display_interp", 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "slot_round", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "autowriteagain", 0 ], [ "layout", 0 ] ],
+									"embedstate" : [ [ "bubblesize", 14 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "fontname", "Arial" ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "spacing", 4 ], [ "layout", 0 ], [ "send_name", "none" ], [ "scrollable", 0 ], [ "display_interp", 1 ], [ "ui_rename", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "slot_round", 0 ], [ "use_uid", 0 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "autowriteagain", 0 ], [ "min_rows", 10 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "color_mode", 0 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "nbslot_edit", 1 ], [ "menu_mode", 0 ], [ "unique_names", 0 ], [ "select_mode", 0 ], [ "pattrstorage", "colors" ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "fontsize", 14 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "poll_edited", 0 ] ],
 									"filename" : "tc.preset.js",
 									"id" : "obj-10",
 									"maxclass" : "jsui",
 									"numinlets" : 1,
-									"numoutlets" : 4,
-									"outlettype" : [ "", "", "", "" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "", "", "", "", "" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 10.0, 378.0, 256.0, 112.0 ]
 								}
@@ -4526,13 +4114,6 @@
 					}
 ,
 					"patching_rect" : [ 487.0, 2.0, 81.0, 22.0 ],
-					"saved_object_attributes" : 					{
-						"description" : "",
-						"digest" : "",
-						"globalpatchername" : "",
-						"tags" : ""
-					}
-,
 					"text" : "p \"slot colors\"",
 					"varname" : "slot colors"
 				}
@@ -4593,6 +4174,7 @@
 				"box" : 				{
 					"id" : "obj-27",
 					"keymode" : 1,
+					"lines" : 1,
 					"maxclass" : "textedit",
 					"nosymquotes" : 1,
 					"numinlets" : 1,
@@ -4620,13 +4202,13 @@
 , 			{
 				"box" : 				{
 					"border" : 0,
-					"embedstate" : [ [ "spacing", 4 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "select_mode", 0 ], [ "scrollable", 0 ], [ "bubblesize", 14 ], [ "margin", 4 ], [ "fontsize", 14 ], [ "color_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "ignoreslotzero", 1 ], [ "min_rows", 10 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "fontname", "Arial" ], [ "pattrstorage", "test" ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "display_interp", 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "slot_round", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "autowriteagain", 0 ], [ "layout", 0 ] ],
+					"embedstate" : [ [ "bubblesize", 14 ], [ "active_slot_color", 0.808, 0.898, 0.91, 1 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "fontname", "Arial" ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "spacing", 4 ], [ "layout", 0 ], [ "send_name", "none" ], [ "scrollable", 0 ], [ "display_interp", 1 ], [ "ui_rename", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "slot_round", 0 ], [ "use_uid", 0 ], [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "bgcolor", 0.2, 0.2, 0.2, 1 ], [ "autowriteagain", 0 ], [ "min_rows", 10 ], [ "text_color", 0.129, 0.129, 0.129, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "color_mode", 0 ], [ "ignoreslotzero", 1 ], [ "margin", 4 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "nbslot_edit", 1 ], [ "menu_mode", 0 ], [ "unique_names", 0 ], [ "select_mode", 0 ], [ "pattrstorage", "test" ], [ "text_bg_color", 1, 1, 1, 0.5 ], [ "fontsize", 14 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "poll_edited", 0 ] ],
 					"filename" : "tc.preset.js",
 					"id" : "obj-10",
 					"maxclass" : "jsui",
 					"numinlets" : 1,
-					"numoutlets" : 4,
-					"outlettype" : [ "", "", "", "" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "", "", "", "", "" ],
 					"parameter_enable" : 0,
 					"patching_rect" : [ 140.0, 285.0, 257.0, 112.0 ]
 				}
@@ -4782,14 +4364,14 @@
 			}
 , 			{
 				"name" : "tc.preset.js",
-				"bootpath" : "~/Documents/Max 8/Packages/tc.preset/code",
-				"patcherrelativepath" : "../code",
+				"bootpath" : "~/Documents/Max 9/Packages/tc.preset/javascript",
+				"patcherrelativepath" : "../javascript",
 				"type" : "TEXT",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "test.json",
-				"bootpath" : "~/Documents/Max 8/Packages/tc.preset/help",
+				"bootpath" : "~/Documents/Max 9/Packages/tc.preset/help",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1

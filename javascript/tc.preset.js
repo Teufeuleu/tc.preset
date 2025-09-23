@@ -1398,19 +1398,19 @@ function set_textedit(s) {
             textedit_obj.setattr('bordercolor', [0,0,0,0]);
             textedit_obj.setattr('textcolor', text_color);
             textedit_obj.setattr('fontname', font_name);
-            textedit_obj.setattr('fontsize', font_size-1);
+            textedit_obj.setattr('fontsize', slot_size);
             textedit_obj.setattr('fontface', 0);
             textedit_obj.setattr('textjustification', 0);
 
             if (layout == 0) {
-                textedit_obj.message('position', pos[0] + margin, pos[1] + slots[s].top + y_offset);
-                textedit_obj.message('size', ui_width - (2*margin), slot_size + 1);
+                textedit_obj.message('position', pos[0] + margin, pos[1] + slots[s].top + y_offset - 4);
+                textedit_obj.message('size', ui_width - (2*margin), slot_size + 8);
                 // Only works in v8ui
                 // textedit_obj.position = [pos[0] + margin, pos[1] + slots[s].top + y_offset];
                 // textedit_obj.size = [ui_width - (2*margin), slot_size + 1];
             } else if (layout == 1) {
-                textedit_obj.message('position', pos[0] + margin + slot_size + spacing, pos[1] + slots[s].top + y_offset);
-                textedit_obj.message('size', ui_width - (2*margin + slot_size + spacing), slot_size + 1);
+                textedit_obj.message('position', pos[0] + margin + slot_size + spacing, pos[1] + slots[s].top + y_offset - 4);
+                textedit_obj.message('size', ui_width - (2*margin + slot_size + spacing), slot_size + 8);
                 // Only works in v8ui
                 // textedit_obj.position = [pos[0] + margin + slot_size + spacing, pos[1] + slots[s].top + y_offset];
                 // textedit_obj.size = [ui_width - (2*margin + slot_size + spacing), slot_size + 1];
