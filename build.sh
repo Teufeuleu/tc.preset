@@ -30,6 +30,7 @@ copy_files() {
     find . -type f \
         -not -path "*/.*" \
         -not -path "./dist/*" \
+        -not -path "./media/*" \
         -not -name "build.sh" | while read -r file; do
         
         # Get filename without path

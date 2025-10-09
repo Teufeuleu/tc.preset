@@ -47,3 +47,10 @@ Alternatively, instead of relying on this script you can manually remove the fil
 Consider donating if you like this package.
 
 [![Paypal donation button](https://pics.paypal.com/00/s/YjdhYzU5ZDItYjM0Yi00MGE1LWEzMWEtZGQ2NzVjMDI3MDg2/file.PNG)](https://www.paypal.com/donate/?hosted_button_id=AVGJ5JLTP76K8)
+
+## License
+Copyright (C) 2025 Théophile Clet <contact@tflcl.xyz> - https://tflcl.xyz.
+
+GPL-3.0-or-later
+
+See the [license file](./LICENSE).
