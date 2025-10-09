@@ -1,3 +1,1 @@
-max setdefinepackage tc.preset pattrstorage;
-max definesubstitution tc.preset jsui @filename tc.preset;
-max setdefinepackage "" "";
+max definesubstitution tc.preset jsui @filename tc.preset @jsarguments;

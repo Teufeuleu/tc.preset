@@ -144,7 +144,7 @@ var poll_edited_task = new Task(do_poll_edited, this);
 var has_loaded = false;
 
 if (jsarguments.length>1) { // Depreciated, use "pattrstorage" attribute instead of jsarguments.
-    pattrstorage_name = jsarguments[1];
+    setpattrstorage(jsarguments[1]);
 }
 
 // FUNCTIONS
@@ -2062,7 +2062,7 @@ function setselect_mode(v){
     mgraphics.redraw();
 }
 
-declareattribute("color_mode", "getcolor_mode", "setcolor_mode", 1, {type: "long", min: 0, max: 3, style: "enumindex", enumvals: ["Same color", "Six colors cycling", "Six colors free", "Custom colors"], label: "Color Mode", category: "Appearance"});
+declareattribute("color_mode", "getcolor_mode", "setcolor_mode", 1, {type: "long", min: 0, max: 3, style: "enumindex", enumvals: ["Classic", "Cycle", "Select", "Custom"], label: "Color Mode", category: "Appearance"});
 function getcolor_mode() {
 	return color_mode;
 }
