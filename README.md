@@ -45,21 +45,5 @@ Alternatively, instead of relying on this script you can manually remove the fil
 
 ## How to support my work
 Consider donating if you like this package.
+
 [![Paypal donation button](https://pics.paypal.com/00/s/YjdhYzU5ZDItYjM0Yi00MGE1LWEzMWEtZGQ2NzVjMDI3MDg2/file.PNG)](https://www.paypal.com/donate/?hosted_button_id=AVGJ5JLTP76K8)
-
-## License
-GPL-3.0-or-later 
-
-Copyright (C) 2025 Théophile Clet <contact@tflcl.xyz> - https://tflcl.xyz.
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-See <https://www.gnu.org/licenses/gpl-3.0.txt>.
