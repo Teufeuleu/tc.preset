@@ -6,7 +6,7 @@
 		A jsui replacement for the preset object.
 	</digest>
 	<description>
-		tc.preset is a jsui clone of the preset object, but loaded with more features, such as preset organization through drag and drop, display as a scrollable list, colored slots...
+		tc.preset is a <o>jsui</o>/<o>v8ui</o> clone of the <o>preset</o> object, but loaded with more features, such as preset organization through drag and drop, display as a scrollable list, colored slots...
 		Contrary to the preset object, tc.preset doesn't work alone and has to be used in conjonction with a pattrstorage object.<modification class=""></modification>
 	</description>
 

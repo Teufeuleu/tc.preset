@@ -380,32 +380,30 @@ function paint_base() {
     bg_width = layout == 0 ? columns * (slot_size + spacing) - spacing + 2 * margin : ui_width;
     bg_height = rows * (slot_size + spacing) - spacing + 2 * margin;
 	mg = new MGraphics(ui_width*2, bg_height*2);
-	with(mg) {
-		set_source_rgba(background_color);
-		rectangle(0, 0, bg_width*2, bg_height*2);
-		fill();
+    mg.set_source_rgba(background_color);
+    mg.rectangle(0, 0, bg_width*2, bg_height*2);
+    mg.fill();
 
-        select_font_face(font_name);
-        set_font_size(font_size);
+    mg.select_font_face(font_name);
+    mg.set_font_size(font_size);
 
-		// All slots
-        for (var i = 1; i <= true_slots_count_display; i++) {
-            if (i != drag_slot) { //We mask the slot that is currently dragged as it is drawn at the mouse position already
-                if (slots[i].name != null) {
-                    if (color_mode == 1) {
-                        set_source_rgba(color_wheel_custom[i % color_wheel_size]);
-                    } else if (color_mode == 2) {
-                        set_source_rgba(color_wheel_custom[Math.abs(slots[i].color_index) % color_wheel_size]);
-                    } else if (color_mode == 3) {
-                        set_source_rgba(slots[i].color_custom);
-                    } else {
-                        set_source_rgba(stored_slot_color);
-                    }
+    // All slots
+    for (var i = 1; i <= true_slots_count_display; i++) {
+        if (i != drag_slot) { //We mask the slot that is currently dragged as it is drawn at the mouse position already
+            if (slots[i].name != null) {
+                if (color_mode == 1) {
+                    mg.set_source_rgba(color_wheel_custom[i % color_wheel_size]);
+                } else if (color_mode == 2) {
+                    mg.set_source_rgba(color_wheel_custom[Math.abs(slots[i].color_index) % color_wheel_size]);
+                } else if (color_mode == 3) {
+                    mg.set_source_rgba(slots[i].color_custom);
                 } else {
-                    set_source_rgba(empty_slot_color);
+                    mg.set_source_rgba(stored_slot_color);
                 }
-                draw_slot(i, 2, mg);
+            } else {
+                mg.set_source_rgba(empty_slot_color);
             }
+            draw_slot(i, 2, mg);
         }
 	}
     is_painting_base = 0;
@@ -423,186 +421,182 @@ function paint()
         onresize(cur_size[0], cur_size[1]);
     } else {
         // post("redraw\n");
-        with (mgraphics) {
-            select_font_face(font_name);
-            set_font_size(font_size);
-            translate(0, y_offset);
-            // Draw the base, which includes empty and filled slots
-            // It is first rendered at twice the size in order to make texts look nice and cripsy on hidpi discplays
-            // So we need to scale it down here
-            scale(0.5, 0.5);
-            image_surface_draw(base_drawing);
-            scale(2, 2);
+        mgraphics.select_font_face(font_name);
+        mgraphics.set_font_size(font_size);
+        mgraphics.translate(0, y_offset);
+        // Draw the base, which includes empty and filled slots
+        // It is first rendered at twice the size in order to make texts look nice and cripsy on hidpi discplays
+        // So we need to scale it down here
+        mgraphics.scale(0.5, 0.5);
+        mgraphics.image_surface_draw(base_drawing);
+        mgraphics.scale(2, 2);
+        
+        mgraphics.set_line_width(1);
+        
+        // Active slot
+        if (is_dragging == 0 && active_slot > 0 && active_slot <= slots_count_display) {
+            mgraphics.set_source_rgba(active_slot_color);
+            if (color_mode) {
+                draw_slot_bubble(slots[active_slot].left+1.5, slots[active_slot].top+1.5, slot_size-3, slot_size-3);
+                mgraphics.set_line_width(3);
+                mgraphics.stroke();
+            } else {
+                draw_slot_bubble(slots[active_slot].left, slots[active_slot].top, slot_size, slot_size);
+                mgraphics.fill();
+            }
+        }
+
+        // Previous active slot
+        if (is_dragging == 0 && previous_active_slot > 0 && previous_active_slot <= slots_count_display) {
+            mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], active_slot_color[3] * 0.5);
+            if (color_mode) {
+                draw_slot_bubble(slots[previous_active_slot].left+1.5, slots[previous_active_slot].top+1.5, slot_size-3, slot_size-3);
+                mgraphics.set_line_width(3);
+                mgraphics.stroke();
+            } else {
+                draw_slot_bubble(slots[previous_active_slot].left, slots[previous_active_slot].top, slot_size, slot_size);
+                mgraphics.fill();
+            }
+        }
+
+            //Hide dragged slot
+        if (is_dragging) {
+            mgraphics.set_source_rgba(empty_slot_color);
+            draw_slot_bubble(slots[drag_slot].left, slots[drag_slot].top, slot_size, slot_size);
+            mgraphics.fill();
+        }
+
+        // Selected slot
+        if (selected_slot > 0 && selected_slot <= slots_count_display) {
+            mgraphics.set_source_rgba(active_slot_color);
+            mgraphics.set_line_width(1);
+            draw_slot_bubble(slots[selected_slot].left - 0.5, slots[selected_slot].top - 0.5, slot_size + 1, slot_size + 1);
+            mgraphics.stroke();
+        }
+
+        // Interpolated slots
+        if (is_dragging == 0 && display_interp && is_interpolating) {
             
-            set_line_width(1);
+            for (var i = 1; i <= slots_count_display; i++) {
+                var interp = slots[i].interp;
+                if (interp >= 0) {
+                    mgraphics.set_source_rgba(interp_slot_color);
+                    draw_slot_bubble(slots[i].left, slots[i].top, slot_size, slot_size);
+                    mgraphics.stroke();
+                    draw_slot_bubble(slots[i].left, slots[i].top + slot_size * (1-interp), slot_size, slot_size * interp);
+                    mgraphics.fill();
+                }
+            }
+        }
+
+        //Edited dot
+        if (active_slot_edited && active_slot > 0 && selected_slot <= slots_count_display) {
+            mgraphics.set_source_rgba(edited_color);
+            mgraphics.ellipse(slots[active_slot].left + 1, slots[active_slot].top + 1, slot_size/3, slot_size/3);
+            mgraphics.fill();
+        }
+
+        // Hovered slot
+        if (last_hovered > -1) {
+            if (shift_hold && last_hovered_is_preset_slot) {
+                if (option_hold) {
+                    // About to delete
+                    mgraphics.set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.8);
+                    draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
+                    mgraphics.fill();
+                } else {
+                    // About to store
+                    mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], 0.7);
+                    draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
+                    mgraphics.fill();
+                }
+            }
+
+            // Slot border
+            mgraphics.set_source_rgba(1, 1, 1, 0.8);
+            draw_slot_bubble(slots[last_hovered].left, slots[last_hovered].top, slot_size, slot_size);
+            mgraphics.stroke();
+
+            if (layout == 0) {
+                //Text (slot number and name)
+                var text = null;
+                if (scrollable && nbslot_edit && (last_hovered > (true_slots_count_display - 2))) {
+                    if (last_hovered == true_slots_count_display - 1) {
+                        text = "remove slot row";
+                    } else {
+                        text = "add slot row";
+                    }
+                } else {
+                    text = format_slot_name(last_hovered);
+                }
+                var text_dim = mgraphics.text_measure(text);
+                // If the text is too big or a slot is being dragged, display the text on top of the next slot.
+                // Otherwise, it gets displayed on the hovered slot.
+
+                var bg_txt_dim_w = text_dim[0] > slot_size ? text_dim[0] + 4 : slot_size + 4;
+                var bg_txt_dim_h = text_dim[1] > slot_size ? text_dim[1] + 4 : slot_size + 4;
+                var bg_txt_pos_x = text_dim[0] > slot_size || is_dragging ? slots[last_hovered].left + slot_size + 2: slots[last_hovered].left - 2;
+                var bg_txt_pos_y = text_dim[1] > slot_size || is_dragging ? slots[last_hovered].top - 2 : slots[last_hovered].top - 2;
+                
+
+                // If there is not enough place on the right and if there is more available place on the left, text is displayed on the left
+                if (bg_txt_pos_x + bg_txt_dim_w > ui_width && slots[last_hovered].left - half_spacing > ui_width - slots[last_hovered].right) {
+                    bg_txt_pos_x = slots[last_hovered].left - half_spacing - bg_txt_dim_w;
+                }
+
+                var txt_pos_x = text_dim[0] > slot_size ? bg_txt_pos_x + half_spacing : bg_txt_pos_x + (bg_txt_dim_w / 2) - (text_dim[0]/2);
+                var txt_pos_y = bg_txt_pos_y + (bg_txt_dim_h + text_dim[1]) / 2 - text_dim[1]*0.18;
+
+                // Bubble background
+                mgraphics.set_source_rgba(text_bg_color);
+                mgraphics.rectangle_rounded(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, 4, 4);
+                mgraphics.fill();
+
+                // Buble text
+                mgraphics.set_source_rgba(text_color);
+                mgraphics.move_to(txt_pos_x, txt_pos_y);
+                mgraphics.show_text(text.toString());
+            }
             
-            // Active slot
-            if (is_dragging == 0 && active_slot > 0 && active_slot <= slots_count_display) {
-                set_source_rgba(active_slot_color);
-                if (color_mode) {
-                    draw_slot_bubble(slots[active_slot].left+1.5, slots[active_slot].top+1.5, slot_size-3, slot_size-3);
-                    set_line_width(3);
-                    stroke();
-                } else {
-                    draw_slot_bubble(slots[active_slot].left, slots[active_slot].top, slot_size, slot_size);
-                    fill();
+        }
+
+        // Drag slot
+        if (is_dragging) {
+            if (layout == 0) {
+                mgraphics.translate(last_x, last_y );
+                mgraphics.rotate(0.15);
+                mgraphics.scale(1.1, 1.1);
+
+                // Slot shadow
+                mgraphics.set_source_rgba(0, 0, 0, 0.15);
+                for (var i = 0; i<4; i++) {
+                    draw_slot_bubble( i*0.4 + 1-slot_size/2, i*0.4 + 1-slot_size/2, slot_size + i*0.8, slot_size+i*0.8);
+                    mgraphics.fill();
                 }
-            }
+                draw_slot_bubble( 2-slot_size/2, 2-slot_size/2, slot_size, slot_size);
+                mgraphics.fill();
 
-            // Previous active slot
-            if (is_dragging == 0 && previous_active_slot > 0 && previous_active_slot <= slots_count_display) {
-                set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], active_slot_color[3] * 0.5);
-                if (color_mode) {
-                    draw_slot_bubble(slots[previous_active_slot].left+1.5, slots[previous_active_slot].top+1.5, slot_size-3, slot_size-3);
-                    set_line_width(3);
-                    stroke();
-                } else {
-                    draw_slot_bubble(slots[previous_active_slot].left, slots[previous_active_slot].top, slot_size, slot_size);
-                    fill();
-                }
-            }
-
-             //Hide dragged slot
-            if (is_dragging) {
-                set_source_rgba(empty_slot_color);
-                draw_slot_bubble(slots[drag_slot].left, slots[drag_slot].top, slot_size, slot_size);
-                fill();
-            }
-
-            // Selected slot
-            if (selected_slot > 0 && selected_slot <= slots_count_display) {
-                set_source_rgba(active_slot_color);
-                set_line_width(1);
-                draw_slot_bubble(slots[selected_slot].left - 0.5, slots[selected_slot].top - 0.5, slot_size + 1, slot_size + 1);
-                stroke();
-            }
-
-            // Interpolated slots
-            if (is_dragging == 0 && display_interp && is_interpolating) {
+                //Flying slot
+                mgraphics.set_source_rgba(active_slot_color);
+                draw_slot_bubble( -slot_size/2, -slot_size/2, slot_size, slot_size);
+                mgraphics.fill();
+            } else {
+                mgraphics.translate(last_x, last_y );
+                // rotate(0.15);
+                mgraphics.set_source_rgba(active_slot_color);
                 
-                for (var i = 1; i <= slots_count_display; i++) {
-                    var interp = slots[i].interp;
-                    if (interp >= 0) {
-                        set_source_rgba(interp_slot_color);
-                        draw_slot_bubble(slots[i].left, slots[i].top, slot_size, slot_size);
-                        stroke();
-                        draw_slot_bubble(slots[i].left, slots[i].top + slot_size * (1-interp), slot_size, slot_size * interp);
-                        fill();
-                    }
-                }
+                draw_slot_bubble( -slot_size/2, -slot_size/2, slot_size, slot_size);
+                mgraphics.fill();
+                // slot name
+                var text = format_slot_name(drag_slot);
+                var bg_txt_pos_x = slot_size/2+ spacing;
+                var bg_txt_pos_y = -slot_size/2;
+                var bg_txt_dim_w = ui_width - (2*margin + slot_size + spacing);
+                var bg_txt_dim_h = slot_size;
+                mgraphics.set_source_rgba(stored_slot_color);
+                draw_text_bubble(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, text);
+
             }
-
-            //Edited dot
-            if (active_slot_edited && active_slot > 0 && selected_slot <= slots_count_display) {
-                set_source_rgba(edited_color);
-                ellipse(slots[active_slot].left + 1, slots[active_slot].top + 1, slot_size/3, slot_size/3);
-                fill();
-            }
-
-            // Hovered slot
-            if (last_hovered > -1) {
-                if (shift_hold && last_hovered_is_preset_slot) {
-                    if (option_hold) {
-                        // About to delete
-                        set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.8);
-                        draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
-                        fill();
-                    } else {
-                        // About to store
-                        set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], 0.7);
-                        draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
-                        fill();
-                    }
-                }
-
-                // Slot border
-                set_source_rgba(1, 1, 1, 0.8);
-                draw_slot_bubble(slots[last_hovered].left, slots[last_hovered].top, slot_size, slot_size);
-                stroke();
-
-                if (layout == 0) {
-                    //Text (slot number and name)
-                    var text = null;
-                    if (scrollable && nbslot_edit && (last_hovered > (true_slots_count_display - 2))) {
-                        if (last_hovered == true_slots_count_display - 1) {
-                            text = "remove slot row";
-                        } else {
-                            text = "add slot row";
-                        }
-                    } else {
-                        text = format_slot_name(last_hovered);
-                    }
-                    var text_dim = text_measure(text);
-                    // If the text is too big or a slot is being dragged, display the text on top of the next slot.
-                    // Otherwise, it gets displayed on the hovered slot.
-
-                    var bg_txt_dim_w = text_dim[0] > slot_size ? text_dim[0] + 4 : slot_size + 4;
-                    var bg_txt_dim_h = text_dim[1] > slot_size ? text_dim[1] + 4 : slot_size + 4;
-                    var bg_txt_pos_x = text_dim[0] > slot_size || is_dragging ? slots[last_hovered].left + slot_size + 2: slots[last_hovered].left - 2;
-                    var bg_txt_pos_y = text_dim[1] > slot_size || is_dragging ? slots[last_hovered].top - 2 : slots[last_hovered].top - 2;
-                    
-
-                    // If there is not enough place on the right and if there is more available place on the left, text is displayed on the left
-                    if (bg_txt_pos_x + bg_txt_dim_w > ui_width && slots[last_hovered].left - half_spacing > ui_width - slots[last_hovered].right) {
-                        bg_txt_pos_x = slots[last_hovered].left - half_spacing - bg_txt_dim_w;
-                    }
-
-                    var txt_pos_x = text_dim[0] > slot_size ? bg_txt_pos_x + half_spacing : bg_txt_pos_x + (bg_txt_dim_w / 2) - (text_dim[0]/2);
-                    var txt_pos_y = bg_txt_pos_y + (bg_txt_dim_h + text_dim[1]) / 2 - text_dim[1]*0.18;
-
-                    // Bubble background
-                    set_source_rgba(text_bg_color);
-                    rectangle_rounded(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, 4, 4);
-                    fill();
-
-                    // Buble text
-                    set_source_rgba(text_color);
-                    move_to(txt_pos_x, txt_pos_y);
-                    show_text(text.toString());
-                }
-                
-            }
-
-            // Drag slot
-            if (is_dragging) {
-                if (layout == 0) {
-                    translate(last_x, last_y );
-                    rotate(0.15);
-                    scale(1.1, 1.1);
-
-                    // Slot shadow
-                    set_source_rgba(0, 0, 0, 0.15);
-                    for (var i = 0; i<4; i++) {
-                        draw_slot_bubble( i*0.4 + 1-slot_size/2, i*0.4 + 1-slot_size/2, slot_size + i*0.8, slot_size+i*0.8);
-                        fill();
-                    }
-                    draw_slot_bubble( 2-slot_size/2, 2-slot_size/2, slot_size, slot_size);
-                    fill();
-
-                    //Flying slot
-                    set_source_rgba(active_slot_color);
-                    draw_slot_bubble( -slot_size/2, -slot_size/2, slot_size, slot_size);
-                    fill();
-                } else {
-                    translate(last_x, last_y );
-                    // rotate(0.15);
-                    set_source_rgba(active_slot_color);
-                    
-                    draw_slot_bubble( -slot_size/2, -slot_size/2, slot_size, slot_size);
-                    fill();
-                    // slot name
-                    var text = format_slot_name(drag_slot);
-                    var bg_txt_pos_x = slot_size/2+ spacing;
-                    var bg_txt_pos_y = -slot_size/2;
-                    var bg_txt_dim_w = ui_width - (2*margin + slot_size + spacing);
-                    var bg_txt_dim_h = slot_size;
-                    set_source_rgba(stored_slot_color);
-                    draw_text_bubble(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, text);
-
-                }
-                
-            }
-
         }
     }
 }
@@ -1725,7 +1719,9 @@ function get_prect(prect) {
 get_prect.local = 1;
 
 function notifydeleted(){
-    poll_edited_task.freepeer();
+    if (poll_edited_task.valid) {
+        poll_edited_task.freepeer();
+    }
 }
 
 // ATTRIBUTES DECLARATION
