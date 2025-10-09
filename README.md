@@ -4,7 +4,7 @@ A [jsui]/[v8ui] replacement for the [preset] object in Cycling'74 Max.
 
 ## Features
 - Same click + modifier key behavior as the preset object to store and delete presets
-- + Additional interactions (control+click to rename, shift+control+click to lock/unlock)
+- \+ Additional interactions (control+click to rename, shift+control+click to lock/unlock)
 - Drag and drop presets to re-organize
 - Display presets as a grid or a list
 - Scrollable list layout (requires Max 8.6.2)
@@ -45,15 +45,7 @@ Alternatively, instead of relying on this script you can manually remove the fil
 
 ## How to support my work
 Consider donating if you like this package.
-<div>
-<div id="donate-button-container">
-<div id="donate-button"></div>
-<script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
-<script>
-PayPal.Donation.Button({env:'production',hosted_button_id:'AVGJ5JLTP76K8',image: {src:'https://pics.paypal.com/00/s/YjdhYzU5ZDItYjM0Yi00MGE1LWEzMWEtZGQ2NzVjMDI3MDg2/file.PNG',alt:'Donate with PayPal button',title:'PayPal - The safer, easier way to pay online!',}}).render('#donate-button');
-</script>
-</div>
-</div>
+[![Paypal donation button](https://pics.paypal.com/00/s/YjdhYzU5ZDItYjM0Yi00MGE1LWEzMWEtZGQ2NzVjMDI3MDg2/file.PNG)](https://www.paypal.com/donate/?hosted_button_id=AVGJ5JLTP76K8)
 
 ## License
 GPL-3.0-or-later 
