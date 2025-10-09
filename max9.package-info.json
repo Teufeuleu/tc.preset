@@ -1,0 +1,28 @@
+{
+	"name" : "tc.preset",
+	"displayname" : "",
+	"version" : "0.0.2",
+	"author" : "Théophile Clet",
+	"authors" : [  ],
+	"description" : "A v8ui replacement for the preset object",
+	"tags" : ["preset", "pattrstorage", "jsui", "v8ui"],
+	"website" : "https://github.com/Teufeuleu/tc.preset/",
+	"extends" : "",
+	"extensible" : 0,
+	"max_version_min" : "9.0.7",
+	"max_version_max" : "none",
+	"os" : 	{
+		"macintosh" : 		{
+			"min_version" : "10.11.x",
+			"platform" : [ "x64", "aarch64" ]
+		}
+,
+		"windows" : 		{
+			"min_version" : "10",
+			"platform" : [ "x64" ]
+		}
+
+	}
+,
+	"homepatcher" : "tc.preset Launch.maxpat"
+}

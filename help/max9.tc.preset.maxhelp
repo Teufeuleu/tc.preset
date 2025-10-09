@@ -9,7 +9,7 @@
             "modernui": 1
         },
         "classnamespace": "box",
-        "rect": [ 333.0, 218.0, 899.0, 646.0 ],
+        "rect": [ 364.0, 109.0, 899.0, 646.0 ],
         "showrootpatcherontab": 0,
         "showontab": 0,
         "boxes": [
@@ -34,7 +34,7 @@
                         "boxes": [],
                         "lines": []
                     },
-                    "patching_rect": [ 676.0, 26.0, 50.0, 22.0 ],
+                    "patching_rect": [ 756.0, 25.7999267578125, 50.0, 22.0 ],
                     "text": "p ?",
                     "varname": "q_tab"
                 }
@@ -81,7 +81,7 @@
                                     "numoutlets": 3,
                                     "outlettype": [ "", "", "" ],
                                     "patching_rect": [ 636.0, 16.0, 40.0, 22.0 ],
-                                    "restore": [ -0.079365079365079, 0.206349206349206, 0.428571428571429, 0.682539682539683, 0.904761904761905, 0.904761904761905, 0.841269841269841, 0.555555555555556, 0.047619047619048, -0.301587301587302, -0.587301587301587, -0.682539682539683, -0.650793650793651, -0.428571428571429, -0.111111111111111, 0.079365079365079 ],
+                                    "restore": [ -0.714285714285714, -0.714285714285714, -0.6, -0.542857142857143, -0.457142857142857, -0.342857142857143, -0.171428571428571, -0.028571428571429, 0.028571428571428, 0.142857142857143, 0.228571428571429, 0.371428571428571, 0.485714285714286, 0.571428571428571, 0.714285714285714, 0.8 ],
                                     "saved_object_attributes": {
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0
@@ -174,7 +174,7 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 418.0, 335.0, 168.0, 20.0 ],
+                                    "patching_rect": [ 389.0, 350.0, 168.0, 20.0 ],
                                     "text": "tc.preset specific messages"
                                 }
                             },
@@ -398,7 +398,7 @@
                                     "outlettype": [ "", "int", "", "" ],
                                     "parameter_enable": 0,
                                     "patching_rect": [ 129.0, 506.0, 102.0, 24.0 ],
-                                    "text": "W"
+                                    "text": "up"
                                 }
                             },
                             {
@@ -742,7 +742,7 @@
                             }
                         ]
                     },
-                    "patching_rect": [ 231.0, 27.7999267578125, 73.0, 22.0 ],
+                    "patching_rect": [ 311.0, 27.7999267578125, 73.0, 22.0 ],
                     "text": "p messages",
                     "varname": "messages"
                 }
@@ -773,7 +773,7 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 567.0, 75.0, 306.0, 114.0 ],
+                                    "patching_rect": [ 567.0, 75.0, 309.0, 114.0 ],
                                     "text": "By default, clicking a stored preset in tc.preset recalls it immediately, the recall message being sent remotely to pattrstorage.\nWhen recall_passthrough is disabled, the recall mesage is first sent out of tc.preset leftmost outlet and it's up to the user to pass it to pattrstorage, potentially with some custom logic, like for triggering interpolations (see the red patch cord)"
                                 }
                             },
@@ -1537,7 +1537,7 @@
                             }
                         ]
                     },
-                    "patching_rect": [ 313.0, 26.7999267578125, 65.0, 22.0 ],
+                    "patching_rect": [ 393.0, 26.7999267578125, 65.0, 22.0 ],
                     "text": "p behavior",
                     "varname": "behavior"
                 }
@@ -1558,7 +1558,7 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 333.0, 244.0, 899.0, 620.0 ],
+                        "rect": [ 0.0, 26.0, 899.0, 620.0 ],
                         "showontab": 1,
                         "boxes": [
                             {
@@ -1603,43 +1603,43 @@
                                             {
                                                 "box": {
                                                     "embedstate": [
-                                                        [ "autowriteagain", 0 ],
-                                                        [ "send_name", "none" ],
-                                                        [ "recall_passthrough", 1 ],
-                                                        [ "slot_round", 0 ],
                                                         [ "text_bg_color", 1, 1, 1, 0.5 ],
-                                                        [ "ignoreslotzero", 1 ],
-                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
-                                                        [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ],
-                                                        [ "layout", 0 ],
-                                                        [ "nbslot_edit", 1 ],
-                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                                         [ "ui_rename", 0 ],
-                                                        [ "menu_mode", 0 ],
-                                                        [ "min_rows", 10 ],
-                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
-                                                        [ "select_mode", 0 ],
-                                                        [ "use_uid", 0 ],
-                                                        [ "margin", 4 ],
-                                                        [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ],
-                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
                                                         [ "bubblesize", 14 ],
+                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
+                                                        [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ],
+                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
+                                                        [ "text_color", 0.129, 0.129, 0.129, 1 ],
+                                                        [ "poll_edited", 0 ],
+                                                        [ "slot_round", 0 ],
+                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
+                                                        [ "active_slot_color", 0.808, 0.898, 0.91, 1 ],
+                                                        [ "scrollable", 0 ],
+                                                        [ "min_rows", 10 ],
+                                                        [ "margin", 4 ],
+                                                        [ "color_mode", 0 ],
+                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "bgcolor", 0.2, 0.2, 0.2, 1 ],
                                                         [ "fontsize", 14 ],
                                                         [ "edited_color", 1, 0.49, 0.263, 1 ],
-                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
-                                                        [ "text_color", 0.129, 0.129, 0.129, 1 ],
+                                                        [ "select_mode", 0 ],
+                                                        [ "send_name", "none" ],
+                                                        [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ],
                                                         [ "fontname", "Arial" ],
                                                         [ "pattrstorage", "mypat" ],
-                                                        [ "scrollable", 0 ],
-                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
-                                                        [ "spacing", 4 ],
-                                                        [ "active_slot_color", 0.808, 0.898, 0.91, 1 ],
-                                                        [ "display_interp", 1 ],
-                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
+                                                        [ "menu_mode", 0 ],
+                                                        [ "nbslot_edit", 1 ],
                                                         [ "unique_names", 0 ],
-                                                        [ "bgcolor", 0.2, 0.2, 0.2, 1 ],
-                                                        [ "color_mode", 0 ],
-                                                        [ "poll_edited", 0 ]
+                                                        [ "recall_passthrough", 1 ],
+                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
+                                                        [ "layout", 0 ],
+                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
+                                                        [ "autowriteagain", 0 ],
+                                                        [ "display_interp", 1 ],
+                                                        [ "spacing", 4 ],
+                                                        [ "use_uid", 0 ]
                                                     ],
                                                     "filename": "tc.preset",
                                                     "id": "obj-1",
@@ -2689,8 +2689,7 @@
                                                     "source": [ "obj-9", 0 ]
                                                 }
                                             }
-                                        ],
-                                        "bgcolor": [ 0.8, 0.8, 0.8, 1.0 ]
+                                        ]
                                     },
                                     "patching_rect": [ 75.0, 18.0, 287.0, 239.0 ],
                                     "varname": "bpatcher",
@@ -2713,7 +2712,7 @@
                         ],
                         "lines": []
                     },
-                    "patching_rect": [ 607.0, 25.7999267578125, 63.0, 22.0 ],
+                    "patching_rect": [ 687.0, 25.7999267578125, 63.0, 22.0 ],
                     "text": "p snippets",
                     "varname": "snippet"
                 }
@@ -2784,7 +2783,7 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 409.0, 120.0, 239.0, 74.0 ],
+                                    "patching_rect": [ 409.0, 120.0, 241.0, 74.0 ],
                                     "text": "When scrollable is enabled, adds a - and + buttons at the end of the presets list which, when clicked, respectively remove or add a row of empty slot(s). The minimum number of rows is capped by min_rows."
                                 }
                             },
@@ -3129,7 +3128,7 @@
                             }
                         ]
                     },
-                    "patching_rect": [ 388.0, 26.7999267578125, 82.0, 22.0 ],
+                    "patching_rect": [ 468.0, 26.7999267578125, 82.0, 22.0 ],
                     "text": "p appearance",
                     "varname": "appearance"
                 }
@@ -4203,7 +4202,7 @@
                                     "numoutlets": 3,
                                     "outlettype": [ "", "", "" ],
                                     "patching_rect": [ 319.0, 312.5, 126.0, 22.0 ],
-                                    "restore": [ "{\"color\":[0,0.502,0.502,0.502,1],\"uid\":\"a322b36b-1aba-415c-9083-d8df678268b7\"}" ],
+                                    "restore": [ "{\"color\":[0,0.502,0.502,0.502,1],\"uid\":\"44918fd8-bfef-42ee-87ed-13929dc21d32\"}" ],
                                     "saved_object_attributes": {
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0
@@ -4778,7 +4777,7 @@
                             }
                         ]
                     },
-                    "patching_rect": [ 487.0, 26.7999267578125, 112.0, 22.0 ],
+                    "patching_rect": [ 567.0, 26.7999267578125, 112.0, 22.0 ],
                     "text": "p \"slot colors & uid\"",
                     "varname": "slot colors"
                 }
@@ -4799,7 +4798,7 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 0.0, 26.0, 899.0, 620.0 ],
+                        "rect": [ 364.0, 135.0, 899.0, 620.0 ],
                         "default_fontsize": 13.0,
                         "gridsize": [ 5.0, 5.0 ],
                         "showontab": 1,
@@ -4894,11 +4893,11 @@
                                     "bubble": 1,
                                     "bubbleside": 0,
                                     "id": "obj-6",
-                                    "linecount": 3,
+                                    "linecount": 2,
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 231.0, 473.0, 145.0, 69.0 ],
+                                    "patching_rect": [ 228.5, 473.0, 150.0, 55.0 ],
                                     "text": "Edit the selected preset name and hit enter!"
                                 }
                             },
@@ -4961,7 +4960,7 @@
                                     "outlettype": [ "", "int", "", "" ],
                                     "parameter_enable": 0,
                                     "patching_rect": [ 254.0, 441.0, 98.0, 23.0 ],
-                                    "text": "random"
+                                    "text": "sine"
                                 }
                             },
                             {
@@ -5061,7 +5060,7 @@
                                     "numinlets": 1,
                                     "numoutlets": 0,
                                     "patching_rect": [ 10.0, 136.0, 427.0, 100.0 ],
-                                    "text": "Get tc.preset working in 4 steps:\n1. Create a [tc.preset] (shortcut for [v8ui @filename tc.preset.js])\n2. Create a [substitute read readfile]\n3. Connect these objects to your [pattrstorage] like shown below\n4. Send to tc.preset the name of your pattrstorage prepended by \"patterstorage\", or set its name in the @pattrstorage attribute "
+                                    "text": "Get tc.preset working in 4 steps:\n1. Create a [tc.preset] (shortcut for [v8ui @filename tc.preset.js])\n2. Create a [substitute read readfile]\n3. Connect these objects to your [pattrstorage] like shown below\n4. Send to tc.preset the name of your pattrstorage prepended by \"pattrstorage\", or set its name in the @pattrstorage attribute "
                                 }
                             },
                             {
@@ -5138,7 +5137,7 @@
                             }
                         ]
                     },
-                    "patching_rect": [ 10.0, 85.0, 50.0, 22.0 ],
+                    "patching_rect": [ 240.0, 27.7999267578125, 50.0, 22.0 ],
                     "saved_object_attributes": {
                         "fontsize": 13.0
                     },
@@ -5163,17 +5162,6 @@
             }
         ],
         "lines": [],
-        "parameters": {
-            "parameterbanks": {
-                "0": {
-                    "index": 0,
-                    "name": "",
-                    "parameters": [ "-", "-", "-", "-", "-", "-", "-", "-" ],
-                    "buttons": [ "-", "-", "-", "-", "-", "-", "-", "-" ]
-                }
-            },
-            "inherited_shortname": 1
-        },
         "autosave": 0
     }
 }

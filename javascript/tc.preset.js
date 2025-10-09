@@ -1175,7 +1175,6 @@ function clientlist() {
                 color_mode = color_mode_candidate;
             }
             is_listening_to_clientlist = 0;
-            
             paint_base();
         } else if (client == "done") {
             error("A [pattr preset_metadata] object has been found but seems to be invisible to the pattrstorage.\n")
@@ -1224,7 +1223,7 @@ function find_pattrstorage(name) {
 find_pattrstorage.local = 1;
 
 function to_pattrstorage() {
-    if (pattrstorage_obj && pattrstorage_obj.maxclass === 'pattrstorage') {
+    if (pattrstorage_obj != null) {
         // post('sending to pattrstorage: ', arrayfromargs(arguments), '\n');
         pattrstorage_obj.message(arrayfromargs(arguments));
     }
@@ -1760,7 +1759,9 @@ function setpattrstorage(v){
 
 function delayed_init() {
     loadbang();
-    arguments.callee.task.freepeer();
+    if (arguments.callee.task) {
+            arguments.callee.task.freepeer();
+    }
 }
 delayed_init.local = 1;
 
@@ -2077,7 +2078,6 @@ function setcolor_mode(v){
             color_mode_candidate = v;
             connect_to_metadata_pattr();
         } else {
-            v = 0;
             color_mode = v;
             paint_base();
         }
@@ -2246,7 +2246,7 @@ function run_edited_poll_task() {
 run_edited_poll_task.local = 1;
 
 function cancel_edited_poll_task() {
-    poll_edited_task.cancel();
+    if (poll_edited_task.valid) poll_edited_task.cancel();
 }
 cancel_edited_poll_task.local = 1;
 
