@@ -1,55 +1,64 @@
 # tc.preset
 
-A [jsui] replacement for the [preset] object in Cycling'74 Max.
+A [jsui]/[v8ui] replacement for the [preset] object in Cycling'74 Max.
 
 ## Features
-- Same click + modifier key behavior as the vanilla object to store and delete presets
+- Same click + modifier key behavior as the preset object to store and delete presets
+- + Additional interactions (control+click to rename, shift+control+click to lock/unlock)
 - Drag and drop presets to re-organize
 - Display presets as a grid or a list
 - Scrollable list layout (requires Max 8.6.2)
 - Shows active preset even if recalled directly from pattrstorage
 - Shows previously active preset, with the ability to ignore preset 0 if it being used as an intermediary step
-- Shows presets being interpolated (using recall or recallmulti)
+- Shows presets being interpolated (using recall or recallmulti) - now this feature is available the original preset object too
 - Shows preset name and lock state
+- Ability to display a dot if the current preset is edited
 - Outputs active preset name and lock state from third and fourth outlet
 - Ability to rewrite json file automatically every time a preset is stored/moved/deleted/renamed/(un)locked
-- Helps keeping in sync a umenu with the list of stored slotstlet
+- Helps keeping in sync a umenu with the list of stored presets
+- Provides a dictionary with all presets and their metadata (slot number, name, colors, uid)
 - More look customization
 - Dynamically adapts to resize both in Edit and Presentation mode
 - Select mode: simple click selects the slot, double click recalls it (allows for organizing presets without recalling them)
 - Color mode: various ways to colorize preset slots
+- UID: generate unique identifiers for each preset so you can "follow" them when they're moved, renamed or re-saved. Practical in case of advanced preset management
+...and more!
 
 ## How to install
-- [Download](https://github.com/Teufeuleu/tc.preset/archive/refs/heads/main.zip) this repository (and please consider donating on the [gumroad page](https://glucose47.gumroad.com/l/tc_preset) if you like this package)
-- Unzip the downloaded file and place the tc.preset folder in your Max Library package.
+- Go to the Releases page of this repository and download the version you want to use
+- Unzip the downloaded file and place the tc.preset folder in your [Max Packages folder](https://docs.cycling74.com/userguide/packages/#packages-folder).
 - Restart Max
 
 ## How to use
-- In your Max patch, reate a [`tc.preset`] object (or a more lenghty [`jsui @filename tc.preset.js`])
-- Connect the [pattrstorage] outlet to the [jsui] inlet
-- Set the jsui attribute named "pattrstorage" to the name of the pattrstorage you just connected (or send a message like "pattrstorage my_pattrstorage_name")
+Check "tc.preset Lauch" in the Extras menu of Max and then click "Open Help file" for detailed explanations.
 
+## How to develop tc.preset
 
-## Limitations
-- Due to the way [pattrstorage] works, some pattrstorage-specific messages should be sent to the [jsui] instead of the [pattrstorage]. Some to both: 
-    - `recall`: send to [pattrstorage] only
-    - `recallmulti`, `slotname`: send to [pattrstorage] first (for better timing), then to the [jsui]
-    - `store`: send to [jsui] only
-- Some messages to pattrstorage causes the jsui to be out of sync (`insert`, `lockall`, `read`, `readagain`, `remove`, `renumber`). If you use any of these messages, make sure to then send a `resync` to the jsui.
-- The js program send a lot of message to the [pattrstorage] (using `maxobj.message()`syntax, so without patch cord), which in return send (using a patch cord) a lot of messages required for the [jsui] to stay in sync. Using one of the above messages incorrectly, or sending `getslotlist`, `getslotnamelist`, or any message that will impact the presets might cause the [pattrstorage] to get out of sync. In case something like that happens, you can send the `resync` message to the [jsui].
+- Clone this repository in a folder that is not part of your [Max Search path](https://docs.cycling74.com/userguide/search_path/)
+- Do your stuff
+- Run `./build.sh`. The script will:
+  - create ./dist/Max 8/tc.preset and ./dist/Max 9/tc.preset
+  - copy the package files in these two folders depending on their prefix (starting with `max8.` or `max9.` - that prefix being removed during the copy process). Files with no prefix are copied in both folders
+  - once the copy is done the script will ask if you want to copy these two folders into the default working directory (~/Documents/Max <8|9>/Packages). Press 'y' to confirm or 'n' to cancel.
 
-## Desired features (for someday, if ever)
-- No need for a patch cord (programmatically create a [send]/[receive] pair?)
-- Ability to lock/unlock and rename directly in the jsui without the need of external objects
-- Ability to target a [pattrstorage] in a different patcher level
+Alternatively, instead of relying on this script you can manually remove the files with the prefix you don't want, and remove the prefix from the files you want to work on.
 
-## Known bugs
-- With slot_round > 0, interpolation visualization is a bit wacky
+## How to support my work
+Consider donating if you like this package.
+<div>
+<div id="donate-button-container">
+<div id="donate-button"></div>
+<script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+<script>
+PayPal.Donation.Button({env:'production',hosted_button_id:'AVGJ5JLTP76K8',image: {src:'https://pics.paypal.com/00/s/YjdhYzU5ZDItYjM0Yi00MGE1LWEzMWEtZGQ2NzVjMDI3MDg2/file.PNG',alt:'Donate with PayPal button',title:'PayPal - The safer, easier way to pay online!',}}).render('#donate-button');
+</script>
+</div>
+</div>
 
 ## License
 GPL-3.0-or-later 
 
-Copyright (C) 2024 Théophile Clet <contact@tflcl.xyz> - https://tflcl.xyz.
+Copyright (C) 2025 Théophile Clet <contact@tflcl.xyz> - https://tflcl.xyz.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
