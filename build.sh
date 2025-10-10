@@ -79,6 +79,18 @@ echo "Max 8 package: $MAX8_DIR"
 echo "Max 9 package: $MAX9_DIR"
 echo ""
 
+# Create zip files
+echo "Creating zip archives..."
+cd "$DIST_DIR/Max 8"
+zip -r "../../${PACKAGE_NAME}_Max8.zip" "$PACKAGE_NAME" -q
+cd "../Max 9"
+zip -r "../../${PACKAGE_NAME}_Max9.zip" "$PACKAGE_NAME" -q
+cd ../..
+
+echo "✓ Created ${PACKAGE_NAME}_Max8.zip"
+echo "✓ Created ${PACKAGE_NAME}_Max9.zip"
+echo ""
+
 # Ask to install
 read -p "Install to Max Packages folders (~/Documents/Max <8|9>/Packages)? (y/n) " -n 1 -r
 echo

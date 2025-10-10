@@ -3,3 +3,4 @@
 .LSOverride
 media/
 dist/
+*.zip
