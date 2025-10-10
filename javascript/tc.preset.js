@@ -120,7 +120,9 @@ var last_x, last_y, last_hovered = -1;
 var last_hovered_is_preset_slot = false;
 var y_offset = 0; // handle scrolling
 var drag_scroll = 0; // handle scrolling when dragging outside of boundaries
-var shift_hold, option_hold = 0;
+var shift_hold = 0;
+var option_hold = 0;
+var control_hold = 0;
 var is_interpolating = 0;
 var is_dragging = 0;    // Drag flag
 var drag_slot = -1;     // Stores the slot that's being dragged
@@ -498,22 +500,48 @@ function paint()
 
         // Hovered slot
         if (last_hovered > -1) {
-            if (shift_hold && last_hovered_is_preset_slot) {
-                if (option_hold) {
-                    // About to delete
-                    mgraphics.set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.8);
-                    draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
-                    mgraphics.fill();
-                } else {
-                    // About to store
-                    mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], 0.7);
-                    draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
-                    mgraphics.fill();
+            if (last_hovered_is_preset_slot) {
+                if (shift_hold) {
+                    if (control_hold && slots[last_hovered].name !== null) {
+                        // About to lock/unlock
+                        var bracket_size = slot_size * 0.2;
+                        mgraphics.set_source_rgba(1, 1, 1, 0.8);
+                        mgraphics.set_line_width(2);
+                        mgraphics.move_to(slots[last_hovered].left + bracket_size, slots[last_hovered].top - 2);
+                        mgraphics.rel_line_to(-bracket_size - 2, 0);
+                        mgraphics.rel_line_to(0, slot_size + 4);
+                        mgraphics.rel_line_to(bracket_size + 2, 0);
+                        mgraphics.move_to(slots[last_hovered].right - bracket_size, slots[last_hovered].top - 2);
+                        mgraphics.rel_line_to(2 + bracket_size, 0);
+                        mgraphics.rel_line_to(0, slot_size + 4);
+                        mgraphics.rel_line_to(- 2 - bracket_size, 0);
+                        mgraphics.stroke();
+                    } else if (option_hold && !control_hold  && slots[last_hovered].name !== null) {
+                        // About to delete
+                        mgraphics.set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.8);
+                        draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
+                        mgraphics.fill();
+                    } else if (!control_hold && !option_hold){
+                        // About to store
+                        mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], 0.7);
+                        draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
+                        mgraphics.fill();
+                    }
+                } else if (control_hold && slots[last_hovered].name !== null) {
+                    // About to rename
+                    mgraphics.set_source_rgba(1, 1, 1, 0.8);
+                    mgraphics.set_line_width(2);
+                    mgraphics.move_to(slots[last_hovered].left - 2, slots[last_hovered].top - 2);
+                    mgraphics.rel_line_to(slot_size + 4, 0);
+                    mgraphics.move_to(slots[last_hovered].left - 2, slots[last_hovered].bottom + 2);
+                    mgraphics.rel_line_to(slot_size + 4, 0);
+                    mgraphics.stroke();
                 }
             }
 
             // Slot border
             mgraphics.set_source_rgba(1, 1, 1, 0.8);
+            mgraphics.set_line_width(1);
             draw_slot_bubble(slots[last_hovered].left, slots[last_hovered].top, slot_size, slot_size);
             mgraphics.stroke();
 
@@ -1451,9 +1479,10 @@ function onidle(x,y,but,cmd,shift,capslock,option,ctrl)
             redraw_flag = true;
 		}
     }
-    if (shift_hold != shift || option_hold != option) {
+    if (shift_hold != shift || option_hold != option || control_hold != ctrl) {
         shift_hold = shift;
 		option_hold = option;
+        control_hold = ctrl;
         redraw_flag = true;
     }
     last_hovered_is_preset_slot = scrollable && nbslot_edit && last_hovered > (true_slots_count_display - 2) ? false : true;
