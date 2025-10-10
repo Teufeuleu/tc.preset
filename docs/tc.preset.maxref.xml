@@ -72,6 +72,13 @@
 				With no argument, it resets colors for the select preset to default values.
 			</description>
 		</method>
+		<method name="move">
+			<digest>Move a preset to another slot</digest>
+			<description> The word move followed by two integers move the stored preset located in the slot designaded by the first integer to the slot designated by the second integer.
+				This is the message equivalent of dragging a preset with the mouse.
+				If a preset gets moved to a slot with another existing preset, that preset and the subsequent ones will be offset by 1 slot.
+			</description>
+		</method>
 		<method name="pattrstorage">
 			<digest>Link to named pattrstorage object</digest>
 			<description>The word 'pattrstorage' followed by the name of an existing pattrstorage links the jsui to that pattrstorage.

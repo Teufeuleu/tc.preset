@@ -54,6 +54,7 @@ var empty_slot_color = [0.349, 0.349, 0.349, 1];
 var active_slot_color = [0.808, 0.898, 0.910, 1];
 var stored_slot_color = [0.502, 0.502, 0.502, 1];
 var interp_slot_color = [1.0, 1.0, 1.0, 0.8];
+var border_color = [1.0, 1.0, 1.0, 0.85];
 var text_bg_color = [1,1,1, 0.5];
 var text_color = [0.129, 0.129, 0.129, 1];
 var edited_color = [1, 0.49, 0.263, 1];
@@ -124,6 +125,7 @@ var shift_hold = 0;
 var option_hold = 0;
 var control_hold = 0;
 var is_interpolating = 0;
+var is_moving = 0;
 var is_dragging = 0;    // Drag flag
 var drag_slot = -1;     // Stores the slot that's being dragged
 var is_writing = 0;
@@ -375,7 +377,6 @@ format_slot_name.local = 1;
 
 function paint_base() {
     // We draw all slots (empty and stored ones) so we don't have to for every redraw
-    // post("paint_base\n");
     is_painting_base = 1;
 
     // Background
@@ -439,9 +440,12 @@ function paint()
         if (is_dragging == 0 && active_slot > 0 && active_slot <= slots_count_display) {
             mgraphics.set_source_rgba(active_slot_color);
             if (color_mode) {
-                draw_slot_bubble(slots[active_slot].left+1.5, slots[active_slot].top+1.5, slot_size-3, slot_size-3);
-                mgraphics.set_line_width(3);
-                mgraphics.stroke();
+                if (!control_hold) {
+                    // If color_mode enabled, draw a bold border around the active slot only if control isn't hold (for rename/lock actions)
+                    draw_slot_bubble(slots[active_slot].left+1, slots[active_slot].top+1, slot_size-2, slot_size-2);
+                    mgraphics.set_line_width(2);
+                    mgraphics.stroke();
+                }
             } else {
                 draw_slot_bubble(slots[active_slot].left, slots[active_slot].top, slot_size, slot_size);
                 mgraphics.fill();
@@ -452,24 +456,20 @@ function paint()
         if (is_dragging == 0 && previous_active_slot > 0 && previous_active_slot <= slots_count_display) {
             mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], active_slot_color[3] * 0.5);
             if (color_mode) {
-                draw_slot_bubble(slots[previous_active_slot].left+1.5, slots[previous_active_slot].top+1.5, slot_size-3, slot_size-3);
-                mgraphics.set_line_width(3);
-                mgraphics.stroke();
+                if (!control_hold) {
+                    draw_slot_bubble(slots[previous_active_slot].left+1, slots[previous_active_slot].top+1, slot_size-2, slot_size-2);
+                    mgraphics.set_line_width(2);
+                    mgraphics.stroke();
+                }
             } else {
                 draw_slot_bubble(slots[previous_active_slot].left, slots[previous_active_slot].top, slot_size, slot_size);
                 mgraphics.fill();
             }
         }
 
-            //Hide dragged slot
-        if (is_dragging) {
-            mgraphics.set_source_rgba(empty_slot_color);
-            draw_slot_bubble(slots[drag_slot].left, slots[drag_slot].top, slot_size, slot_size);
-            mgraphics.fill();
-        }
 
         // Selected slot
-        if (selected_slot > 0 && selected_slot <= slots_count_display) {
+        if (selected_slot > 0 && selected_slot <= slots_count_display && !(control_hold && last_hovered == selected_slot) && selected_slot != drag_slot) {
             mgraphics.set_source_rgba(active_slot_color);
             mgraphics.set_line_width(1);
             draw_slot_bubble(slots[selected_slot].left - 0.5, slots[selected_slot].top - 0.5, slot_size + 1, slot_size + 1);
@@ -498,23 +498,39 @@ function paint()
             mgraphics.fill();
         }
 
+        //Hide dragged slot
+        // if (is_dragging) {
+        //     mgraphics.set_source_rgba(background_color);
+        //     draw_slot_bubble(slots[drag_slot].left, slots[drag_slot].top, slot_size, slot_size);
+        //     mgraphics.fill();
+        // }
+
         // Hovered slot
         if (last_hovered > -1) {
+
+            // Slot border
+            if (slots[last_hovered].name == null || (slots[last_hovered].name != null && !control_hold)) {
+                mgraphics.set_source_rgba(border_color[0], border_color[1], border_color[2], 0.8 * border_color[3]);
+                mgraphics.set_line_width(1);
+                draw_slot_bubble(slots[last_hovered].left, slots[last_hovered].top, slot_size, slot_size);
+                mgraphics.stroke();
+            }
+
             if (last_hovered_is_preset_slot) {
                 if (shift_hold) {
                     if (control_hold && slots[last_hovered].name !== null) {
                         // About to lock/unlock
                         var bracket_size = slot_size * 0.2;
-                        mgraphics.set_source_rgba(1, 1, 1, 0.8);
+                        mgraphics.set_source_rgba(border_color);
                         mgraphics.set_line_width(2);
-                        mgraphics.move_to(slots[last_hovered].left + bracket_size, slots[last_hovered].top - 2);
-                        mgraphics.rel_line_to(-bracket_size - 2, 0);
-                        mgraphics.rel_line_to(0, slot_size + 4);
-                        mgraphics.rel_line_to(bracket_size + 2, 0);
-                        mgraphics.move_to(slots[last_hovered].right - bracket_size, slots[last_hovered].top - 2);
-                        mgraphics.rel_line_to(2 + bracket_size, 0);
-                        mgraphics.rel_line_to(0, slot_size + 4);
-                        mgraphics.rel_line_to(- 2 - bracket_size, 0);
+                        mgraphics.move_to(slots[last_hovered].left + bracket_size, slots[last_hovered].top);
+                        mgraphics.rel_line_to(-bracket_size, 0);
+                        mgraphics.rel_line_to(0, slot_size);
+                        mgraphics.rel_line_to(bracket_size, 0);
+                        mgraphics.move_to(slots[last_hovered].right - bracket_size, slots[last_hovered].top);
+                        mgraphics.rel_line_to(bracket_size, 0);
+                        mgraphics.rel_line_to(0, slot_size);
+                        mgraphics.rel_line_to(-bracket_size, 0);
                         mgraphics.stroke();
                     } else if (option_hold && !control_hold  && slots[last_hovered].name !== null) {
                         // About to delete
@@ -529,21 +545,15 @@ function paint()
                     }
                 } else if (control_hold && slots[last_hovered].name !== null) {
                     // About to rename
-                    mgraphics.set_source_rgba(1, 1, 1, 0.8);
+                    mgraphics.set_source_rgba(border_color);
                     mgraphics.set_line_width(2);
-                    mgraphics.move_to(slots[last_hovered].left - 2, slots[last_hovered].top - 2);
-                    mgraphics.rel_line_to(slot_size + 4, 0);
-                    mgraphics.move_to(slots[last_hovered].left - 2, slots[last_hovered].bottom + 2);
-                    mgraphics.rel_line_to(slot_size + 4, 0);
+                    mgraphics.move_to(slots[last_hovered].left, slots[last_hovered].top);
+                    mgraphics.rel_line_to(slot_size, 0);
+                    mgraphics.move_to(slots[last_hovered].left, slots[last_hovered].bottom);
+                    mgraphics.rel_line_to(slot_size, 0);
                     mgraphics.stroke();
                 }
             }
-
-            // Slot border
-            mgraphics.set_source_rgba(1, 1, 1, 0.8);
-            mgraphics.set_line_width(1);
-            draw_slot_bubble(slots[last_hovered].left, slots[last_hovered].top, slot_size, slot_size);
-            mgraphics.stroke();
 
             if (layout == 0) {
                 //Text (slot number and name)
@@ -813,7 +823,7 @@ function anything() {
     // Here just to avoid error messages in case pattrstorage sends unhandled message, like when  using getstoredvalue, getsubscriptionlist, getalias, etc.
 
     // Handle the "delete" messages here because we can't declare a "function delete" (it is a reserved word in js and cannot be used as a function name.
-    if (messagename == "delete") {
+    if (messagename == "delete" && !is_dragging && !is_moving) {
         var v = arrayfromargs(arguments)[0];
             v = Math.floor(v);
         if (v >= 0) {
@@ -828,7 +838,7 @@ function anything() {
                     previous_active_slot = 0;
                 }
                                 
-                if (is_dragging == 0) {
+                if (is_dragging == 0 && is_moving == 0) {
                     to_pattrstorage("delete", v);
                     to_pattrstorage("getslotlist");
                     paint_base();
@@ -1130,13 +1140,15 @@ function lock() {
     if (args.length == 2) {
         to_pattrstorage("lock", args[0], args[1]);
         to_pattrstorage("getlockedslots");
-        outlet(0, "lock", args[0], args[1]);
-        update_filled_slots_dict();
-        trigger_writeagain();
-        if (layout == 1) {
-            paint_base();
-        } else if (layout == 0) {
-            mgraphics.redraw();
+        if (!is_dragging && !is_moving) {
+            outlet(0, "lock", args[0], args[1]);
+            update_filled_slots_dict();
+            trigger_writeagain();
+            if (layout == 1) {
+                paint_base();
+            } else if (layout == 0) {
+                mgraphics.redraw();
+            }
         }
     }
 }
@@ -1154,6 +1166,91 @@ function lockedslots() {
             }
         } 
     }
+}
+
+function move() {
+    var args = arrayfromargs(arguments);
+    if (args.length < 2) return;
+    var src_slot = args[0]; // Preset to move
+    var dst_slot = args[1]; // Destination slot
+    if (src_slot == dst_slot || !(src_slot <= slots_highest && dst_slot <= slots_count_display) || slots[src_slot].name == null) {
+        if (is_dragging) {
+            
+        }
+        return;
+    }
+    is_moving = 1;
+
+    var cur_active_slot = active_slot;
+    var cur_prev_active_slot = previous_active_slot;
+    var cur_selected_slot = selected_slot;
+    var offset = ((dst_slot <= src_slot) && slots[dst_slot].name != null) ? 1 : 0;
+    var offset_others = slots[dst_slot].name != null ? 1 : 0;
+    var src_slot_lock = slots[src_slot].lock;
+    var recalc_rows_flag = 0;
+
+    // If the slot we wan to drag is locked, we need to temporarily unlock it.
+    if (src_slot_lock) {
+        lock(src_slot, 0);
+    }
+    // If new slot is empty we just move the drag preset here. If it's not, we move al next slots to the right
+    if (slots[dst_slot].name !== null) {
+        if (slots_highest == slots_count_display) {
+            // If there's a stored preset in the last displayed slot, it will be pushed to a new row at insert, so we need to add a new row at redraw
+            recalc_rows_flag = 1;
+        }
+        to_pattrstorage("insert", dst_slot);
+    }
+    
+    to_pattrstorage("copy", src_slot + offset, dst_slot);
+    to_pattrstorage("delete", src_slot + offset);
+
+    // All this just to keep trace of the active and previous active slots
+    if (cur_active_slot == src_slot) {
+        active_slot = dst_slot;
+    } else if (dst_slot == cur_active_slot) {
+        active_slot = cur_active_slot + 1;
+    } else if (cur_active_slot > dst_slot) {
+        active_slot += offset_others;
+    }
+    if (cur_prev_active_slot == src_slot) {
+        previous_active_slot = dst_slot;
+    } else if (cur_prev_active_slot == dst_slot){
+        previous_active_slot = cur_prev_active_slot + 1;
+    } else if (cur_prev_active_slot > dst_slot) {
+        previous_active_slot += offset_others;
+    }
+    if (cur_selected_slot == src_slot) {
+        selected_slot = dst_slot;
+    } else if (dst_slot == cur_selected_slot) {
+        selected_slot = cur_selected_slot + 1;
+    } else if (cur_selected_slot > dst_slot) {
+        selected_slot += offset_others;
+    }
+
+    slots_clear();
+    to_pattrstorage("getslotlist");
+    
+    // If the dragged slot was locked, relock it.
+    if (src_slot_lock) {
+        lock(dst_slot, 1);
+    }
+
+    to_pattrstorage("getlockedslots");
+
+    outlet(0, "move", src_slot, dst_slot);
+    is_moving = 0;
+    if (is_dragging) {
+        is_dragging = 0;
+        drag_slot = -1; 
+    }
+
+    if (recalc_rows_flag) {
+        calc_rows_columns();
+    } else {
+        paint_base();
+    }
+    trigger_writeagain();
 }
 
 function write() {
@@ -1328,10 +1425,7 @@ function update_umenu() {
                     break;
             }
         }
-
-        if (layout == 1) {
-            set_umenu(selected_slot);
-        }
+        set_umenu(selected_slot);
     }
 }
 update_umenu.local = 1;
@@ -1609,6 +1703,7 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
             if (dist_from_start > 10) {
                 is_dragging = 1;
                 drag_slot = last_hovered;
+                paint_base(); // We repaint the base with the dragged slot removed from the grid
             }
 
         } else if (is_dragging == 1) {
@@ -1620,66 +1715,7 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
             if (!but) {
                 // When the button is released, the dragging ceases
                 if (last_hovered > 0 && last_hovered != drag_slot && last_hovered_is_preset_slot) {
-                    var cur_active_slot = active_slot;
-                    var cur_prev_active_slot = previous_active_slot;
-                    var offset = ((last_hovered <= drag_slot) && slots[last_hovered].name != null) ? 1 : 0;
-                    var offset_others = slots[last_hovered].name != null ? 1 : 0;
-                    var drag_slot_lock = slots[drag_slot].lock;
-                    var recalc_rows_flag = 0
-                    // If the slot we wan to drag is locked, we need to temporarily unlock it.
-                    if (drag_slot_lock) {
-                        lock(drag_slot, 0);
-                    }
-                    // If new slot is empty we just move the drag preset here. If it's not, we move al next slots to the right
-                    if (slots[last_hovered].name !== null) {
-                        if (slots_highest == slots_count_display) {
-                            // If there's a stored preset in the last displayed slot, it will be pushed to a new row at insert, so we need to add a new row at redraw
-                            recalc_rows_flag = 1;
-                        }
-                        to_pattrstorage("insert", last_hovered);
-                    }
-                    
-                    to_pattrstorage("copy", drag_slot + offset, last_hovered);
-                    to_pattrstorage("delete", drag_slot + offset);
-                    
-                    slots_clear();
-                    to_pattrstorage("getslotlist");
-                    to_pattrstorage("getlockedslots");
-
-                    // All this just to keep trace of the active and previous active slots
-                    if (cur_active_slot == drag_slot) {
-                        active_slot = last_hovered;
-                    } else if (last_hovered == cur_active_slot) {
-                        active_slot = cur_active_slot + 1;
-                    } else if (cur_active_slot > last_hovered) {
-                        active_slot += offset_others;
-                    }
-                    if (cur_prev_active_slot == drag_slot) {
-                        previous_active_slot = last_hovered;
-                    } else if (cur_prev_active_slot == last_hovered){
-                        previous_active_slot = cur_prev_active_slot + 1;
-                    } else if (cur_prev_active_slot > last_hovered) {
-                        previous_active_slot += offset_others;
-                    }
-
-                    // If the dragged slot was locked, relock it.
-                    if (drag_slot_lock) {
-                        lock(last_hovered, 1);
-                    }
-                    outlet(0, "drag", drag_slot, last_hovered, offset);
-                    is_dragging = 0;
-                    drag_slot = -1;
-
-                    select(last_hovered);
-
-                    if (recalc_rows_flag) {
-                        calc_rows_columns();
-                    } else {
-                        paint_base();
-                    }
-                    
-                    trigger_writeagain();
-
+                    move(drag_slot, last_hovered);
                 } else {
                     // Drag released but not somewhere we can throw a slot in
                     is_dragging = 0;

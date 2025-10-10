@@ -70,9 +70,31 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 0.0, 26.0, 899.0, 620.0 ],
+                        "rect": [ 364.0, 135.0, 899.0, 620.0 ],
                         "showontab": 1,
                         "boxes": [
+                            {
+                                "box": {
+                                    "id": "obj-12",
+                                    "linecount": 2,
+                                    "maxclass": "comment",
+                                    "numinlets": 1,
+                                    "numoutlets": 0,
+                                    "patching_rect": [ 473.0, 388.0, 278.0, 33.0 ],
+                                    "text": "Move an existing preset to another slot\n(same action as dragging a preset with the mouse)"
+                                }
+                            },
+                            {
+                                "box": {
+                                    "id": "obj-5",
+                                    "maxclass": "message",
+                                    "numinlets": 2,
+                                    "numoutlets": 1,
+                                    "outlettype": [ "" ],
+                                    "patching_rect": [ 403.0, 394.0, 65.0, 22.0 ],
+                                    "text": "move 4 10"
+                                }
+                            },
                             {
                                 "box": {
                                     "id": "obj-38",
@@ -119,8 +141,8 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 472.0, 377.0, 365.0, 20.0 ],
-                                    "text": "Recalls the nth (0-based) filled preset, regardless of its slot number"
+                                    "patching_rect": [ 473.0, 367.0, 365.0, 20.0 ],
+                                    "text": "Recall the nth (0-based) filled preset, regardless of its slot number"
                                 }
                             },
                             {
@@ -130,7 +152,7 @@
                                     "numinlets": 2,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 389.0, 376.0, 79.0, 22.0 ],
+                                    "patching_rect": [ 389.0, 366.0, 79.0, 22.0 ],
                                     "text": "recall_filled 4"
                                 }
                             },
@@ -174,7 +196,7 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 389.0, 350.0, 168.0, 20.0 ],
+                                    "patching_rect": [ 390.0, 335.0, 168.0, 20.0 ],
                                     "text": "tc.preset specific messages"
                                 }
                             },
@@ -305,7 +327,7 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 472.0, 481.0, 225.0, 20.0 ],
+                                    "patching_rect": [ 447.0, 473.0, 225.0, 20.0 ],
                                     "text": "Sets the lock state of the selected preset"
                                 }
                             },
@@ -317,7 +339,7 @@
                                     "numoutlets": 1,
                                     "outlettype": [ "int" ],
                                     "parameter_enable": 0,
-                                    "patching_rect": [ 405.0, 450.0, 24.0, 24.0 ]
+                                    "patching_rect": [ 380.0, 442.0, 24.0, 24.0 ]
                                 }
                             },
                             {
@@ -327,7 +349,7 @@
                                     "numinlets": 2,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 405.0, 480.0, 63.0, 22.0 ],
+                                    "patching_rect": [ 380.0, 472.0, 63.0, 22.0 ],
                                     "text": "setlock $1"
                                 }
                             },
@@ -338,7 +360,7 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 472.0, 411.0, 285.0, 33.0 ],
+                                    "patching_rect": [ 473.0, 423.0, 285.0, 33.0 ],
                                     "text": "Select a preset. Doesn't recall it, but updates the umenu, textedit and lock toggle underneath the jsui."
                                 }
                             },
@@ -349,7 +371,7 @@
                                     "numinlets": 2,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 418.0, 417.0, 50.0, 22.0 ],
+                                    "patching_rect": [ 418.0, 429.0, 50.0, 22.0 ],
                                     "text": "select 3"
                                 }
                             },
@@ -419,7 +441,7 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 472.0, 507.0, 198.0, 20.0 ],
+                                    "patching_rect": [ 447.0, 499.0, 198.0, 20.0 ],
                                     "text": "Set the name of the selected preset"
                                 }
                             },
@@ -430,7 +452,7 @@
                                     "numinlets": 2,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 345.0, 506.0, 123.0, 22.0 ],
+                                    "patching_rect": [ 320.0, 498.0, 123.0, 22.0 ],
                                     "text": "setslotname myname"
                                 }
                             },
@@ -441,7 +463,7 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 472.0, 530.0, 171.0, 33.0 ],
+                                    "patching_rect": [ 447.0, 522.0, 171.0, 33.0 ],
                                     "text": "A fail-safe message to resync the jsui to the pattrstorage"
                                 }
                             },
@@ -464,7 +486,7 @@
                                     "numinlets": 2,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 424.0, 535.0, 44.0, 22.0 ],
+                                    "patching_rect": [ 399.0, 527.0, 44.0, 22.0 ],
                                     "text": "resync"
                                 }
                             },
@@ -714,6 +736,12 @@
                                 "patchline": {
                                     "destination": [ "obj-1", 0 ],
                                     "source": [ "obj-48", 0 ]
+                                }
+                            },
+                            {
+                                "patchline": {
+                                    "destination": [ "obj-10", 0 ],
+                                    "source": [ "obj-5", 0 ]
                                 }
                             },
                             {
@@ -1603,43 +1631,43 @@
                                             {
                                                 "box": {
                                                     "embedstate": [
-                                                        [ "text_bg_color", 1, 1, 1, 0.5 ],
-                                                        [ "ui_rename", 0 ],
-                                                        [ "bubblesize", 14 ],
-                                                        [ "ignoreslotzero", 1 ],
                                                         [ "color_5", 0.283, 0.606, 0.559, 1 ],
+                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
                                                         [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ],
+                                                        [ "spacing", 4 ],
+                                                        [ "bgcolor", 0.2, 0.2, 0.2, 1 ],
                                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                                         [ "text_color", 0.129, 0.129, 0.129, 1 ],
-                                                        [ "poll_edited", 0 ],
+                                                        [ "color_mode", 0 ],
                                                         [ "slot_round", 0 ],
                                                         [ "color_6", 0.316, 0.616, 0.377, 1 ],
+                                                        [ "nbslot_edit", 1 ],
                                                         [ "active_slot_color", 0.808, 0.898, 0.91, 1 ],
-                                                        [ "scrollable", 0 ],
                                                         [ "min_rows", 10 ],
-                                                        [ "margin", 4 ],
-                                                        [ "color_mode", 0 ],
-                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
-                                                        [ "bgcolor", 0.2, 0.2, 0.2, 1 ],
-                                                        [ "fontsize", 14 ],
-                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
                                                         [ "select_mode", 0 ],
+                                                        [ "unique_names", 0 ],
+                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "scrollable", 0 ],
                                                         [ "send_name", "none" ],
                                                         [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ],
+                                                        [ "margin", 4 ],
+                                                        [ "layout", 0 ],
+                                                        [ "use_uid", 0 ],
+                                                        [ "fontsize", 14 ],
+                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
+                                                        [ "recall_passthrough", 1 ],
+                                                        [ "ui_rename", 0 ],
+                                                        [ "menu_mode", 0 ],
+                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
                                                         [ "fontname", "Arial" ],
                                                         [ "pattrstorage", "mypat" ],
-                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
-                                                        [ "menu_mode", 0 ],
-                                                        [ "nbslot_edit", 1 ],
-                                                        [ "unique_names", 0 ],
-                                                        [ "recall_passthrough", 1 ],
-                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
-                                                        [ "layout", 0 ],
+                                                        [ "bubblesize", 14 ],
                                                         [ "color_4", 0.367, 0.542, 0.712, 1 ],
                                                         [ "autowriteagain", 0 ],
+                                                        [ "poll_edited", 0 ],
                                                         [ "display_interp", 1 ],
-                                                        [ "spacing", 4 ],
-                                                        [ "use_uid", 0 ]
+                                                        [ "text_bg_color", 1, 1, 1, 0.5 ]
                                                     ],
                                                     "filename": "tc.preset",
                                                     "id": "obj-1",
@@ -4798,7 +4826,7 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 364.0, 135.0, 899.0, 620.0 ],
+                        "rect": [ 0.0, 26.0, 899.0, 620.0 ],
                         "default_fontsize": 13.0,
                         "gridsize": [ 5.0, 5.0 ],
                         "showontab": 1,
