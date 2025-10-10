@@ -131,7 +131,7 @@ var requested_slot = -1; // Which slot we're waiting a value for (used in get_al
 var color_mode_candidate = 0; // Which color mode we're aiming
 var is_listening_to_subscriptionlist = 0; //Filters out received subscriptionlist messages when not updating slot color values
 var is_listening_to_clientlist = 0; //Filters out received clientlist messages when not updating slot color values
-var metadata_pattr;
+var metadata_pattr = null;
 var metadata_pattr_address;
 var metadata_updated = false; // Flag to write presets file after filling possible empty preset_metadata
 
@@ -687,15 +687,15 @@ function connect_to_metadata_pattr() {
     var obj = this.patcher.getnamed("preset_metadata");
     if (!obj) {
         error("preset_metadata pattr not found.\n");
-        metadata_pattr = 0;
+        metadata_pattr = null;
         return false;
     } else if (obj.maxclass != "pattr"){
         error("preset_metadata named object is not a pattr object.\n");
-        metadata_pattr = 0;
+        metadata_pattr = null;
         return false;
     } else if (obj.getattr('invisible') == 1) {
         error("preset_metadata has been found but has invisible attribute set to 1\n");
-        metadata_pattr = 0;
+        metadata_pattr = null;
         return false;
     } else {
         metadata_pattr = obj;
@@ -2073,13 +2073,16 @@ function setcolor_mode(v){
     // For color modes 2 and 3 (select and custom),
     // we need to ensure there's a [pattr preset_metadata] somewhere to store the preset color
     if (v >= 2 ) {
-        if (metadata_pattr == undefined) {
+        if (metadata_pattr == null) {
             is_listening_to_clientlist = 2;
             color_mode_candidate = v;
             connect_to_metadata_pattr();
-        } else {
+        } else if (metadata_pattr.valid) {
             color_mode = v;
             paint_base();
+        } else {
+            error("Connection with [pattr preset_metadata lost\n");
+            metadata_pattr = null;
         }
     } else {
         color_mode = v;
