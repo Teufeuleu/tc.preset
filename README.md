@@ -53,4 +53,4 @@ Copyright (C) 2025 Théophile Clet <contact@tflcl.xyz> - https://tflcl.xyz.
 
 GPL-3.0-or-later
 
-See the [license file](./LICENSE).
+See the [license file](./license).
