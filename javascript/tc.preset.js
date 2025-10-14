@@ -1502,6 +1502,7 @@ function set_textedit(s) {
             textedit_initstate.bgcolor = textedit_obj.getattr('bgcolor');
             textedit_initstate.bordercolor = textedit_obj.getattr('bordercolor');
             textedit_initstate.textcolor = textedit_obj.getattr('textcolor');
+            textedit_initstate.border = textedit_obj.getattr('border');
             textedit_initstate.fontname = textedit_obj.getattr('fontname');
             textedit_initstate.fontsize = textedit_obj.getattr('fontsize');
             textedit_initstate.fontface = textedit_obj.getattr('fontface');
@@ -1509,23 +1510,25 @@ function set_textedit(s) {
 
             // Apply new textedit state
             var pos = this.patcher.getattr("presentation") ? this.box.getattr('presentation_rect') : this.box.getattr('patching_rect');
+            var h = Math.max(slot_size, font_size + 2);
             textedit_obj.setattr('bgcolor', stored_slot_color);
             textedit_obj.setattr('bordercolor', [0,0,0,0]);
             textedit_obj.setattr('textcolor', text_color);
+            textedit_obj.setattr('fontsize', font_size);
             textedit_obj.setattr('fontname', font_name);
-            textedit_obj.setattr('fontsize', slot_size);
             textedit_obj.setattr('fontface', 0);
             textedit_obj.setattr('textjustification', 0);
+            textedit_obj.setattr('border', 0);
 
             if (layout == 0) {
-                textedit_obj.message('position', pos[0] + margin, pos[1] + slots[s].top + y_offset - 4);
-                textedit_obj.message('size', ui_width - (2*margin), slot_size + 8);
+                textedit_obj.message('position', pos[0] + margin, pos[1] + slots[s].top + y_offset);
+                textedit_obj.message('size', ui_width - (2*margin), h);
                 // Only works in v8ui
                 // textedit_obj.position = [pos[0] + margin, pos[1] + slots[s].top + y_offset];
                 // textedit_obj.size = [ui_width - (2*margin), slot_size + 1];
             } else if (layout == 1) {
-                textedit_obj.message('position', pos[0] + margin + slot_size + spacing, pos[1] + slots[s].top + y_offset - 4);
-                textedit_obj.message('size', ui_width - (2*margin + slot_size + spacing), slot_size + 8);
+                textedit_obj.message('position', pos[0] + margin + slot_size + spacing, pos[1] + slots[s].top + y_offset);
+                textedit_obj.message('size', ui_width - (2*margin + slot_size + spacing), h);
                 // Only works in v8ui
                 // textedit_obj.position = [pos[0] + margin + slot_size + spacing, pos[1] + slots[s].top + y_offset];
                 // textedit_obj.size = [ui_width - (2*margin + slot_size + spacing), slot_size + 1];
@@ -1545,6 +1548,7 @@ function restore_textedit() {
             textedit_obj.setattr('bgcolor', textedit_initstate.bgcolor);
             textedit_obj.setattr('bordercolor', textedit_initstate.bordercolor);
             textedit_obj.setattr('textcolor', textedit_initstate.textcolor);
+            textedit_obj.setattr('border', textedit_initstate.border);
             textedit_obj.setattr('fontname', textedit_initstate.fontname);
             textedit_obj.setattr('fontsize', textedit_initstate.fontsize);
             textedit_obj.setattr('fontface', textedit_initstate.fontface);
