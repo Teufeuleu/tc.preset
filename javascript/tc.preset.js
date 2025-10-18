@@ -144,6 +144,7 @@ var textedit_initstate = {};
 var is_typing_name = false;
 
 var poll_edited_task = new Task(do_poll_edited, this);
+var init_tsk;
 
 var has_loaded = false;
 
@@ -438,7 +439,9 @@ function paint()
         
         // Active slot
         if (is_dragging == 0 && active_slot > 0 && active_slot <= slots_count_display) {
-            mgraphics.set_source_rgba(active_slot_color);
+            var opacity = active_slot_color[3];
+            var opacity = control_hold && last_hovered == active_slot ? active_slot_color[3] * 0.7 : active_slot_color[3];
+            mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], opacity);
             if (color_mode) {
                 if (!control_hold) {
                     // If color_mode enabled, draw a bold border around the active slot only if control isn't hold (for rename/lock actions)
@@ -1821,14 +1824,14 @@ function setpattrstorage(v){
         // (was it just an attribute change? or maybe the object got copy-pasted with already set attribute, or it is being instantiated at patch load with saved attributes)
         // So we have to delay the loadbang to make sure it will work in any case
         // and won't be triggered before this or other objects are being instantiated completely.
-        var init_tsk = new Task(delayed_init);
+        init_tsk = new Task(delayed_init);
         init_tsk.schedule(200);
     }
 }
 
 function delayed_init() {
     loadbang();
-    if (arguments.callee.task) {
+    if (arguments.callee.task.valid) {
             arguments.callee.task.freepeer();
     }
 }
