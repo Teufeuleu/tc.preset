@@ -9,10 +9,527 @@
             "modernui": 1
         },
         "classnamespace": "box",
-        "rect": [ 364.0, 109.0, 899.0, 646.0 ],
+        "rect": [ 368.0, 140.0, 900.0, 646.0 ],
         "showrootpatcherontab": 0,
         "showontab": 0,
         "boxes": [
+            {
+                "box": {
+                    "id": "obj-1",
+                    "maxclass": "newobj",
+                    "numinlets": 0,
+                    "numoutlets": 0,
+                    "patcher": {
+                        "fileversion": 1,
+                        "appversion": {
+                            "major": 9,
+                            "minor": 1,
+                            "revision": 0,
+                            "architecture": "x64",
+                            "modernui": 1
+                        },
+                        "classnamespace": "box",
+                        "rect": [ 0.0, 26.0, 900.0, 620.0 ],
+                        "showontab": 1,
+                        "boxes": [
+                            {
+                                "box": {
+                                    "id": "obj-12",
+                                    "linecount": 6,
+                                    "maxclass": "comment",
+                                    "numinlets": 1,
+                                    "numoutlets": 0,
+                                    "patching_rect": [ 519.0, 158.0, 350.0, 87.0 ],
+                                    "text": "Reason for the [substitute read readfile] workaround:\n[pattrstorage] sometimes outputs 'read' messages, which are properly handled by [jsui] or [v8ui] starting from Max 9.1.0.\nBut between Max 9.0.0 and 9.0.9, [v8ui] doesn't accept read messages since it is a method of the object to change the loaded javascript file."
+                                }
+                            },
+                            {
+                                "box": {
+                                    "id": "obj-10",
+                                    "linecount": 4,
+                                    "maxclass": "comment",
+                                    "numinlets": 1,
+                                    "numoutlets": 0,
+                                    "patching_rect": [ 519.0, 64.0, 350.0, 60.0 ],
+                                    "text": "Differences between the JSUI and V8UI versions:\nThe V8UI version performs slightly better and takes advantage of improved attribute management with proper value pickers.\nOther than that, features are the same."
+                                }
+                            },
+                            {
+                                "box": {
+                                    "border": 0,
+                                    "filename": "helpname.js",
+                                    "id": "obj-8",
+                                    "ignoreclick": 1,
+                                    "jsarguments": [ "tc.preset" ],
+                                    "maxclass": "v8ui",
+                                    "numinlets": 1,
+                                    "numoutlets": 1,
+                                    "outlettype": [ "" ],
+                                    "parameter_enable": 0,
+                                    "patching_rect": [ 10.0, 10.0, 188.2880096435547, 57.599853515625 ],
+                                    "textfile": {
+                                        "filename": "helpname.js",
+                                        "flags": 0,
+                                        "embed": 0,
+                                        "autowatch": 1
+                                    }
+                                }
+                            },
+                            {
+                                "box": {
+                                    "fontsize": 13.0,
+                                    "id": "obj-113",
+                                    "linecount": 12,
+                                    "maxclass": "comment",
+                                    "numinlets": 1,
+                                    "numoutlets": 0,
+                                    "patching_rect": [ 10.0, 64.0, 470.0, 181.0 ],
+                                    "text": "There is various ways to use the tc.preset.js file, depending on the compatibility coverage you want:\n\n- If retrocompatibility isn't a concern, you can use the V8UI version as shown in the other tabs of this help file.\n\n- If you develop Max for Live devices and target Live 12.2 which is shipping with Max 9.0.7, you can either use the JSUI version of tc.preset, or the V8UI version with the [substitute read readfile] workaround.\n\n- If you develop for Max 8 or want your Max for Live device to be compatible with Live 11, go with the JSUI version."
+                                }
+                            },
+                            {
+                                "box": {
+                                    "bgcolor": [ 0.5686274509803921, 0.7294117647058823, 0.7764705882352941, 1.0 ],
+                                    "bgmode": 2,
+                                    "border": 0,
+                                    "clickthrough": 0,
+                                    "embed": 1,
+                                    "enablehscroll": 0,
+                                    "enablevscroll": 0,
+                                    "id": "obj-7",
+                                    "lockeddragscroll": 0,
+                                    "lockedsize": 0,
+                                    "maxclass": "bpatcher",
+                                    "numinlets": 0,
+                                    "numoutlets": 0,
+                                    "offset": [ 0.0, 0.0 ],
+                                    "patcher": {
+                                        "fileversion": 1,
+                                        "appversion": {
+                                            "major": 9,
+                                            "minor": 1,
+                                            "revision": 0,
+                                            "architecture": "x64",
+                                            "modernui": 1
+                                        },
+                                        "classnamespace": "box",
+                                        "rect": [ 59.0, 119.0, 1000.0, 755.0 ],
+                                        "boxes": [
+                                            {
+                                                "box": {
+                                                    "id": "obj-2",
+                                                    "maxclass": "newobj",
+                                                    "numinlets": 2,
+                                                    "numoutlets": 2,
+                                                    "outlettype": [ "", "" ],
+                                                    "patching_rect": [ 11.0, 50.0, 130.0, 22.0 ],
+                                                    "text": "substitute read readfile"
+                                                }
+                                            },
+                                            {
+                                                "box": {
+                                                    "border": 0,
+                                                    "embedstate": [
+                                                        [ "active_slot_color", 0.808, 0.898, 0.91, 1 ],
+                                                        [ "autowriteagain", 0 ],
+                                                        [ "bgcolor", 0.2, 0.2, 0.2, 1 ],
+                                                        [ "bubblesize", 14 ],
+                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
+                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
+                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
+                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
+                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
+                                                        [ "color_mode", 0 ],
+                                                        [ "display_interp", 1 ],
+                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
+                                                        [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ],
+                                                        [ "fontname", "Arial" ],
+                                                        [ "fontsize", 14 ],
+                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
+                                                        [ "layout", 0 ],
+                                                        [ "margin", 4 ],
+                                                        [ "menu_mode", 0 ],
+                                                        [ "min_rows", 10 ],
+                                                        [ "nbslot_edit", 1 ],
+                                                        [ "pattrstorage", "mypat" ],
+                                                        [ "poll_edited", 0 ],
+                                                        [ "recall_passthrough", 1 ],
+                                                        [ "scrollable", 0 ],
+                                                        [ "select_mode", 0 ],
+                                                        [ "send_name", "none" ],
+                                                        [ "slot_round", 0 ],
+                                                        [ "spacing", 4 ],
+                                                        [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ],
+                                                        [ "text_bg_color", 1, 1, 1, 0.5 ],
+                                                        [ "text_color", 0.129, 0.129, 0.129, 1 ],
+                                                        [ "ui_rename", 1 ],
+                                                        [ "unique_names", 0 ],
+                                                        [ "use_uid", 0 ]
+                                                    ],
+                                                    "filename": "tc.preset.js",
+                                                    "id": "obj-10",
+                                                    "maxclass": "v8ui",
+                                                    "numinlets": 1,
+                                                    "numoutlets": 5,
+                                                    "outlettype": [ "", "", "", "", "" ],
+                                                    "parameter_enable": 0,
+                                                    "patching_rect": [ 11.0, 86.0, 130.0, 59.0 ],
+                                                    "textfile": {
+                                                        "filename": "tc.preset.js",
+                                                        "flags": 0,
+                                                        "embed": 0,
+                                                        "autowatch": 0
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "box": {
+                                                    "id": "obj-1",
+                                                    "maxclass": "newobj",
+                                                    "numinlets": 1,
+                                                    "numoutlets": 1,
+                                                    "outlettype": [ "" ],
+                                                    "patching_rect": [ 11.0, 14.0, 109.0, 22.0 ],
+                                                    "saved_object_attributes": {
+                                                        "client_rect": [ 100, 172, 596, 755 ],
+                                                        "parameter_enable": 0,
+                                                        "parameter_mappable": 0,
+                                                        "storage_rect": [ 365, 44, 816, 172 ]
+                                                    },
+                                                    "text": "pattrstorage mypat",
+                                                    "varname": "mypat"
+                                                }
+                                            }
+                                        ],
+                                        "lines": [
+                                            {
+                                                "patchline": {
+                                                    "destination": [ "obj-2", 0 ],
+                                                    "source": [ "obj-1", 0 ]
+                                                }
+                                            },
+                                            {
+                                                "patchline": {
+                                                    "destination": [ "obj-10", 0 ],
+                                                    "source": [ "obj-2", 1 ]
+                                                }
+                                            },
+                                            {
+                                                "patchline": {
+                                                    "destination": [ "obj-10", 0 ],
+                                                    "source": [ "obj-2", 0 ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "patching_rect": [ 375.0, 363.0, 154.0, 155.0 ],
+                                    "varname": "bpatcher[1]",
+                                    "viewvisibility": 1
+                                }
+                            },
+                            {
+                                "box": {
+                                    "bgcolor": [ 0.4392156862745098, 0.7411764705882353, 0.6862745098039216, 1.0 ],
+                                    "bgmode": 2,
+                                    "border": 0,
+                                    "clickthrough": 0,
+                                    "embed": 1,
+                                    "enablehscroll": 0,
+                                    "enablevscroll": 0,
+                                    "id": "obj-21",
+                                    "lockeddragscroll": 0,
+                                    "lockedsize": 0,
+                                    "maxclass": "bpatcher",
+                                    "numinlets": 0,
+                                    "numoutlets": 0,
+                                    "offset": [ 0.0, 0.0 ],
+                                    "patcher": {
+                                        "fileversion": 1,
+                                        "appversion": {
+                                            "major": 9,
+                                            "minor": 1,
+                                            "revision": 0,
+                                            "architecture": "x64",
+                                            "modernui": 1
+                                        },
+                                        "classnamespace": "box",
+                                        "rect": [ 59.0, 119.0, 1000.0, 755.0 ],
+                                        "boxes": [
+                                            {
+                                                "box": {
+                                                    "border": 0,
+                                                    "embedstate": [
+                                                        [ "active_slot_color", 0.808, 0.898, 0.91, 1 ],
+                                                        [ "autowriteagain", 0 ],
+                                                        [ "bgcolor", 0.2, 0.2, 0.2, 1 ],
+                                                        [ "bubblesize", 14 ],
+                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
+                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
+                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
+                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
+                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
+                                                        [ "color_mode", 0 ],
+                                                        [ "display_interp", 1 ],
+                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
+                                                        [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ],
+                                                        [ "fontname", "Arial" ],
+                                                        [ "fontsize", 14 ],
+                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
+                                                        [ "layout", 0 ],
+                                                        [ "margin", 4 ],
+                                                        [ "menu_mode", 0 ],
+                                                        [ "min_rows", 10 ],
+                                                        [ "nbslot_edit", 1 ],
+                                                        [ "pattrstorage", "mypat" ],
+                                                        [ "poll_edited", 0 ],
+                                                        [ "recall_passthrough", 1 ],
+                                                        [ "scrollable", 0 ],
+                                                        [ "select_mode", 0 ],
+                                                        [ "send_name", "none" ],
+                                                        [ "slot_round", 0 ],
+                                                        [ "spacing", 4 ],
+                                                        [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ],
+                                                        [ "text_bg_color", 1, 1, 1, 0.5 ],
+                                                        [ "text_color", 0.129, 0.129, 0.129, 1 ],
+                                                        [ "ui_rename", 1 ],
+                                                        [ "unique_names", 0 ],
+                                                        [ "use_uid", 0 ]
+                                                    ],
+                                                    "filename": "tc.preset.js",
+                                                    "id": "obj-10",
+                                                    "maxclass": "v8ui",
+                                                    "numinlets": 1,
+                                                    "numoutlets": 5,
+                                                    "outlettype": [ "", "", "", "", "" ],
+                                                    "parameter_enable": 0,
+                                                    "patching_rect": [ 11.0, 53.0, 130.0, 59.0 ],
+                                                    "textfile": {
+                                                        "filename": "tc.preset.js",
+                                                        "flags": 0,
+                                                        "embed": 0,
+                                                        "autowatch": 0
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "box": {
+                                                    "id": "obj-1",
+                                                    "maxclass": "newobj",
+                                                    "numinlets": 1,
+                                                    "numoutlets": 1,
+                                                    "outlettype": [ "" ],
+                                                    "patching_rect": [ 11.0, 14.0, 109.0, 22.0 ],
+                                                    "saved_object_attributes": {
+                                                        "client_rect": [ 100, 172, 596, 755 ],
+                                                        "parameter_enable": 0,
+                                                        "parameter_mappable": 0,
+                                                        "storage_rect": [ 365, 44, 816, 172 ]
+                                                    },
+                                                    "text": "pattrstorage mypat",
+                                                    "varname": "mypat"
+                                                }
+                                            }
+                                        ],
+                                        "lines": [
+                                            {
+                                                "patchline": {
+                                                    "destination": [ "obj-10", 0 ],
+                                                    "source": [ "obj-1", 0 ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "patching_rect": [ 691.0, 363.0, 153.0, 123.0 ],
+                                    "varname": "bpatcher",
+                                    "viewvisibility": 1
+                                }
+                            },
+                            {
+                                "box": {
+                                    "bgcolor": [ 0.6196078431372549, 0.6431372549019608, 0.7215686274509804, 1.0 ],
+                                    "bgmode": 2,
+                                    "border": 0,
+                                    "clickthrough": 0,
+                                    "embed": 1,
+                                    "enablehscroll": 0,
+                                    "enablevscroll": 0,
+                                    "id": "obj-24",
+                                    "lockeddragscroll": 0,
+                                    "lockedsize": 0,
+                                    "maxclass": "bpatcher",
+                                    "numinlets": 0,
+                                    "numoutlets": 0,
+                                    "offset": [ 0.0, 0.0 ],
+                                    "patcher": {
+                                        "fileversion": 1,
+                                        "appversion": {
+                                            "major": 9,
+                                            "minor": 1,
+                                            "revision": 0,
+                                            "architecture": "x64",
+                                            "modernui": 1
+                                        },
+                                        "classnamespace": "box",
+                                        "rect": [ 59.0, 119.0, 1000.0, 755.0 ],
+                                        "boxes": [
+                                            {
+                                                "box": {
+                                                    "embedstate": [
+                                                        [ "poll_edited", 0 ],
+                                                        [ "autowriteagain", 0 ],
+                                                        [ "send_name", "none" ],
+                                                        [ "slot_round", 0 ],
+                                                        [ "display_interp", 1 ],
+                                                        [ "margin", 4 ],
+                                                        [ "menu_mode", 0 ],
+                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
+                                                        [ "text_color", 0.129, 0.129, 0.129, 1 ],
+                                                        [ "fontsize", 14 ],
+                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
+                                                        [ "unique_names", 0 ],
+                                                        [ "fontname", "Arial" ],
+                                                        [ "pattrstorage", "mypat" ],
+                                                        [ "bubblesize", 14 ],
+                                                        [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ],
+                                                        [ "nbslot_edit", 1 ],
+                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
+                                                        [ "use_uid", 0 ],
+                                                        [ "scrollable", 0 ],
+                                                        [ "min_rows", 10 ],
+                                                        [ "ui_rename", 0 ],
+                                                        [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ],
+                                                        [ "layout", 0 ],
+                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
+                                                        [ "spacing", 4 ],
+                                                        [ "bgcolor", 0.2, 0.2, 0.2, 1 ],
+                                                        [ "active_slot_color", 0.808, 0.898, 0.91, 1 ],
+                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
+                                                        [ "color_mode", 0 ],
+                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
+                                                        [ "text_bg_color", 1, 1, 1, 0.5 ],
+                                                        [ "select_mode", 0 ],
+                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
+                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "recall_passthrough", 1 ]
+                                                    ],
+                                                    "filename": "tc.preset",
+                                                    "id": "obj-1",
+                                                    "maxclass": "jsui",
+                                                    "numinlets": 1,
+                                                    "numoutlets": 5,
+                                                    "outlettype": [ "", "", "", "", "" ],
+                                                    "parameter_enable": 0,
+                                                    "patching_rect": [ 13.0, 55.0, 130.0, 58.0 ]
+                                                }
+                                            },
+                                            {
+                                                "box": {
+                                                    "id": "obj-20",
+                                                    "maxclass": "newobj",
+                                                    "numinlets": 1,
+                                                    "numoutlets": 1,
+                                                    "outlettype": [ "" ],
+                                                    "patching_rect": [ 13.0, 16.0, 109.0, 22.0 ],
+                                                    "saved_object_attributes": {
+                                                        "client_rect": [ 100, 172, 596, 755 ],
+                                                        "parameter_enable": 0,
+                                                        "parameter_mappable": 0,
+                                                        "storage_rect": [ 365, 44, 816, 172 ]
+                                                    },
+                                                    "text": "pattrstorage mypat",
+                                                    "varname": "mypat"
+                                                }
+                                            }
+                                        ],
+                                        "lines": [
+                                            {
+                                                "patchline": {
+                                                    "destination": [ "obj-1", 0 ],
+                                                    "source": [ "obj-20", 0 ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    "patching_rect": [ 53.0, 363.0, 159.0, 123.0 ],
+                                    "varname": "patcher[1]",
+                                    "viewvisibility": 1
+                                }
+                            },
+                            {
+                                "box": {
+                                    "fontface": 1,
+                                    "id": "obj-6",
+                                    "maxclass": "comment",
+                                    "numinlets": 1,
+                                    "numoutlets": 0,
+                                    "patching_rect": [ 696.0, 338.0, 144.0, 20.0 ],
+                                    "text": "v8UI: Max 9.1.0 to latest"
+                                }
+                            },
+                            {
+                                "box": {
+                                    "fontface": 1,
+                                    "id": "obj-4",
+                                    "maxclass": "comment",
+                                    "numinlets": 1,
+                                    "numoutlets": 0,
+                                    "patching_rect": [ 315.0, 338.0, 274.0, 20.0 ],
+                                    "text": "V8UI + readfile workaround: Max 9.0.6 to latest"
+                                }
+                            },
+                            {
+                                "box": {
+                                    "fontface": 1,
+                                    "id": "obj-2",
+                                    "maxclass": "comment",
+                                    "numinlets": 1,
+                                    "numoutlets": 0,
+                                    "patching_rect": [ 60.0, 338.0, 145.0, 20.0 ],
+                                    "text": "JSUI: Max 8.6.2 to latest"
+                                }
+                            }
+                        ],
+                        "lines": []
+                    },
+                    "patching_rect": [ 632.0, 27.7999267578125, 85.0, 22.0 ],
+                    "text": "p compatibility",
+                    "varname": "compatibility"
+                }
+            },
+            {
+                "box": {
+                    "code": "const v = max.version;\r\nconst message = \"This version of the tc.preset help patch requires at least Max 9.1.0\";\r\nif (v<910) {\r\n    error(message, '\\n');\r\n    outlet(0, message);\r\n}",
+                    "filename": "none",
+                    "fontface": 0,
+                    "fontname": "<Monospaced>",
+                    "fontsize": 12.0,
+                    "id": "obj-17",
+                    "maxclass": "v8.codebox",
+                    "numinlets": 1,
+                    "numoutlets": 1,
+                    "outlettype": [ "" ],
+                    "patching_rect": [ 185.0, 332.0, 340.0, 200.0 ],
+                    "saved_object_attributes": {
+                        "parameter_enable": 0
+                    }
+                }
+            },
+            {
+                "box": {
+                    "id": "obj-15",
+                    "maxclass": "newobj",
+                    "numinlets": 2,
+                    "numoutlets": 3,
+                    "outlettype": [ "", "bang", "bang" ],
+                    "patching_rect": [ 185.0, 546.0, 96.0, 22.0 ],
+                    "text": "dialog @mode 1"
+                }
+            },
             {
                 "box": {
                     "id": "obj-19",
@@ -29,12 +546,12 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 0.0, 26.0, 899.0, 620.0 ],
+                        "rect": [ 0.0, 26.0, 900.0, 620.0 ],
                         "showontab": 1,
                         "boxes": [],
                         "lines": []
                     },
-                    "patching_rect": [ 756.0, 25.7999267578125, 50.0, 22.0 ],
+                    "patching_rect": [ 838.0, 28.7999267578125, 50.0, 22.0 ],
                     "text": "p ?",
                     "varname": "q_tab"
                 }
@@ -70,9 +587,31 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 364.0, 135.0, 899.0, 620.0 ],
+                        "rect": [ 0.0, 26.0, 900.0, 620.0 ],
                         "showontab": 1,
                         "boxes": [
+                            {
+                                "box": {
+                                    "id": "obj-7",
+                                    "maxclass": "newobj",
+                                    "numinlets": 1,
+                                    "numoutlets": 1,
+                                    "outlettype": [ "" ],
+                                    "patching_rect": [ 242.5, 538.0, 93.0, 22.0 ],
+                                    "text": "prepend setlock"
+                                }
+                            },
+                            {
+                                "box": {
+                                    "id": "obj-2",
+                                    "maxclass": "newobj",
+                                    "numinlets": 1,
+                                    "numoutlets": 1,
+                                    "outlettype": [ "" ],
+                                    "patching_rect": [ 10.0, 538.0, 116.0, 22.0 ],
+                                    "text": "prepend recall_filled"
+                                }
+                            },
                             {
                                 "box": {
                                     "id": "obj-12",
@@ -176,17 +715,6 @@
                                     "outlettype": [ "" ],
                                     "patching_rect": [ 618.0, 249.0, 60.0, 22.0 ],
                                     "text": "renumber"
-                                }
-                            },
-                            {
-                                "box": {
-                                    "id": "obj-9",
-                                    "maxclass": "newobj",
-                                    "numinlets": 2,
-                                    "numoutlets": 2,
-                                    "outlettype": [ "", "" ],
-                                    "patching_rect": [ 29.0, 334.0, 130.0, 22.0 ],
-                                    "text": "substitute read readfile"
                                 }
                             },
                             {
@@ -549,7 +1077,7 @@
                                         [ "menu_mode", 0 ],
                                         [ "min_rows", 10 ],
                                         [ "nbslot_edit", 1 ],
-                                        [ "pattrstorage", "test" ],
+                                        [ "pattrstorage", "tcpreset_help" ],
                                         [ "poll_edited", 0 ],
                                         [ "recall_passthrough", 1 ],
                                         [ "scrollable", 0 ],
@@ -587,22 +1115,22 @@
                                     "numinlets": 1,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 29.0, 303.0, 176.0, 22.0 ],
+                                    "patching_rect": [ 29.0, 303.0, 229.0, 22.0 ],
                                     "saved_object_attributes": {
                                         "client_rect": [ 100, 172, 596, 755 ],
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0,
                                         "storage_rect": [ 365, 44, 816, 172 ]
                                     },
-                                    "text": "pattrstorage test @savemode 0",
-                                    "varname": "test"
+                                    "text": "pattrstorage tcpreset_help @savemode 0",
+                                    "varname": "tcpreset_help"
                                 }
                             }
                         ],
                         "lines": [
                             {
                                 "patchline": {
-                                    "destination": [ "obj-9", 0 ],
+                                    "destination": [ "obj-10", 0 ],
                                     "source": [ "obj-1", 0 ]
                                 }
                             },
@@ -638,6 +1166,12 @@
                             },
                             {
                                 "patchline": {
+                                    "destination": [ "obj-2", 0 ],
+                                    "source": [ "obj-17", 0 ]
+                                }
+                            },
+                            {
+                                "patchline": {
                                     "destination": [ "obj-10", 0 ],
                                     "source": [ "obj-18", 0 ]
                                 }
@@ -646,6 +1180,13 @@
                                 "patchline": {
                                     "destination": [ "obj-10", 0 ],
                                     "source": [ "obj-19", 0 ]
+                                }
+                            },
+                            {
+                                "patchline": {
+                                    "destination": [ "obj-10", 0 ],
+                                    "midpoints": [ 19.5, 561.0, 6.0, 561.0, 6.0, 375.0, 19.5, 375.0 ],
+                                    "source": [ "obj-2", 0 ]
                                 }
                             },
                             {
@@ -676,6 +1217,13 @@
                                 "patchline": {
                                     "destination": [ "obj-10", 0 ],
                                     "source": [ "obj-26", 0 ]
+                                }
+                            },
+                            {
+                                "patchline": {
+                                    "destination": [ "obj-10", 0 ],
+                                    "midpoints": [ 138.5, 569.65234375, 6.0, 569.65234375, 6.0, 375.0, 19.5, 375.0 ],
+                                    "source": [ "obj-27", 0 ]
                                 }
                             },
                             {
@@ -752,6 +1300,12 @@
                             },
                             {
                                 "patchline": {
+                                    "destination": [ "obj-7", 0 ],
+                                    "source": [ "obj-56", 0 ]
+                                }
+                            },
+                            {
+                                "patchline": {
                                     "destination": [ "obj-10", 0 ],
                                     "source": [ "obj-6", 0 ]
                                 }
@@ -759,18 +1313,13 @@
                             {
                                 "patchline": {
                                     "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-9", 1 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-9", 0 ]
+                                    "midpoints": [ 252.0, 570.0, 6.0, 570.0, 6.0, 375.0, 19.5, 375.0 ],
+                                    "source": [ "obj-7", 0 ]
                                 }
                             }
                         ]
                     },
-                    "patching_rect": [ 311.0, 27.7999267578125, 73.0, 22.0 ],
+                    "patching_rect": [ 292.0, 27.7999267578125, 73.0, 22.0 ],
                     "text": "p messages",
                     "varname": "messages"
                 }
@@ -791,7 +1340,7 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 0.0, 26.0, 899.0, 620.0 ],
+                        "rect": [ 0.0, 26.0, 900.0, 620.0 ],
                         "showontab": 1,
                         "boxes": [
                             {
@@ -1040,7 +1589,7 @@
                                     "numoutlets": 3,
                                     "outlettype": [ "", "", "" ],
                                     "patching_rect": [ 293.0, 378.0, 40.0, 22.0 ],
-                                    "restore": [ 0.873015873015873, 0.714285714285714, 0.587301587301587, 0.46031746031746, 0.301587301587302, 0.174603174603175, 0.015873015873016, -0.111111111111111, -0.238095238095238, -0.333333333333333, -0.428571428571429, -0.523809523809524, -0.587301587301587, -0.682539682539683, -0.777777777777778, -0.873015873015873 ],
+                                    "restore": [ -0.714285714285714, -0.714285714285714, -0.6, -0.542857142857143, -0.457142857142857, -0.342857142857143, -0.171428571428571, -0.028571428571429, 0.028571428571428, 0.142857142857143, 0.228571428571429, 0.371428571428571, 0.485714285714286, 0.571428571428571, 0.714285714285714, 0.8 ],
                                     "saved_object_attributes": {
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0
@@ -1129,17 +1678,6 @@
                             },
                             {
                                 "box": {
-                                    "id": "obj-9",
-                                    "maxclass": "newobj",
-                                    "numinlets": 2,
-                                    "numoutlets": 2,
-                                    "outlettype": [ "", "" ],
-                                    "patching_rect": [ 10.0, 340.0, 130.0, 22.0 ],
-                                    "text": "substitute read readfile"
-                                }
-                            },
-                            {
-                                "box": {
                                     "id": "obj-56",
                                     "maxclass": "toggle",
                                     "numinlets": 1,
@@ -1164,7 +1702,7 @@
                                     "outlettype": [ "", "int", "", "" ],
                                     "parameter_enable": 0,
                                     "patching_rect": [ 129.0, 505.0, 102.0, 24.0 ],
-                                    "text": "down"
+                                    "text": "up"
                                 }
                             },
                             {
@@ -1206,7 +1744,7 @@
                                         [ "menu_mode", 0 ],
                                         [ "min_rows", 10 ],
                                         [ "nbslot_edit", 1 ],
-                                        [ "pattrstorage", "test" ],
+                                        [ "pattrstorage", "tcpreset_help" ],
                                         [ "poll_edited", 1 ],
                                         [ "recall_passthrough", 0 ],
                                         [ "scrollable", 0 ],
@@ -1244,15 +1782,15 @@
                                     "numinlets": 1,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 10.0, 309.0, 176.0, 22.0 ],
+                                    "patching_rect": [ 10.0, 342.0, 229.0, 22.0 ],
                                     "saved_object_attributes": {
                                         "client_rect": [ 100, 172, 596, 755 ],
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0,
                                         "storage_rect": [ 365, 44, 816, 172 ]
                                     },
-                                    "text": "pattrstorage test @savemode 0",
-                                    "varname": "test"
+                                    "text": "pattrstorage tcpreset_help @savemode 0",
+                                    "varname": "tcpreset_help"
                                 }
                             },
                             {
@@ -1425,7 +1963,7 @@
                         "lines": [
                             {
                                 "patchline": {
-                                    "destination": [ "obj-9", 0 ],
+                                    "destination": [ "obj-10", 0 ],
                                     "source": [ "obj-1", 0 ]
                                 }
                             },
@@ -1485,7 +2023,7 @@
                                 "patchline": {
                                     "color": [ 0.8391728401184082, 0.0, 0.0, 1.0 ],
                                     "destination": [ "obj-1", 0 ],
-                                    "midpoints": [ 19.5, 531.0, 7.359375, 531.0, 7.359375, 303.64453125, 19.5, 303.64453125 ],
+                                    "midpoints": [ 19.5, 531.0, 7.359375, 531.0, 7.359375, 331.56640625, 19.5, 331.56640625 ],
                                     "source": [ "obj-2", 0 ]
                                 }
                             },
@@ -1550,22 +2088,10 @@
                                     "hidden": 1,
                                     "source": [ "obj-8", 0 ]
                                 }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-9", 1 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-9", 0 ]
-                                }
                             }
                         ]
                     },
-                    "patching_rect": [ 393.0, 26.7999267578125, 65.0, 22.0 ],
+                    "patching_rect": [ 367.0, 27.7999267578125, 65.0, 22.0 ],
                     "text": "p behavior",
                     "varname": "behavior"
                 }
@@ -1586,7 +2112,7 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 0.0, 26.0, 899.0, 620.0 ],
+                        "rect": [ 0.0, 26.0, 900.0, 620.0 ],
                         "showontab": 1,
                         "boxes": [
                             {
@@ -1631,43 +2157,43 @@
                                             {
                                                 "box": {
                                                     "embedstate": [
-                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
-                                                        [ "ignoreslotzero", 1 ],
-                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
-                                                        [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ],
-                                                        [ "spacing", 4 ],
-                                                        [ "bgcolor", 0.2, 0.2, 0.2, 1 ],
-                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
-                                                        [ "text_color", 0.129, 0.129, 0.129, 1 ],
-                                                        [ "color_mode", 0 ],
-                                                        [ "slot_round", 0 ],
-                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
-                                                        [ "nbslot_edit", 1 ],
-                                                        [ "active_slot_color", 0.808, 0.898, 0.91, 1 ],
-                                                        [ "min_rows", 10 ],
-                                                        [ "select_mode", 0 ],
-                                                        [ "unique_names", 0 ],
-                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
-                                                        [ "scrollable", 0 ],
+                                                        [ "poll_edited", 0 ],
+                                                        [ "autowriteagain", 0 ],
                                                         [ "send_name", "none" ],
-                                                        [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ],
+                                                        [ "slot_round", 0 ],
+                                                        [ "display_interp", 1 ],
                                                         [ "margin", 4 ],
-                                                        [ "layout", 0 ],
-                                                        [ "use_uid", 0 ],
+                                                        [ "menu_mode", 0 ],
+                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
+                                                        [ "text_color", 0.129, 0.129, 0.129, 1 ],
                                                         [ "fontsize", 14 ],
                                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
-                                                        [ "recall_passthrough", 1 ],
-                                                        [ "ui_rename", 0 ],
-                                                        [ "menu_mode", 0 ],
-                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
+                                                        [ "unique_names", 0 ],
                                                         [ "fontname", "Arial" ],
                                                         [ "pattrstorage", "mypat" ],
                                                         [ "bubblesize", 14 ],
+                                                        [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ],
+                                                        [ "nbslot_edit", 1 ],
                                                         [ "color_4", 0.367, 0.542, 0.712, 1 ],
-                                                        [ "autowriteagain", 0 ],
-                                                        [ "poll_edited", 0 ],
-                                                        [ "display_interp", 1 ],
-                                                        [ "text_bg_color", 1, 1, 1, 0.5 ]
+                                                        [ "use_uid", 0 ],
+                                                        [ "scrollable", 0 ],
+                                                        [ "min_rows", 10 ],
+                                                        [ "ui_rename", 0 ],
+                                                        [ "empty_slot_color", 0.349, 0.349, 0.349, 1 ],
+                                                        [ "layout", 0 ],
+                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
+                                                        [ "spacing", 4 ],
+                                                        [ "bgcolor", 0.2, 0.2, 0.2, 1 ],
+                                                        [ "active_slot_color", 0.808, 0.898, 0.91, 1 ],
+                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
+                                                        [ "color_mode", 0 ],
+                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
+                                                        [ "text_bg_color", 1, 1, 1, 0.5 ],
+                                                        [ "select_mode", 0 ],
+                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
+                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "recall_passthrough", 1 ]
                                                     ],
                                                     "filename": "tc.preset",
                                                     "id": "obj-1",
@@ -1763,7 +2289,7 @@
                                             }
                                         ]
                                     },
-                                    "patching_rect": [ 458.0, 368.5, 299.0, 189.0 ],
+                                    "patching_rect": [ 458.0, 372.5, 299.0, 189.0 ],
                                     "varname": "patcher[1]",
                                     "viewvisibility": 1
                                 }
@@ -1810,17 +2336,6 @@
                                             },
                                             {
                                                 "box": {
-                                                    "id": "obj-9",
-                                                    "maxclass": "newobj",
-                                                    "numinlets": 2,
-                                                    "numoutlets": 2,
-                                                    "outlettype": [ "", "" ],
-                                                    "patching_rect": [ 16.0, 41.0, 130.0, 22.0 ],
-                                                    "text": "substitute read readfile"
-                                                }
-                                            },
-                                            {
-                                                "box": {
                                                     "id": "obj-27",
                                                     "keymode": 1,
                                                     "lines": 1,
@@ -1830,7 +2345,7 @@
                                                     "numoutlets": 4,
                                                     "outlettype": [ "", "int", "", "" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 156.5, 110.0, 100.0, 23.0 ]
+                                                    "patching_rect": [ 157.0, 90.0, 100.0, 23.0 ]
                                                 }
                                             },
                                             {
@@ -1842,7 +2357,7 @@
                                                     "numoutlets": 3,
                                                     "outlettype": [ "int", "", "" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 156.5, 74.0, 112.0, 22.0 ]
+                                                    "patching_rect": [ 157.0, 54.0, 112.0, 22.0 ]
                                                 }
                                             },
                                             {
@@ -1894,7 +2409,7 @@
                                                     "numoutlets": 5,
                                                     "outlettype": [ "", "", "", "", "" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 16.0, 74.0, 130.0, 95.0 ],
+                                                    "patching_rect": [ 16.0, 54.0, 130.0, 95.0 ],
                                                     "textfile": {
                                                         "filename": "tc.preset.js",
                                                         "flags": 0,
@@ -1925,7 +2440,7 @@
                                         "lines": [
                                             {
                                                 "patchline": {
-                                                    "destination": [ "obj-9", 0 ],
+                                                    "destination": [ "obj-10", 0 ],
                                                     "source": [ "obj-1", 0 ]
                                                 }
                                             },
@@ -1946,22 +2461,10 @@
                                                     "destination": [ "obj-10", 0 ],
                                                     "source": [ "obj-27", 0 ]
                                                 }
-                                            },
-                                            {
-                                                "patchline": {
-                                                    "destination": [ "obj-10", 0 ],
-                                                    "source": [ "obj-9", 1 ]
-                                                }
-                                            },
-                                            {
-                                                "patchline": {
-                                                    "destination": [ "obj-10", 0 ],
-                                                    "source": [ "obj-9", 0 ]
-                                                }
                                             }
                                         ]
                                     },
-                                    "patching_rect": [ 75.0, 366.0, 287.0, 194.0 ],
+                                    "patching_rect": [ 75.0, 381.0, 287.0, 172.0 ],
                                     "varname": "bpatcher[1]",
                                     "viewvisibility": 1
                                 }
@@ -2065,17 +2568,6 @@
                                             },
                                             {
                                                 "box": {
-                                                    "id": "obj-9",
-                                                    "maxclass": "newobj",
-                                                    "numinlets": 2,
-                                                    "numoutlets": 2,
-                                                    "outlettype": [ "", "" ],
-                                                    "patching_rect": [ 20.0, 78.0, 130.0, 22.0 ],
-                                                    "text": "substitute read readfile"
-                                                }
-                                            },
-                                            {
-                                                "box": {
                                                     "button": 1,
                                                     "id": "obj-17",
                                                     "maxclass": "tab",
@@ -2162,7 +2654,7 @@
                                                     "numinlets": 1,
                                                     "numoutlets": 1,
                                                     "outlettype": [ "" ],
-                                                    "patching_rect": [ 20.0, 47.0, 109.0, 22.0 ],
+                                                    "patching_rect": [ 20.0, 80.0, 109.0, 22.0 ],
                                                     "saved_object_attributes": {
                                                         "client_rect": [ 100, 172, 596, 755 ],
                                                         "parameter_enable": 0,
@@ -2213,7 +2705,7 @@
                                             },
                                             {
                                                 "patchline": {
-                                                    "destination": [ "obj-9", 0 ],
+                                                    "destination": [ "obj-2", 0 ],
                                                     "source": [ "obj-20", 0 ]
                                                 }
                                             },
@@ -2227,18 +2719,6 @@
                                                 "patchline": {
                                                     "destination": [ "obj-2", 0 ],
                                                     "source": [ "obj-5", 0 ]
-                                                }
-                                            },
-                                            {
-                                                "patchline": {
-                                                    "destination": [ "obj-2", 0 ],
-                                                    "source": [ "obj-9", 1 ]
-                                                }
-                                            },
-                                            {
-                                                "patchline": {
-                                                    "destination": [ "obj-2", 0 ],
-                                                    "source": [ "obj-9", 0 ]
                                                 }
                                             }
                                         ]
@@ -2284,19 +2764,8 @@
                                                     "maxclass": "comment",
                                                     "numinlets": 1,
                                                     "numoutlets": 0,
-                                                    "patching_rect": [ 148.0, 13.0, 129.0, 24.0 ],
+                                                    "patching_rect": [ 141.0, 13.0, 129.0, 24.0 ],
                                                     "text": "tc.preset_interp"
-                                                }
-                                            },
-                                            {
-                                                "box": {
-                                                    "id": "obj-9",
-                                                    "maxclass": "newobj",
-                                                    "numinlets": 2,
-                                                    "numoutlets": 2,
-                                                    "outlettype": [ "", "" ],
-                                                    "patching_rect": [ 16.0, 41.0, 130.0, 22.0 ],
-                                                    "text": "substitute read readfile"
                                                 }
                                             },
                                             {
@@ -2308,7 +2777,7 @@
                                                     "numoutlets": 2,
                                                     "outlettype": [ "", "bang" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 122.0, 177.0, 50.0, 22.0 ]
+                                                    "patching_rect": [ 117.0, 151.0, 50.0, 22.0 ]
                                                 }
                                             },
                                             {
@@ -2555,7 +3024,7 @@
                                                             }
                                                         ]
                                                     },
-                                                    "patching_rect": [ 16.0, 206.0, 125.0, 22.0 ],
+                                                    "patching_rect": [ 11.0, 180.0, 125.0, 22.0 ],
                                                     "text": "p trigger_interpolation"
                                                 }
                                             },
@@ -2570,7 +3039,7 @@
                                                     "numoutlets": 4,
                                                     "outlettype": [ "", "int", "", "" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 161.0, 143.0, 100.0, 23.0 ]
+                                                    "patching_rect": [ 156.0, 117.0, 100.0, 23.0 ]
                                                 }
                                             },
                                             {
@@ -2582,7 +3051,7 @@
                                                     "numoutlets": 3,
                                                     "outlettype": [ "int", "", "" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 43.0, 143.0, 112.0, 22.0 ]
+                                                    "patching_rect": [ 38.0, 117.0, 112.0, 22.0 ]
                                                 }
                                             },
                                             {
@@ -2634,7 +3103,7 @@
                                                     "numoutlets": 5,
                                                     "outlettype": [ "", "", "", "", "" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 16.0, 74.0, 130.0, 59.0 ],
+                                                    "patching_rect": [ 11.0, 48.0, 130.0, 59.0 ],
                                                     "textfile": {
                                                         "filename": "tc.preset.js",
                                                         "flags": 0,
@@ -2650,7 +3119,7 @@
                                                     "numinlets": 1,
                                                     "numoutlets": 1,
                                                     "outlettype": [ "" ],
-                                                    "patching_rect": [ 16.0, 14.0, 109.0, 22.0 ],
+                                                    "patching_rect": [ 11.0, 14.0, 109.0, 22.0 ],
                                                     "saved_object_attributes": {
                                                         "client_rect": [ 100, 172, 596, 755 ],
                                                         "parameter_enable": 0,
@@ -2665,7 +3134,7 @@
                                         "lines": [
                                             {
                                                 "patchline": {
-                                                    "destination": [ "obj-9", 0 ],
+                                                    "destination": [ "obj-10", 0 ],
                                                     "source": [ "obj-1", 0 ]
                                                 }
                                             },
@@ -2704,22 +3173,10 @@
                                                     "destination": [ "obj-34", 1 ],
                                                     "source": [ "obj-6", 0 ]
                                                 }
-                                            },
-                                            {
-                                                "patchline": {
-                                                    "destination": [ "obj-10", 0 ],
-                                                    "source": [ "obj-9", 1 ]
-                                                }
-                                            },
-                                            {
-                                                "patchline": {
-                                                    "destination": [ "obj-10", 0 ],
-                                                    "source": [ "obj-9", 0 ]
-                                                }
                                             }
                                         ]
                                     },
-                                    "patching_rect": [ 75.0, 18.0, 287.0, 239.0 ],
+                                    "patching_rect": [ 81.0, 28.0, 275.0, 216.0 ],
                                     "varname": "bpatcher",
                                     "viewvisibility": 1
                                 }
@@ -2740,7 +3197,7 @@
                         ],
                         "lines": []
                     },
-                    "patching_rect": [ 687.0, 25.7999267578125, 63.0, 22.0 ],
+                    "patching_rect": [ 719.0, 27.7999267578125, 63.0, 22.0 ],
                     "text": "p snippets",
                     "varname": "snippet"
                 }
@@ -2761,9 +3218,26 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 0.0, 26.0, 899.0, 620.0 ],
+                        "rect": [ 368.0, 166.0, 900.0, 620.0 ],
                         "showontab": 1,
                         "boxes": [
+                            {
+                                "box": {
+                                    "fontface": 0,
+                                    "fontname": "Arial",
+                                    "fontsize": 12.0,
+                                    "id": "obj-2",
+                                    "keymode": 1,
+                                    "lines": 1,
+                                    "maxclass": "textedit",
+                                    "numinlets": 1,
+                                    "numoutlets": 4,
+                                    "outlettype": [ "", "int", "", "" ],
+                                    "parameter_enable": 0,
+                                    "patching_rect": [ 10.0, 499.0, 116.0, 26.0 ],
+                                    "text": "up"
+                                }
+                            },
                             {
                                 "box": {
                                     "id": "obj-38",
@@ -2772,7 +3246,7 @@
                                     "numoutlets": 3,
                                     "outlettype": [ "", "", "" ],
                                     "patching_rect": [ 293.0, 378.0, 40.0, 22.0 ],
-                                    "restore": [ -0.079365079365079, 0.206349206349206, 0.428571428571429, 0.682539682539683, 0.904761904761905, 0.904761904761905, 0.841269841269841, 0.555555555555556, 0.047619047619048, -0.301587301587302, -0.587301587301587, -0.682539682539683, -0.650793650793651, -0.428571428571429, -0.111111111111111, 0.079365079365079 ],
+                                    "restore": [ -0.714285714285714, -0.714285714285714, -0.6, -0.542857142857143, -0.457142857142857, -0.342857142857143, -0.171428571428571, -0.028571428571429, 0.028571428571428, 0.142857142857143, 0.228571428571429, 0.371428571428571, 0.485714285714286, 0.571428571428571, 0.714285714285714, 0.8 ],
                                     "saved_object_attributes": {
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0
@@ -2830,24 +3304,13 @@
                             },
                             {
                                 "box": {
-                                    "id": "obj-5",
-                                    "maxclass": "newobj",
-                                    "numinlets": 2,
-                                    "numoutlets": 2,
-                                    "outlettype": [ "", "" ],
-                                    "patching_rect": [ 10.0, 340.0, 130.0, 22.0 ],
-                                    "text": "substitute read readfile"
-                                }
-                            },
-                            {
-                                "box": {
                                     "bubble": 1,
                                     "bubbleside": 0,
                                     "id": "obj-6",
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 20.5, 484.0, 236.0, 39.0 ],
+                                    "patching_rect": [ 137.0, 492.0, 236.0, 39.0 ],
                                     "text": "Scroll the list with your mouse or trackpad!"
                                 }
                             },
@@ -2876,9 +3339,9 @@
                                         [ "layout", 1 ],
                                         [ "margin", 4 ],
                                         [ "menu_mode", 0 ],
-                                        [ "min_rows", 10 ],
+                                        [ "min_rows", 9 ],
                                         [ "nbslot_edit", 1 ],
-                                        [ "pattrstorage", "test" ],
+                                        [ "pattrstorage", "tcpreset_help" ],
                                         [ "poll_edited", 0 ],
                                         [ "recall_passthrough", 1 ],
                                         [ "scrollable", 1 ],
@@ -2889,7 +3352,7 @@
                                         [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ],
                                         [ "text_bg_color", 1, 1, 1, 0.5 ],
                                         [ "text_color", 0.129, 0.129, 0.129, 1 ],
-                                        [ "ui_rename", 0 ],
+                                        [ "ui_rename", 1 ],
                                         [ "unique_names", 0 ],
                                         [ "use_uid", 0 ]
                                     ],
@@ -2916,15 +3379,15 @@
                                     "numinlets": 1,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 10.0, 309.0, 176.0, 22.0 ],
+                                    "patching_rect": [ 10.0, 342.0, 229.0, 22.0 ],
                                     "saved_object_attributes": {
                                         "client_rect": [ 100, 172, 596, 755 ],
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0,
                                         "storage_rect": [ 365, 44, 816, 172 ]
                                     },
-                                    "text": "pattrstorage test @savemode 0",
-                                    "varname": "test"
+                                    "text": "pattrstorage tcpreset_help @savemode 0",
+                                    "varname": "tcpreset_help"
                                 }
                             },
                             {
@@ -3084,8 +3547,14 @@
                         "lines": [
                             {
                                 "patchline": {
-                                    "destination": [ "obj-5", 0 ],
+                                    "destination": [ "obj-10", 0 ],
                                     "source": [ "obj-1", 0 ]
+                                }
+                            },
+                            {
+                                "patchline": {
+                                    "destination": [ "obj-2", 0 ],
+                                    "source": [ "obj-10", 2 ]
                                 }
                             },
                             {
@@ -3126,20 +3595,15 @@
                             },
                             {
                                 "patchline": {
+                                    "destination": [ "obj-10", 0 ],
+                                    "midpoints": [ 19.5, 528.0, 6.0, 528.0, 6.0, 375.0, 19.5, 375.0 ],
+                                    "source": [ "obj-2", 0 ]
+                                }
+                            },
+                            {
+                                "patchline": {
                                     "destination": [ "obj-34", 0 ],
                                     "source": [ "obj-38", 1 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-5", 1 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-5", 0 ]
                                 }
                             },
                             {
@@ -3156,7 +3620,7 @@
                             }
                         ]
                     },
-                    "patching_rect": [ 468.0, 26.7999267578125, 82.0, 22.0 ],
+                    "patching_rect": [ 434.0, 27.7999267578125, 82.0, 22.0 ],
                     "text": "p appearance",
                     "varname": "appearance"
                 }
@@ -3177,7 +3641,7 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 0.0, 26.0, 899.0, 620.0 ],
+                        "rect": [ 0.0, 26.0, 900.0, 620.0 ],
                         "showontab": 1,
                         "boxes": [
                             {
@@ -3215,6 +3679,7 @@
                             {
                                 "box": {
                                     "bubble": 1,
+                                    "bubblepoint": 0.37,
                                     "bubbleside": 2,
                                     "id": "obj-40",
                                     "linecount": 5,
@@ -3283,17 +3748,6 @@
                                     "numinlets": 1,
                                     "numoutlets": 0,
                                     "patching_rect": [ 614.0, 345.0, 253.0, 267.0 ]
-                                }
-                            },
-                            {
-                                "box": {
-                                    "id": "obj-8",
-                                    "maxclass": "newobj",
-                                    "numinlets": 2,
-                                    "numoutlets": 2,
-                                    "outlettype": [ "", "" ],
-                                    "patching_rect": [ 10.0, 340.0, 130.0, 22.0 ],
-                                    "text": "substitute read readfile"
                                 }
                             },
                             {
@@ -3737,7 +4191,7 @@
                                     "numinlets": 0,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 148.0, 340.0, 79.0, 22.0 ],
+                                    "patching_rect": [ 205.5, 340.0, 79.0, 22.0 ],
                                     "text": "r to_tc.preset"
                                 }
                             },
@@ -4484,7 +4938,7 @@
                                             }
                                         ]
                                     },
-                                    "patching_rect": [ 232.0, 340.0, 34.0, 22.0 ],
+                                    "patching_rect": [ 289.5, 340.0, 34.0, 22.0 ],
                                     "text": "p init"
                                 }
                             },
@@ -4589,7 +5043,7 @@
                                     "numinlets": 1,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 10.0, 309.0, 189.0, 22.0 ],
+                                    "patching_rect": [ 10.0, 342.0, 189.0, 22.0 ],
                                     "saved_object_attributes": {
                                         "client_rect": [ 100, 172, 596, 755 ],
                                         "parameter_enable": 0,
@@ -4693,7 +5147,7 @@
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
                                     "parameter_enable": 0,
-                                    "patching_rect": [ 671.5, 244.0, 87.0, 22.0 ],
+                                    "patching_rect": [ 614.0, 245.0, 87.0, 22.0 ],
                                     "text_width": 64.0
                                 }
                             }
@@ -4701,7 +5155,7 @@
                         "lines": [
                             {
                                 "patchline": {
-                                    "destination": [ "obj-8", 0 ],
+                                    "destination": [ "obj-10", 0 ],
                                     "source": [ "obj-1", 0 ]
                                 }
                             },
@@ -4768,7 +5222,6 @@
                             {
                                 "patchline": {
                                     "destination": [ "obj-10", 0 ],
-                                    "hidden": 1,
                                     "source": [ "obj-23", 0 ]
                                 }
                             },
@@ -4790,22 +5243,10 @@
                                     "destination": [ "obj-39", 0 ],
                                     "source": [ "obj-38", 1 ]
                                 }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-8", 1 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-8", 0 ]
-                                }
                             }
                         ]
                     },
-                    "patching_rect": [ 567.0, 26.7999267578125, 112.0, 22.0 ],
+                    "patching_rect": [ 518.0, 27.7999267578125, 112.0, 22.0 ],
                     "text": "p \"slot colors & uid\"",
                     "varname": "slot colors"
                 }
@@ -4826,7 +5267,7 @@
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 0.0, 26.0, 899.0, 620.0 ],
+                        "rect": [ 0.0, 26.0, 900.0, 620.0 ],
                         "default_fontsize": 13.0,
                         "gridsize": [ 5.0, 5.0 ],
                         "showontab": 1,
@@ -4839,7 +5280,7 @@
                                     "numoutlets": 3,
                                     "outlettype": [ "", "", "" ],
                                     "patching_rect": [ 596.0, 159.0, 40.0, 23.0 ],
-                                    "restore": [ -0.079365079365079, 0.206349206349206, 0.428571428571429, 0.682539682539683, 0.904761904761905, 0.904761904761905, 0.841269841269841, 0.555555555555556, 0.047619047619048, -0.301587301587302, -0.587301587301587, -0.682539682539683, -0.650793650793651, -0.428571428571429, -0.111111111111111, 0.079365079365079 ],
+                                    "restore": [ -0.714285714285714, -0.714285714285714, -0.6, -0.542857142857143, -0.457142857142857, -0.342857142857143, -0.171428571428571, -0.028571428571429, 0.028571428571428, 0.142857142857143, 0.228571428571429, 0.371428571428571, 0.485714285714286, 0.571428571428571, 0.714285714285714, 0.8 ],
                                     "saved_object_attributes": {
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0
@@ -4859,17 +5300,6 @@
                                     "patching_rect": [ 607.0, 186.0, 136.0, 78.0 ],
                                     "size": 16,
                                     "varname": "multislider"
-                                }
-                            },
-                            {
-                                "box": {
-                                    "id": "obj-25",
-                                    "linecount": 2,
-                                    "maxclass": "comment",
-                                    "numinlets": 1,
-                                    "numoutlets": 0,
-                                    "patching_rect": [ 160.0, 277.0, 300.0, 36.0 ],
-                                    "text": "This object is required with the v8ui version of tc.preset since 'read' is a method of the v8ui object"
                                 }
                             },
                             {
@@ -4895,17 +5325,6 @@
                             },
                             {
                                 "box": {
-                                    "id": "obj-11",
-                                    "maxclass": "newobj",
-                                    "numinlets": 2,
-                                    "numoutlets": 2,
-                                    "outlettype": [ "", "" ],
-                                    "patching_rect": [ 18.0, 283.0, 140.0, 23.0 ],
-                                    "text": "substitute read readfile"
-                                }
-                            },
-                            {
-                                "box": {
                                     "bubble": 1,
                                     "id": "obj-12",
                                     "linecount": 3,
@@ -4913,7 +5332,7 @@
                                     "numinlets": 1,
                                     "numoutlets": 0,
                                     "patching_rect": [ 394.0, 426.0, 103.0, 54.0 ],
-                                    "text": "Lock state of the current preset"
+                                    "text": "Lock state of the selected preset"
                                 }
                             },
                             {
@@ -4978,6 +5397,9 @@
                             },
                             {
                                 "box": {
+                                    "fontface": 0,
+                                    "fontname": "Arial",
+                                    "fontsize": 13.0,
                                     "id": "obj-27",
                                     "keymode": 1,
                                     "lines": 1,
@@ -4988,7 +5410,7 @@
                                     "outlettype": [ "", "int", "", "" ],
                                     "parameter_enable": 0,
                                     "patching_rect": [ 254.0, 441.0, 98.0, 23.0 ],
-                                    "text": "sine"
+                                    "text": "up"
                                 }
                             },
                             {
@@ -5030,7 +5452,7 @@
                                         [ "menu_mode", 0 ],
                                         [ "min_rows", 10 ],
                                         [ "nbslot_edit", 1 ],
-                                        [ "pattrstorage", "test" ],
+                                        [ "pattrstorage", "tcpreset_help" ],
                                         [ "poll_edited", 0 ],
                                         [ "recall_passthrough", 1 ],
                                         [ "scrollable", 0 ],
@@ -5041,7 +5463,7 @@
                                         [ "stored_slot_color", 0.502, 0.502, 0.502, 1 ],
                                         [ "text_bg_color", 1, 1, 1, 0.5 ],
                                         [ "text_color", 0.129, 0.129, 0.129, 1 ],
-                                        [ "ui_rename", 0 ],
+                                        [ "ui_rename", 1 ],
                                         [ "unique_names", 0 ],
                                         [ "use_uid", 0 ]
                                     ],
@@ -5068,27 +5490,29 @@
                                     "numinlets": 1,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 18.0, 247.0, 190.0, 23.0 ],
+                                    "patching_rect": [ 18.0, 289.0, 247.0, 23.0 ],
                                     "saved_object_attributes": {
                                         "client_rect": [ 100, 172, 596, 755 ],
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0,
                                         "storage_rect": [ 365, 44, 816, 172 ]
                                     },
-                                    "text": "pattrstorage test @savemode 0",
-                                    "varname": "test"
+                                    "text": "pattrstorage tcpreset_help @savemode 0",
+                                    "varname": "tcpreset_help"
                                 }
                             },
                             {
                                 "box": {
+                                    "bgcolor": [ 0.7019607843137254, 0.7019607843137254, 0.7019607843137254, 0.0 ],
+                                    "fontface": 1,
                                     "fontsize": 14.0,
                                     "id": "obj-13",
-                                    "linecount": 6,
+                                    "linecount": 5,
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 10.0, 136.0, 427.0, 100.0 ],
-                                    "text": "Get tc.preset working in 4 steps:\n1. Create a [tc.preset] (shortcut for [v8ui @filename tc.preset.js])\n2. Create a [substitute read readfile]\n3. Connect these objects to your [pattrstorage] like shown below\n4. Send to tc.preset the name of your pattrstorage prepended by \"pattrstorage\", or set its name in the @pattrstorage attribute "
+                                    "patching_rect": [ 10.0, 159.0, 457.0, 85.0 ],
+                                    "text": "Get tc.preset working in 3 steps:\n1. Create a [tc.preset] (substitute for [v8ui @filename tc.preset.js])\n2. Connect it to your [pattrstorage] like shown below\n3. Send to tc.preset the name of your pattrstorage prepended by \"pattrstorage\", or set its name in the @pattrstorage attribute "
                                 }
                             },
                             {
@@ -5110,7 +5534,7 @@
                         "lines": [
                             {
                                 "patchline": {
-                                    "destination": [ "obj-11", 0 ],
+                                    "destination": [ "obj-10", 0 ],
                                     "source": [ "obj-1", 0 ]
                                 }
                             },
@@ -5136,18 +5560,6 @@
                                 "patchline": {
                                     "destination": [ "obj-8", 0 ],
                                     "source": [ "obj-10", 1 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-11", 1 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-11", 0 ]
                                 }
                             },
                             {
@@ -5189,7 +5601,14 @@
                 }
             }
         ],
-        "lines": [],
+        "lines": [
+            {
+                "patchline": {
+                    "destination": [ "obj-15", 0 ],
+                    "source": [ "obj-17", 0 ]
+                }
+            }
+        ],
         "autosave": 0
     }
 }
