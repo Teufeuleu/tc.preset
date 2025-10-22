@@ -88,7 +88,8 @@ var poll_edited = 0;        // If >0, check if current preset is edited every X 
 var nbslot_edit = true;     // If nbslot_edit and scrollable are enabled, the last two visible slots are replaced by buttons to add or remove lines of slot.
 
 // (WORK)
-var pattrstorage_name, pattrstorage_obj = null;
+var pattrstorage_name = null;
+var pattrstorage_obj = null;
 
 var columns, rows = 0;
 var slots = [];                 // Stores on screen box, name, lock and interpolation state for all slots
@@ -143,8 +144,10 @@ var textedit_obj = null;
 var textedit_initstate = {};
 var is_typing_name = false;
 
-var poll_edited_task = new Task(do_poll_edited, this);
 var init_tsk;
+var psto_auto_link_task = new Task(psto_auto_link, this);
+psto_auto_link_task.interval = 200;
+var poll_edited_task = new Task(do_poll_edited, this);
 
 var has_loaded = false;
 
@@ -195,10 +198,42 @@ function slot(left, top, right, bottom, name, lock, interp, color_index, color_c
 function loadbang() {
     // post("loadbang\n");
     has_loaded = true;
-    find_pattrstorage(pattrstorage_name);    
+    find_pattrstorage(pattrstorage_name);
+    if (!pattrstorage_name) {
+        psto_auto_link_task.repeat();
+    }
 	calc_rows_columns();
 
     find_textedit();
+}
+
+init_tsk = new Task(delayed_init);
+init_tsk.schedule(200);
+
+function delayed_init() {
+    if (!has_loaded) {
+        loadbang();
+    }
+    if (arguments.callee.task.valid) {
+            arguments.callee.task.freepeer();
+    }
+}
+delayed_init.local = 1;
+
+function psto_auto_link() {
+    if (!pattrstorage_name) {
+        var cords = this.box.patchcords;
+        for (var c = 0; c < cords.inputs.length; c++) {
+            if (cords.inputs[c].dstinlet == 0 && cords.inputs[c].srcobject.maxclass == "pattrstorage") {
+                find_pattrstorage(cords.inputs[c].srcobject.getboxattr('varname'));
+                calc_rows_columns();
+                arguments.callee.task.freepeer();
+                break;
+            }
+        }
+    } else {
+        arguments.callee.task.cancel();
+    }
 }
 
 function calc_rows_columns() {
@@ -419,12 +454,12 @@ paint_base.local = 1;
 
 function paint()
 {
+    // post("redraw\n");
     // Handling Presentation mode enable/disable
     var cur_size = mgraphics.size;
     if (cur_size[0] != ui_width || cur_size[1] != ui_height) {
         onresize(cur_size[0], cur_size[1]);
     } else {
-        // post("redraw\n");
         mgraphics.select_font_face(font_name);
         mgraphics.set_font_size(font_size);
         mgraphics.translate(0, y_offset);
@@ -1322,6 +1357,8 @@ function resync() {
 
 function find_pattrstorage(name) {
     active_slot = 0;
+    previous_active_slot = 0;
+    selected_slot = 0;
     pattrstorage_obj = this.patcher.getnamed(name);
     if (pattrstorage_obj == null) {
         var parent_patcher = this.patcher.parentpatcher;
@@ -1335,13 +1372,11 @@ function find_pattrstorage(name) {
         // this.patcher.hiddenconnect(pattrstorage_obj, 0, this.box, 0);
         // post('lets find presets_metata pattr for', name, '\n');
         if (use_uid || color_mode > 1) connect_to_metadata_pattr();
+        if (psto_auto_link_task.running) psto_auto_link_task.cancel();
         to_pattrstorage("getslotlist");
         to_pattrstorage("getlockedslots");
     } else {
         pattrstorage_name = null;
-        active_slot = 0;
-        previous_active_slot = 0;
-        selected_slot = 0;
         slots_clear();
         if (name != undefined) {
             error("Pattrstorage", name, "doesn't exist.\n");
@@ -1794,6 +1829,9 @@ function notifydeleted(){
     if (poll_edited_task.valid) {
         poll_edited_task.freepeer();
     }
+    if (psto_auto_link_task.valid) {
+        psto_auto_link_task.freepeer();
+    }
 }
 
 // ATTRIBUTES DECLARATION
@@ -1801,47 +1839,30 @@ function notifydeleted(){
 declareattribute("pattrstorage", "getpattrstorage","setpattrstorage", 1, {type: "symbol", label: "Pattrstorage"});
 function getpattrstorage() {
     if (pattrstorage_name == null) {
-        return 
+        return ""
     } else {
 	    return pattrstorage_name;
     }
 }
+getpattrstorage.local = 1;
+
 function setpattrstorage(v){
     // This method is called for the first time when the patch is loading, before the loadbang (not all objects are instanciated yet)
     // With v being the value stored whithin the patcher
-    if (v == null || v == 0 || v.lastIndexOf('#') === 0) {
+    if (v == null || v == 0 || v == "" | v.lastIndexOf('#') === 0) {
         pattrstorage_name = null;
         pattrstorage_obj = null;
     } else  {
         pattrstorage_name = arrayfromargs(arguments)[0];
     }
-    // post('set_pattrstorage', pattrstorage_name, '\n');
-
-    // If the loadbang already occured once, we need to retrigger here
-    if (has_loaded) {
-        loadbang();
-    } else {
-        // Otherwise, we have no way to know how we're here in the code
-        // (was it just an attribute change? or maybe the object got copy-pasted with already set attribute, or it is being instantiated at patch load with saved attributes)
-        // So we have to delay the loadbang to make sure it will work in any case
-        // and won't be triggered before this or other objects are being instantiated completely.
-        init_tsk = new Task(delayed_init);
-        init_tsk.schedule(200);
-    }
 }
-
-function delayed_init() {
-    loadbang();
-    if (arguments.callee.task.valid) {
-            arguments.callee.task.freepeer();
-    }
-}
-delayed_init.local = 1;
+setpattrstorage.local = 1;
 
 declareattribute("bubblesize", "getslotsize", "setslotsize", 1, {type: "long", default: 14, label: "Slot Size", category: "Appearance"});
 function getslotsize() {
 	return slot_size;
 }
+getslotsize.local = 1;
 function setslotsize(v){
     if (arguments.length) {
         slot_size = Math.max(2, v);
@@ -1850,11 +1871,14 @@ function setslotsize(v){
     }
 	calc_rows_columns();
 }
+setslotsize.local = 1;
 
 declareattribute("slot_round", "getslotround", "setslotround", 1, {type: "long", default: 0, label: "Slot Round", category: "Appearance"});
 function getslotround() {
 	return slot_round;
 }
+getslotround.local = 1;
+
 function setslotround(v){
     if (arguments.length) {
         slot_round = Math.max(0, Math.min(slot_size, v));
@@ -1864,11 +1888,14 @@ function setslotround(v){
     slot_round_ratio = slot_round / slot_size;
 	calc_rows_columns();
 }
+setslotround.local = 1;
 
 declareattribute("margin", "getmargin", "setmargin", 1, {type: "long", default: 4, label: "Margin", category: "Appearance"});
 function getmargin() {
 	return margin;
 }
+getmargin.local = 1;
+
 function setmargin(v){
     if (arguments.length) {
         margin = Math.max(0, v);
@@ -1877,11 +1904,14 @@ function setmargin(v){
     }
 	calc_rows_columns();
 }
+setmargin.local = 1;
 
 declareattribute("spacing", "getspacing", "setspacing", 1, {type: "long", default: 4, label: "Spacing", category: "Appearance"});
 function getspacing() {
 	return spacing;
 }
+getspacing.local = 1;
+
 function setspacing(v){
     if (arguments.length) {
         spacing = Math.max(1, v);
@@ -1891,10 +1921,14 @@ function setspacing(v){
 	calc_rows_columns();
 }
 
+setspacing.local = 1;
+
 declareattribute("bgcolor", "getbgcolor", "setbgcolor", 1, {style: "rgba", label: "Background Color", category: "Appearance"});
 function getbgcolor() {
 	return background_color;
 }
+getbgcolor.local = 1;
+
 function setbgcolor(){
     if (arguments.length == 4) {
         background_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -1905,11 +1939,14 @@ function setbgcolor(){
     }
 	paint_base();
 }
+setbgcolor.local = 1;
 
 declareattribute("empty_slot_color", "getemptycolor", "setemptycolor", 1, {style: "rgba", label: "Empty Slot Color", category: "Appearance"});
 function getemptycolor() {
 	return empty_slot_color;
 }
+getemptycolor.local = 1;
+
 function setemptycolor(){
     if (arguments.length == 4) {
         empty_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -1920,11 +1957,14 @@ function setemptycolor(){
     }
 	paint_base();
 }
+setemptycolor.local = 1;
 
 declareattribute("active_slot_color", "getactiveslotcolor", "setactiveslotcolor", 1, {style: "rgba", label: "Active Slot Color", category: "Appearance"});
 function getactiveslotcolor() {
 	return active_slot_color;
 }
+getactiveslotcolor.local = 1;
+
 function setactiveslotcolor(){
     if (arguments.length == 4) {
         active_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -1935,11 +1975,14 @@ function setactiveslotcolor(){
     }
 	mgraphics.redraw();
 }
+setactiveslotcolor.local = 1;
 
 declareattribute("stored_slot_color", "getstoredslotcolor", "setstoredslotcolor", 1, {style: "rgba", label: "Stored Slot Color", category: "Appearance"});
 function getstoredslotcolor() {
 	return stored_slot_color;
 }
+getstoredslotcolor.local = 1;
+
 function setstoredslotcolor(){
     if (arguments.length == 4) {
         stored_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -1950,11 +1993,14 @@ function setstoredslotcolor(){
     }
 	paint_base();
 }
+setstoredslotcolor.local = 1;
 
 declareattribute("interp_slot_color", "getinterpslotcolor", "setinterpslotcolor", 1, {style: "rgba", label: "Interpolating slot color", category: "Appearance"});
 function getinterpslotcolor() {
 	return interp_slot_color;
 }
+getinterpslotcolor.local = 1;
+
 function setinterpslotcolor(){
     if (arguments.length == 4) {
         interp_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -1965,11 +2011,14 @@ function setinterpslotcolor(){
     }
 	mgraphics.redraw();
 }
+setinterpslotcolor.local = 1;
 
 declareattribute("text_bg_color", "gettextbgcolor", "settextbgcolor", 1, {style: "rgba", label: "Text Background Color", category: "Appearance"});
 function gettextbgcolor() {
 	return text_bg_color;
 }
+gettextbgcolor.local = 1;
+
 function settextbgcolor(){
     if (arguments.length == 4) {
         text_bg_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -1980,11 +2029,13 @@ function settextbgcolor(){
     }
 	mgraphics.redraw();
 }
+settextbgcolor.local = 1;
 
 declareattribute("text_color", "gettextcolor", "settextcolor", 1, {style: "rgba", label: "Text Color", category: "Appearance"});
 function gettextcolor() {
 	return text_color;
 }
+gettextcolor.local = 1;
 function settextcolor(){
     if (arguments.length == 4) {
         text_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -1995,11 +2046,14 @@ function settextcolor(){
     }
 	mgraphics.redraw();
 }
+settextcolor.local = 1;
 
 declareattribute("fontsize", "getfontsize", "setfontsize", 1, {type: "float", label: "Font Size", category: "Appearance"});
 function getfontsize() {
 	return font_size;
 }
+getfontsize.local = 1;
+
 function setfontsize(v){
     if (arguments.length) {
         font_size = Math.max(2, v);
@@ -2012,11 +2066,14 @@ function setfontsize(v){
         mgraphics.redraw();
     }
 }
+setfontsize.local = 1;
 
 declareattribute("fontname", "getfontname", "setfontname", 1, {type: "symbol", label: "Font Name", category: "Appearance"});
 function getfontname() {
 	return font_name;
 }
+getfontname.local = 1;
+
 function setfontname(v){
     if (arguments.length) {
         var fontlist = mgraphics.getfontlist();
@@ -2034,22 +2091,28 @@ function setfontname(v){
         mgraphics.redraw();
     }
 }
+setfontname.local = 1;
 
 declareattribute("menu_mode", "getmenu_mode", "setmenu_mode", 1, {style: "enumindex", enumvals: ["Preset number + name", "Preset number", "Preset name"], label: "Menu Mode"});
 function getmenu_mode() {
 	return menu_mode;
 }
+getmenu_mode.local = 1;
+
 function setmenu_mode(v){
     if (arguments.length == 1) {
         menu_mode = Math.min(Math.max(0, parseInt(v)), 2);
         update_umenu();
     }
 }
+setmenu_mode.local = 1;
 
 declareattribute("autowriteagain", "getautowriteagain", "setautowriteagain", 1, {style: "onoff", label: "Auto writeagain"});
 function getautowriteagain() {
 	return auto_writeagain;
 }
+getautowriteagain.local = 1;
+
 function setautowriteagain(v){
 	if (v == 0) {
         auto_writeagain = 0;
@@ -2057,11 +2120,14 @@ function setautowriteagain(v){
         auto_writeagain = 1;
     }
 }
+setautowriteagain.local = 1;
 
 declareattribute("ignoreslotzero", "getignoreslotzero", "setignoreslotzero", 1, {style: "onoff", label: "Ignore Slot 0", category: "Appearance"});
 function getignoreslotzero() {
 	return ignore_slot_zero;
 }
+getignoreslotzero.local = 1;
+
 function setignoreslotzero(v){
 	if (v == 0) {
         ignore_slot_zero = 0;
@@ -2069,11 +2135,14 @@ function setignoreslotzero(v){
         ignore_slot_zero = 1;
     }
 }
+setignoreslotzero.local = 1;
 
 declareattribute("display_interp", "getdisplayinterp", "setdisplayinterp", 1, {style: "onoff", label: "Display Interpolations", category: "Appearance"});
 function getdisplayinterp() {
 	return display_interp;
 }
+getdisplayinterp.local = 1;
+
 function setdisplayinterp(v){
 	if (v == 0) {
         display_interp = 0;
@@ -2081,11 +2150,14 @@ function setdisplayinterp(v){
         display_interp = 1;
     }
 }
+setdisplayinterp.local = 1;
 
 declareattribute("layout", "getlayout", "setlayout", 1, {style: "enumindex", enumvals: ["Grid", "List"], label: "Layout", category: "Appearance"});
 function getlayout() {
 	return layout;
 }
+getlayout.local = 1;
+
 function setlayout(v){
 	if (v == 0) {
         layout = 0;
@@ -2095,11 +2167,14 @@ function setlayout(v){
     y_offset = 0;
     calc_rows_columns();
 }
+setlayout.local = 1;
 
 declareattribute("scrollable", "getscrollable", "setscrollable", 1, {style: "onoff", label: "Scrollable"});
 function getscrollable() {
 	return scrollable;
 }
+getscrollable.local = 1;
+
 function setscrollable(v){
 	if (v == 0) {
         scrollable = 0;
@@ -2109,11 +2184,13 @@ function setscrollable(v){
     y_offset = 0;
     calc_rows_columns();
 }
+setscrollable.local = 1;
 
 declareattribute("min_rows", "getmin_rows", "setmin_rows", 1, {type: "long", min: 1, label: "Minimum Rows"});
 function getmin_rows() {
 	return min_rows;
 }
+getmin_rows.local = 1;
 function setmin_rows(v){
 	if (v > 0) {
         min_rows = v;
@@ -2122,11 +2199,14 @@ function setmin_rows(v){
         calc_rows_columns();   
     }
 }
+setmin_rows.local = 1;
 
 declareattribute("select_mode", "getselect_mode", "setselect_mode", 1, {style: "onoff", label: "Select Mode"});
 function getselect_mode() {
 	return select_mode;
 }
+getselect_mode.local = 1;
+
 function setselect_mode(v){
 	if (v == 1) {
         select_mode = 1;
@@ -2135,11 +2215,14 @@ function setselect_mode(v){
     }
     mgraphics.redraw();
 }
+setselect_mode.local = 1;
 
 declareattribute("color_mode", "getcolor_mode", "setcolor_mode", 1, {type: "long", min: 0, max: 3, style: "enumindex", enumvals: ["Classic", "Cycle", "Select", "Custom"], label: "Color Mode", category: "Appearance"});
 function getcolor_mode() {
 	return color_mode;
 }
+getcolor_mode.local = 1;
+
 function setcolor_mode(v){
     v = Math.floor(v);
     v = Math.max(0, Math.min(3, v));
@@ -2162,11 +2245,14 @@ function setcolor_mode(v){
         paint_base();
     }
 }
+setcolor_mode.local = 1;
 
 declareattribute("color_1", "getcolor1", "setcolor1", 1, {style: "rgba", label: "Color 1", category: "Appearance"});
 function getcolor1() {
 	return color_1;
 }
+getcolor1.local = 1;
+
 function setcolor1(){
     if (arguments.length == 4) {
         color_wheel(1, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2176,11 +2262,14 @@ function setcolor1(){
         error('color_1: wrong number of arguments\n');
     }
 }
+setcolor1.local = 1;
 
 declareattribute("color_2", "getcolor2", "setcolor2", 1, {style: "rgba", label: "Color 2", category: "Appearance"});
 function getcolor2() {
 	return color_2;
 }
+getcolor2.local = 1;
+
 function setcolor2(){
     if (arguments.length == 4) {
         color_wheel(2, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2190,11 +2279,14 @@ function setcolor2(){
         error('color_2: wrong number of arguments\n');
     }
 }
+setcolor2.local = 1;
 
 declareattribute("color_3", "getcolor3", "setcolor3", 1, {style: "rgba", label: "Color 3", category: "Appearance"});
 function getcolor3() {
 	return color_3;
 }
+getcolor3.local = 1;
+
 function setcolor3(){
     if (arguments.length == 4) {
         color_wheel(3, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2204,11 +2296,14 @@ function setcolor3(){
         error('color_3: wrong number of arguments\n');
     }
 }
+setcolor3.local = 1;
 
 declareattribute("color_4", "getcolor4", "setcolor4", 1, {style: "rgba", label: "Color 4", category: "Appearance"});
 function getcolor4() {
 	return color_4;
 }
+getcolor4.local = 1;
+
 function setcolor4(){
     if (arguments.length == 4) {
         color_wheel(4, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2218,11 +2313,14 @@ function setcolor4(){
         error('color_4: wrong number of arguments\n');
     }
 }
+setcolor4.local = 1;
 
 declareattribute("color_5", "getcolor5", "setcolor5", 1, {style: "rgba", label: "Color 5", category: "Appearance"});
 function getcolor5() {
 	return color_5;
 }
+getcolor5.local = 1;
+
 function setcolor5(){
     if (arguments.length == 4) {
         color_wheel(5, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2232,11 +2330,14 @@ function setcolor5(){
         error('color_5: wrong number of arguments\n');
     }
 }
+setcolor5.local = 1;
 
 declareattribute("color_6", "getcolor6", "setcolor6", 1, {style: "rgba", label: "Color 6", category: "Appearance"});
 function getcolor6() {
 	return color_6;
 }
+getcolor6.local = 1;
+
 function setcolor6(){
     if (arguments.length == 4) {
         color_wheel(6, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2246,11 +2347,14 @@ function setcolor6(){
         error('color_6: wrong number of arguments\n');
     }
 }
+setcolor6.local = 1;
 
 declareattribute("send_name", "getsendname", "setsendname", 1, {type: "symbol", label: "Send Dictionary To"});
 function getsendname() {
 	return send_name;
 }
+getsendname.local = 1;
+
 function setsendname(){
     if (arguments.length > 0) {
         send_name = arguments[0];
@@ -2258,19 +2362,25 @@ function setsendname(){
        send_name = "none";
     }
 }
+setsendname.local = 1;
 
 declareattribute("unique_names", "getunique_names", "setunique_names", 1, {style: "onoff", label: "Force Unique Names"});
 function getunique_names() {
 	return unique_names;
 }
+getunique_names.local = 1;
+
 function setunique_names(v){
     unique_names = v > 0;
 }
+setunique_names.local = 1;
 
 declareattribute("use_uid", "getuse_uid", "setuse_uid", 1, {style: "onoff", label: "Use UID"});
 function getuse_uid() {
 	return use_uid;
 }
+getuse_uid.local = 1;
+
 function setuse_uid(v){
     var new_val = v == 1 ? 1 : 0;
     if (new_val != use_uid && new_val == 1) {
@@ -2280,30 +2390,39 @@ function setuse_uid(v){
     }
     use_uid = new_val;
 }
+setuse_uid.local = 1;
 
 declareattribute("recall_passthrough", "getrecall_passthrough", "setrecall_passthrough", 1, {style: "onoff", label: "Recall Passthrough"});
 function getrecall_passthrough() {
 	return recall_passthrough;
 }
+getrecall_passthrough.local = 1;
+
 function setrecall_passthrough(v){
     recall_passthrough = v > 0;
 }
+setrecall_passthrough.local = 1;
 
 declareattribute("ui_rename", "getui_rename", "setui_rename", 1, {style: "onoff", label: "Rename In UI"});
 function getui_rename() {
 	return ui_rename;
 }
+getui_rename.local = 1;
+
 function setui_rename(v){
     ui_rename = v > 0;
     if (ui_rename) {
         find_textedit();
     }
 }
+setui_rename.local = 1;
 
 declareattribute("poll_edited", "getpoll_edited", "setpoll_edited", 1, {type: "float", min: 0, label: "Poll Edited State"});
 function getpoll_edited() {
 	return poll_edited;
 }
+getpoll_edited.local = 1;
+
 function setpoll_edited(v){
     poll_edited = v == 0 ? 0 : Math.max(0.1, Math.abs(v));
     if (poll_edited > 0) {
@@ -2312,6 +2431,7 @@ function setpoll_edited(v){
         cancel_edited_poll_task();
     }
 }
+setpoll_edited.local = 1;
 
 function run_edited_poll_task() {
     if (poll_edited_task.valid && !poll_edited_task.running && poll_edited > 0 && active_slot > 0) {
@@ -2337,6 +2457,8 @@ declareattribute("edited_color", "getedited_color", "setedited_color", 1, {style
 function getedited_color() {
 	return edited_color;
 }
+getedited_color.local = 1;
+
 function setedited_color(){
     if (arguments.length == 4) {
         edited_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -2346,6 +2468,7 @@ function setedited_color(){
         error('edited_color: wrong number of arguments\n');
     }
 }
+setedited_color.local = 1;
 
 function edited(v) {
     active_slot_edited = v;
@@ -2359,11 +2482,14 @@ declareattribute("nbslot_edit", "getnbslot_edit", "setnbslot_edit", 1, {style: "
 function getnbslot_edit() {
 	return nbslot_edit;
 }
+getnbslot_edit.local = 1;
+
 function setnbslot_edit(v){
     nbslot_edit = v > 0;
     y_offset = 0;
     calc_rows_columns();
 }
+setnbslot_edit.local = 1;
 
 // UTILITY
 function post_keys(obj) {
