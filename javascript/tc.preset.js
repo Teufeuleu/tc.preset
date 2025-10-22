@@ -198,6 +198,7 @@ function slot(left, top, right, bottom, name, lock, interp, color_index, color_c
 function loadbang() {
     // post("loadbang\n");
     has_loaded = true;
+    this.box.setboxattr('border', 0);
     find_pattrstorage(pattrstorage_name);
     if (!pattrstorage_name) {
         psto_auto_link_task.repeat();
@@ -1525,9 +1526,10 @@ function find_textedit() {
             textedit_obj.setattr('lines', 1);
             textedit_obj.setattr('nosymquotes', 1);
             textedit_obj.message('set');
-            break;
+            return true;
         }
     }
+    return false;
 }
 find_textedit.local = 1;
 
@@ -1710,8 +1712,15 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
                 outlet(3, "set", slots[last_hovered].lock);
             }
         } else if (output == "rename") {
-            select(last_hovered);
-            set_textedit(last_hovered);
+            if (!textedit_obj) {
+                find_textedit();
+            }
+            if (textedit_obj) {
+                select(last_hovered);
+                set_textedit(last_hovered);
+            } else {
+                error('No textedit connected to tc.preset third outlet.');
+            }
         } else {
             to_pattrstorage(output, last_hovered);
         }
