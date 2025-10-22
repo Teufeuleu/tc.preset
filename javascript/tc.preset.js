@@ -1523,6 +1523,7 @@ function find_textedit() {
             textedit_obj = cords.outputs[c].dstobject;
             textedit_obj.setattr('keymode', 1);
             textedit_obj.setattr('lines', 1);
+            textedit_obj.setattr('nosymquotes', 1);
             textedit_obj.message('set');
             break;
         }
