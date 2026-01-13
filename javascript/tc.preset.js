@@ -404,7 +404,7 @@ function format_slot_name(id) {
         text = '[' + text + ']';
     }
     // If slot has a name, append it to the preset name
-    if (slots[id].name != null) {
+    if ([null, '<(unnamed)>'].indexOf(slots[id].name) < 0 ) {
         text += ': ' + slots[id].name;
     }
     text = text.toString();
