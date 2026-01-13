@@ -611,18 +611,18 @@ function paint()
                     text = format_slot_name(last_hovered);
                 }
                 var text_dim = mgraphics.text_measure(text);
-                // If the text is too big or a slot is being dragged, display the text on top of the next slot.
-                // Otherwise, it gets displayed on the hovered slot.
 
+                // Display the text bubble on top of the next slot to avoid hiding slots borders (useful when attempting to lock/rename/delete)
                 var bg_txt_dim_w = text_dim[0] > slot_size ? text_dim[0] + 4 : slot_size + 4;
                 var bg_txt_dim_h = text_dim[1] > slot_size ? text_dim[1] + 4 : slot_size + 4;
-                var bg_txt_pos_x = text_dim[0] > slot_size || is_dragging ? slots[last_hovered].left + slot_size + 2: slots[last_hovered].left - 2;
-                var bg_txt_pos_y = text_dim[1] > slot_size || is_dragging ? slots[last_hovered].top - 2 : slots[last_hovered].top - 2;
+                var bg_txt_pos_x = slots[last_hovered].left + slot_size + 2;
+                var bg_txt_pos_y =  slots[last_hovered].top - 2;
                 
-
                 // If there is not enough place on the right and if there is more available place on the left, text is displayed on the left
+                var arrow_on_left = true;
                 if (bg_txt_pos_x + bg_txt_dim_w > ui_width && slots[last_hovered].left - half_spacing > ui_width - slots[last_hovered].right) {
                     bg_txt_pos_x = slots[last_hovered].left - half_spacing - bg_txt_dim_w;
+                    arrow_on_left = false;
                 }
 
                 var txt_pos_x = text_dim[0] > slot_size ? bg_txt_pos_x + half_spacing : bg_txt_pos_x + (bg_txt_dim_w / 2) - (text_dim[0]/2);
@@ -631,9 +631,20 @@ function paint()
                 // Bubble background
                 mgraphics.set_source_rgba(text_bg_color);
                 mgraphics.rectangle_rounded(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, 4, 4);
+                if (arrow_on_left) {
+                    mgraphics.move_to(bg_txt_pos_x, bg_txt_pos_y + bg_txt_dim_h / 2 - 3);
+                    mgraphics.rel_line_to(-2, 3);
+                    mgraphics.rel_line_to(2, 3);
+                    mgraphics.close_path();
+                } else {
+                    mgraphics.move_to(bg_txt_pos_x + bg_txt_dim_w, bg_txt_pos_y + bg_txt_dim_h / 2 - 3);
+                    mgraphics.rel_line_to(2, 3);
+                    mgraphics.rel_line_to(-2, 3);
+                    mgraphics.close_path();
+                }
                 mgraphics.fill();
 
-                // Buble text
+                // Bubble text
                 mgraphics.set_source_rgba(text_color);
                 mgraphics.move_to(txt_pos_x, txt_pos_y);
                 mgraphics.show_text(text.toString());
@@ -1242,8 +1253,8 @@ function move() {
     var cur_active_slot = active_slot;
     var cur_prev_active_slot = previous_active_slot;
     var cur_selected_slot = selected_slot;
-    var offset = ((dst_slot <= src_slot) && slots[dst_slot].name != null) ? 1 : 0;
-    var offset_others = slots[dst_slot].name != null ? 1 : 0;
+    var offset = ((dst_slot <= src_slot) && slots[dst_slot].filled) ? 1 : 0;
+    var offset_others = slots[dst_slot].filled == true ? 1 : 0;
     var src_slot_lock = slots[src_slot].lock;
     var recalc_rows_flag = 0;
 
