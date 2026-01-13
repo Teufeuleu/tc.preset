@@ -125,6 +125,7 @@ var drag_scroll = 0; // handle scrolling when dragging outside of boundaries
 var shift_hold = 0;
 var option_hold = 0;
 var control_hold = 0;
+var is_updating_names = 0;
 var is_interpolating = 0;
 var is_moving = 0;
 var is_dragging = 0;    // Drag flag
@@ -156,7 +157,7 @@ if (jsarguments.length>1) { // Depreciated, use "pattrstorage" attribute instead
 }
 
 // FUNCTIONS
-function slot(left, top, right, bottom, name, lock, interp, color_index, color_custom, uid) {
+function slot(left, top, right, bottom, name, lock, interp, color_index, color_custom, uid, filled) {
     this.left = left;
     this.top = top;
     this.right = right;
@@ -167,6 +168,7 @@ function slot(left, top, right, bottom, name, lock, interp, color_index, color_c
     this.color_index = color_index;
     this.color_custom = color_custom;
     this.uid = uid;
+    this.filled = filled;
 
     this.init = function() {
         this.left = 0;
@@ -178,6 +180,7 @@ function slot(left, top, right, bottom, name, lock, interp, color_index, color_c
         this.interp = -1;
         this.init_color();
         this.uid = 0;
+        this.filled = false;
     }
 
     this.init_color = function() {
@@ -192,6 +195,7 @@ function slot(left, top, right, bottom, name, lock, interp, color_index, color_c
         this.color_index = 0;
         this.color_custom = stored_slot_color;
         this.uid = 0;
+        this.filled = false;
     }
 }
 
@@ -288,7 +292,7 @@ function calc_rows_columns() {
             if (typeof slots[cur] !== 'undefined') {
                 prev_state = slots[cur];
             }
-            slots[cur] = new slot(left, top, right, bottom, prev_state.name, prev_state.lock, prev_state.interp, prev_state.color_index, prev_state.color_custom, prev_state.uid);
+            slots[cur] = new slot(left, top, right, bottom, prev_state.name, prev_state.lock, prev_state.interp, prev_state.color_index, prev_state.color_custom, prev_state.uid, prev_state.filled);
         }
     }
 	
@@ -430,7 +434,7 @@ function paint_base() {
     // All slots
     for (var i = 1; i <= true_slots_count_display; i++) {
         if (i != drag_slot) { //We mask the slot that is currently dragged as it is drawn at the mouse position already
-            if (slots[i].name != null) {
+            if (slots[i].filled == true) {
                 if (color_mode == 1) {
                     mg.set_source_rgba(color_wheel_custom[i % color_wheel_size]);
                 } else if (color_mode == 2) {
@@ -548,7 +552,7 @@ function paint()
         if (last_hovered > -1) {
 
             // Slot border
-            if (slots[last_hovered].name == null || (slots[last_hovered].name != null && !control_hold)) {
+            if (slots[last_hovered].filled == false || (slots[last_hovered].filled == true && !control_hold)) {
                 mgraphics.set_source_rgba(border_color[0], border_color[1], border_color[2], 0.8 * border_color[3]);
                 mgraphics.set_line_width(1);
                 draw_slot_bubble(slots[last_hovered].left, slots[last_hovered].top, slot_size, slot_size);
@@ -557,7 +561,7 @@ function paint()
 
             if (last_hovered_is_preset_slot) {
                 if (shift_hold) {
-                    if (control_hold && slots[last_hovered].name !== null) {
+                    if (control_hold && slots[last_hovered].filled == true) {
                         // About to lock/unlock
                         var bracket_size = slot_size * 0.2;
                         mgraphics.set_source_rgba(border_color);
@@ -571,7 +575,7 @@ function paint()
                         mgraphics.rel_line_to(0, slot_size);
                         mgraphics.rel_line_to(-bracket_size, 0);
                         mgraphics.stroke();
-                    } else if (option_hold && !control_hold  && slots[last_hovered].name !== null) {
+                    } else if (option_hold && !control_hold  && slots[last_hovered].filled == true) {
                         // About to delete
                         mgraphics.set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.8);
                         draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
@@ -582,7 +586,7 @@ function paint()
                         draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
                         mgraphics.fill();
                     }
-                } else if (control_hold && slots[last_hovered].name !== null) {
+                } else if (control_hold) {
                     // About to rename
                     mgraphics.set_source_rgba(border_color);
                     mgraphics.set_line_width(2);
@@ -871,9 +875,11 @@ function anything() {
             } else {
                 slots[v].name = null;
                 slots[v].interp = -1;
+                slots[v].filled = 0;
                 if (active_slot == v) {
                     active_slot = 0;
-                } else if (previous_active_slot == v) {
+                }
+                if (previous_active_slot == v) {
                     previous_active_slot = 0;
                 }
                                 
@@ -947,8 +953,11 @@ function slotlist() {
             }
         }
         for (var i = 0; i < filled_slots.length; i++) {
-            to_pattrstorage("getslotname", filled_slots[i]);
+            // to_pattrstorage("getslotname", filled_slots[i]);
+            slots[filled_slots[i]].filled = true;
         }
+        is_updating_names = 1;
+        to_pattrstorage("getslotnamelist");
         get_all_presets_metadata();
         update_filled_slots_dict();
     }
@@ -956,8 +965,18 @@ function slotlist() {
 
 function slotname() {
 	var args = arrayfromargs(arguments);
-    if (args[0] > 0 && args[1] != "(undefined)") {
-		slots[args[0]].name = args[1];
+    var slot = args[0];
+    var name = args[1];
+    if (slot == 'done') {
+        is_updating_names = 0;
+        return;
+    }
+    if (slot > 0 && name != "(undefined)") {
+        if (is_updating_names == 1 && slots[slot].filled == false) {
+            // Removing parenthesis automatically added by pattrstorage if the preset has a name but isn't filled
+            name = name.slice(1, -1);
+        }
+		slots[slot].name = name;
 	}
 }
 
@@ -1022,7 +1041,7 @@ function recall() {
         interp = Math.min( 1, Math.max(0, args[2]));
     }
 
-    if ((src_slot == 0 || (filled_slots.indexOf(src_slot) > -1 && slots[src_slot].name != null)) && (trg_slot == 0 || (filled_slots.indexOf(trg_slot) > -1 && slots[trg_slot].name != null))) {
+    if ((src_slot == 0 || filled_slots.indexOf(src_slot) > -1) && (trg_slot == 0 || filled_slots.indexOf(trg_slot) > -1 )) {
         for (var i = 0; i < filled_slots.length; i++) {
             slots[filled_slots[i]].interp = -1;
         }
@@ -1081,7 +1100,7 @@ function recall_filled() {
     var args = arrayfromargs(arguments);
     var index = args[0];
 	if (index < filled_slots.length) {
-        to_pattrstorage('recall', filled_slots[args[0]]);
+        to_pattrstorage('recall', filled_slots[index]);
     }
 }
 
@@ -1099,7 +1118,7 @@ function recallmulti() {
 
     for (var i = 0; i < interp_slots.length; i++) {
         var nb = interp_slots[i][0];
-        if (slots[nb].name != null) {
+        if (slots[nb].filled == true) {
             interp_slots[i][1] /= summed_weight;
         }  else {
             interp_slots[i][1] = -1;
@@ -1212,7 +1231,7 @@ function move() {
     if (args.length < 2) return;
     var src_slot = args[0]; // Preset to move
     var dst_slot = args[1]; // Destination slot
-    if (src_slot == dst_slot || !(src_slot <= slots_highest && dst_slot <= slots_count_display) || slots[src_slot].name == null) {
+    if (src_slot == dst_slot || !(src_slot <= slots_highest && dst_slot <= slots_count_display) || slots[src_slot].filled == false) {
         if (is_dragging) {
             
         }
@@ -1233,7 +1252,7 @@ function move() {
         lock(src_slot, 0);
     }
     // If new slot is empty we just move the drag preset here. If it's not, we move al next slots to the right
-    if (slots[dst_slot].name !== null) {
+    if (slots[dst_slot].filled == true) {
         if (slots_highest == slots_count_display) {
             // If there's a stored preset in the last displayed slot, it will be pushed to a new row at insert, so we need to add a new row at redraw
             recalc_rows_flag = 1;
@@ -1394,7 +1413,7 @@ function to_pattrstorage() {
 }
 
 function select(v) {
-    if (filled_slots.indexOf(v) > -1) {
+    if (v <= slots_highest && slots[v].filled) {
         selected_slot = v;
         set_umenu(selected_slot);
         if (selected_slot != 0) {
@@ -1693,9 +1712,9 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
             if (ctrl) {
                 output = "lock";
             }
-		} else if (ctrl && filled_slots.indexOf(last_hovered) > -1) {
+		} else if (ctrl) {
             output = "rename";
-        } else if (slots[last_hovered].name == null) {
+        } else if (slots[last_hovered].filled == false) {
 			return;
 		}
         if (output == "recall" && recall_passthrough == false) {
@@ -1733,7 +1752,7 @@ onclick.local = 1;
 
 function ondblclick(x,y,but,cmd,shift,capslock,option,ctrl)
 {
-	if (select_mode && last_hovered > -1 && pattrstorage_name != null && filled_slots.indexOf(last_hovered) > -1) {
+	if (select_mode && last_hovered > -1 && pattrstorage_name != null && slots[last_hovered].filled) {
         if (recall_passthrough) {
             to_pattrstorage("recall", last_hovered);
         } else {
@@ -1750,7 +1769,7 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
 {
     if (pattrstorage_name != null) {
         y -=  y_offset;
-        if (is_dragging == 0 && last_hovered > 0 && slots[last_hovered].name !== null) {
+        if (is_dragging == 0 && last_hovered > 0 && slots[last_hovered].filled == true) {
             // To prevent mistakes, is_dragging is set to 1 only when dragging for more than 10 pixels
             var dist_from_start = Math.sqrt((x-last_x)*(x-last_x)+(y-last_y)*(y-last_y));
             if (dist_from_start > 10) {
