@@ -328,7 +328,7 @@ function draw_slot(id, scale, cont) {
         var bg_txt_dim_w = ui_width - (2*margin + slot_size + spacing);
         var bg_txt_dim_h = slot_size;
 
-        if (slots[id].name != null) {
+        if (slots[id].filled) {
             cont.set_source_rgba(stored_slot_color);
         } else {
             cont.set_source_rgba(empty_slot_color);
@@ -577,7 +577,7 @@ function paint()
                         mgraphics.stroke();
                     } else if (option_hold && !control_hold  && slots[last_hovered].filled == true) {
                         // About to delete
-                        mgraphics.set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.8);
+                        mgraphics.set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.6);
                         draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
                         mgraphics.fill();
                     } else if (!control_hold && !option_hold){
@@ -590,10 +590,10 @@ function paint()
                     // About to rename
                     mgraphics.set_source_rgba(border_color);
                     mgraphics.set_line_width(2);
-                    mgraphics.move_to(slots[last_hovered].left, slots[last_hovered].top);
-                    mgraphics.rel_line_to(slot_size, 0);
-                    mgraphics.move_to(slots[last_hovered].left, slots[last_hovered].bottom);
-                    mgraphics.rel_line_to(slot_size, 0);
+                    mgraphics.move_to(slots[last_hovered].left - 1, slots[last_hovered].top);
+                    mgraphics.rel_line_to(slot_size + 2, 0);
+                    mgraphics.move_to(slots[last_hovered].left - 1, slots[last_hovered].bottom);
+                    mgraphics.rel_line_to(slot_size + 2, 0);
                     mgraphics.stroke();
                 }
             }
@@ -615,7 +615,7 @@ function paint()
                 // Display the text bubble on top of the next slot to avoid hiding slots borders (useful when attempting to lock/rename/delete)
                 var bg_txt_dim_w = text_dim[0] > slot_size ? text_dim[0] + 4 : slot_size + 4;
                 var bg_txt_dim_h = text_dim[1] > slot_size ? text_dim[1] + 4 : slot_size + 4;
-                var bg_txt_pos_x = slots[last_hovered].left + slot_size + 2;
+                var bg_txt_pos_x = slots[last_hovered].right + 2;
                 var bg_txt_pos_y =  slots[last_hovered].top - 2;
                 
                 // If there is not enough place on the right and if there is more available place on the left, text is displayed on the left
@@ -631,15 +631,16 @@ function paint()
                 // Bubble background
                 mgraphics.set_source_rgba(text_bg_color);
                 mgraphics.rectangle_rounded(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, 4, 4);
+                // Draw an arrow pointing toward the preset slot
                 if (arrow_on_left) {
-                    mgraphics.move_to(bg_txt_pos_x, bg_txt_pos_y + bg_txt_dim_h / 2 - 3);
-                    mgraphics.rel_line_to(-2, 3);
+                    mgraphics.move_to(slots[last_hovered].right, slots[last_hovered].top + slot_size / 2);
                     mgraphics.rel_line_to(2, 3);
+                    mgraphics.rel_line_to(0, -6);
                     mgraphics.close_path();
                 } else {
-                    mgraphics.move_to(bg_txt_pos_x + bg_txt_dim_w, bg_txt_pos_y + bg_txt_dim_h / 2 - 3);
-                    mgraphics.rel_line_to(2, 3);
+                    mgraphics.move_to(slots[last_hovered].left, slots[last_hovered].top + slot_size / 2);
                     mgraphics.rel_line_to(-2, 3);
+                    mgraphics.rel_line_to(0, -6);
                     mgraphics.close_path();
                 }
                 mgraphics.fill();
