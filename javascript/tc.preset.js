@@ -49,14 +49,14 @@ var spacing = 4;
 var font_size = 14;
 var font_name = "Arial";
 
-var background_color = [0.2, 0.2, 0.2, 1];
-var empty_slot_color = [0.349, 0.349, 0.349, 1];
-var active_slot_color = [0.808, 0.898, 0.910, 1];
-var stored_slot_color = [0.502, 0.502, 0.502, 1];
+var background_color = max.getcolor("theme_bgcolor"); //[0.2, 0.2, 0.2, 1];
+var empty_slot_color = max.getcolor("theme_elementcolor"); //[0.349, 0.349, 0.349, 1];
+var active_slot_color = max.getcolor("theme_color"); //[0.808, 0.898, 0.910, 1];
+var stored_slot_color = max.getcolor("theme_accentcolor"); //[0.502, 0.502, 0.502, 1];
 var interp_slot_color = [1.0, 1.0, 1.0, 0.8];
 var border_color = [1.0, 1.0, 1.0, 0.85];
-var text_bg_color = [1,1,1, 0.5];
-var text_color = [0.129, 0.129, 0.129, 1];
+var text_bg_color = [0.5,0.5,0.5, 0.5];
+var text_color = max.getcolor("theme_textcolor"); //[0.129, 0.129, 0.129, 1];
 var edited_color = [1, 0.49, 0.263, 1];
 
 var color_1 = [0.743, 0.41, 0.501, 1]; // Color set for the filled slots. I don't like how this is declared. More info in color_wheel() declaration
@@ -1974,7 +1974,7 @@ function setbgcolor(){
     if (arguments.length == 4) {
         background_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
     } else if (arguments.length == 0) {
-        background_color = [0.2, 0.2, 0.2, 1];
+        background_color = max.getcolor("theme_bgcolor");
     } else {
         error('bgcolor: wrong number of arguments\n');
     }
@@ -1992,7 +1992,7 @@ function setemptycolor(){
     if (arguments.length == 4) {
         empty_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
     } else if (arguments.length == 0) {
-        empty_slot_color = [0.349, 0.349, 0.349, 1];
+        empty_slot_color = max.getcolor("theme_elementcolor");
     } else {
         error('empty_slot_color: wrong number of arguments\n');
     }
@@ -2010,7 +2010,7 @@ function setactiveslotcolor(){
     if (arguments.length == 4) {
         active_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
     } else if (arguments.length == 0) {
-        active_slot_color = [0.808, 0.898, 0.910, 1];
+        active_slot_color = max.getcolor("theme_color");
     } else {
         error('active_slot_color: wrong number of arguments\n');
     }
@@ -2028,7 +2028,7 @@ function setstoredslotcolor(){
     if (arguments.length == 4) {
         stored_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
     } else if (arguments.length == 0) {
-        stored_slot_color = [0.502, 0.502, 0.502, 1];
+        stored_slot_color = max.getcolor("theme_accentcolor");
     } else {
         error('stored_slot_color: wrong number of arguments\n');
     }
@@ -2081,7 +2081,7 @@ function settextcolor(){
     if (arguments.length == 4) {
         text_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
     } else if (arguments.length == 0) {
-        text_color = [0.129, 0.129, 0.129, 1];
+        text_color = max.getcolor("theme_textcolor");
     } else {
         error('text_color: wrong number of arguments\n');
     }
