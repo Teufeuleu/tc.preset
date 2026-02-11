@@ -1,7 +1,7 @@
 {
 	"name" : "tc.preset",
 	"displayname" : "",
-	"version" : "1.2.0",
+	"version" : "1.2.2",
 	"author" : "Théophile Clet",
 	"authors" : [  ],
 	"description" : "A jsui replacement for the preset object",
