@@ -61,9 +61,8 @@
                     "border": 0,
                     "embedstate": [
                         [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ],
-                        [ "fontsize", 14 ],
+                        [ "fontsize", 13 ],
                         [ "menu_mode", 0 ],
-                        [ "text_bg_color", 1, 1, 1, 0.5 ],
                         [ "autowriteagain", 0 ],
                         [ "color_4", 0.367, 0.542, 0.712, 1 ],
                         [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ],
@@ -150,9 +149,8 @@
                     "border": 0,
                     "embedstate": [
                         [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ],
-                        [ "fontsize", 14 ],
+                        [ "fontsize", 13 ],
                         [ "menu_mode", 0 ],
-                        [ "text_bg_color", 1, 1, 1, 0.5 ],
                         [ "autowriteagain", 0 ],
                         [ "color_4", 0.367, 0.542, 0.712, 1 ],
                         [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ],

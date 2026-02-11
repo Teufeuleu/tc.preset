@@ -46,7 +46,7 @@ var slot_round_ratio = 0;
 var margin = 4;
 var spacing = 4;
 
-var font_size = 14;
+var font_size = 13;
 var font_name = "Arial";
 
 var background_color = max.getcolor("theme_bgcolor"); //[0.2, 0.2, 0.2, 1];
@@ -55,8 +55,8 @@ var active_slot_color = max.getcolor("theme_color"); //[0.808, 0.898, 0.910, 1];
 var stored_slot_color = max.getcolor("theme_accentcolor"); //[0.502, 0.502, 0.502, 1];
 var interp_slot_color = [1.0, 1.0, 1.0, 0.8];
 var border_color = [1.0, 1.0, 1.0, 0.85];
-var text_bg_color = [0.5,0.5,0.5, 0.5];
 var text_color = max.getcolor("theme_textcolor"); //[0.129, 0.129, 0.129, 1];
+var text_bg_color = set_text_bg_color();
 var edited_color = [1, 0.49, 0.263, 1];
 
 var color_1 = [0.743, 0.41, 0.501, 1]; // Color set for the filled slots. I don't like how this is declared. More info in color_wheel() declaration
@@ -553,19 +553,21 @@ function paint()
 
             // Slot border
             if (slots[last_hovered].filled == false || (slots[last_hovered].filled == true && !control_hold)) {
-                mgraphics.set_source_rgba(border_color[0], border_color[1], border_color[2], 0.8 * border_color[3]);
+                mgraphics.set_source_rgba(text_color[0], text_color[1], text_color[2], 0.8 * text_color[3]);
                 mgraphics.set_line_width(1);
                 draw_slot_bubble(slots[last_hovered].left, slots[last_hovered].top, slot_size, slot_size);
                 mgraphics.stroke();
             }
 
             if (last_hovered_is_preset_slot) {
+                var stroke_width = Math.round(1 + slot_size / 10);
+                stroke_width = Math.max(2, stroke_width);
                 if (shift_hold) {
                     if (control_hold && slots[last_hovered].filled == true) {
                         // About to lock/unlock
                         var bracket_size = slot_size * 0.2;
-                        mgraphics.set_source_rgba(border_color);
-                        mgraphics.set_line_width(2);
+                        mgraphics.set_source_rgba(text_color);
+                        mgraphics.set_line_width(stroke_width);
                         mgraphics.move_to(slots[last_hovered].left + bracket_size, slots[last_hovered].top);
                         mgraphics.rel_line_to(-bracket_size, 0);
                         mgraphics.rel_line_to(0, slot_size);
@@ -577,7 +579,7 @@ function paint()
                         mgraphics.stroke();
                     } else if (option_hold && !control_hold  && slots[last_hovered].filled == true) {
                         // About to delete
-                        mgraphics.set_source_rgba(empty_slot_color[0], empty_slot_color[1], empty_slot_color[2], 0.6);
+                        mgraphics.set_source_rgba(0, 0, 0, 0.5);
                         draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
                         mgraphics.fill();
                     } else if (!control_hold && !option_hold){
@@ -586,10 +588,10 @@ function paint()
                         draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
                         mgraphics.fill();
                     }
-                } else if (control_hold) {
+                } else if (control_hold && slots[last_hovered].filled == true) {
                     // About to rename
-                    mgraphics.set_source_rgba(border_color);
-                    mgraphics.set_line_width(2);
+                    mgraphics.set_source_rgba(text_color);
+                    mgraphics.set_line_width(stroke_width);
                     mgraphics.move_to(slots[last_hovered].left - 1, slots[last_hovered].top);
                     mgraphics.rel_line_to(slot_size + 2, 0);
                     mgraphics.move_to(slots[last_hovered].left - 1, slots[last_hovered].bottom);
@@ -890,6 +892,7 @@ function anything() {
                 slots[v].filled = 0;
                 if (active_slot == v) {
                     active_slot = 0;
+                    selected_slot = 0;
                 }
                 if (previous_active_slot == v) {
                     previous_active_slot = 0;
@@ -898,8 +901,8 @@ function anything() {
                 if (is_dragging == 0 && is_moving == 0) {
                     to_pattrstorage("delete", v);
                     to_pattrstorage("getslotlist");
-                    paint_base();
                     set_active_slot(active_slot);
+                    paint_base();
                     if (!is_dragging) {
                         outlet(0, "delete", v);
                         if (selected_slot == v) {
@@ -1608,6 +1611,7 @@ function set_textedit(s) {
             }
             textedit_obj.setattr('presentation', this.patcher.getattr("presentation"));
             textedit_obj.setattr('hidden', 0);
+            this.patcher.bringtofront(textedit_obj);
         }
         textedit_obj.message("select");
         is_typing_name = s;
@@ -1718,13 +1722,13 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
         }
 		if (shift) {
 			output = "store";
-			if (option) {
+			if (option && slots[last_hovered].filled) {
 				output = "delete";
 			}
-            if (ctrl) {
+            if (ctrl && slots[last_hovered].filled) {
                 output = "lock";
             }
-		} else if (ctrl) {
+		} else if (ctrl && slots[last_hovered].filled) {
             output = "rename";
         } else if (slots[last_hovered].filled == false) {
 			return;
@@ -2054,24 +2058,6 @@ function setinterpslotcolor(){
 }
 setinterpslotcolor.local = 1;
 
-declareattribute("text_bg_color", "gettextbgcolor", "settextbgcolor", 1, {style: "rgba", label: "Text Background Color", category: "Appearance"});
-function gettextbgcolor() {
-	return text_bg_color;
-}
-gettextbgcolor.local = 1;
-
-function settextbgcolor(){
-    if (arguments.length == 4) {
-        text_bg_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
-    } else if (arguments.length == 0) {
-        text_bg_color = [1,1,1, 0.5];
-    } else {
-        error('text_bg_color: wrong number of arguments\n');
-    }
-	mgraphics.redraw();
-}
-settextbgcolor.local = 1;
-
 declareattribute("text_color", "gettextcolor", "settextcolor", 1, {style: "rgba", label: "Text Color", category: "Appearance"});
 function gettextcolor() {
 	return text_color;
@@ -2085,9 +2071,20 @@ function settextcolor(){
     } else {
         error('text_color: wrong number of arguments\n');
     }
+    set_text_bg_color();
 	mgraphics.redraw();
 }
 settextcolor.local = 1;
+
+function set_text_bg_color() {
+    text_bg_color = is_dark_color(text_color) ? [1, 1, 1, 0.5] : [0, 0, 0, 0.5];
+}
+set_text_bg_color.local = 1;
+
+function is_dark_color(color) {
+    return (0.299 * color[0] + 0.587 * color[1] + 0.114 * color[2]) < 0.5;
+}
+is_dark_color.local = 1;
 
 declareattribute("fontsize", "getfontsize", "setfontsize", 1, {type: "float", label: "Font Size", category: "Appearance"});
 function getfontsize() {
