@@ -3,7 +3,7 @@
 This js file is meant to be used in Cycling'74 Max for the [jsui] object.
 It is designed to mimic [preset], but better. 
 
-Copyright (C) 2024 Théophile Clet <contact@tflcl.xyz> - https://tflcl.xyz.
+Copyright (C) 2026 Théophile Clet <contact@tflcl.xyz> - https://tflcl.xyz.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -81,6 +81,7 @@ var color_mode = 0;         // Change the way the filled slots (stored presets) 
 var select_mode = 0;        // 0: single click to select and recall the slot. 1: single click to select the slot, double click to recall it.
 var send_name = "none";     // The global name to send presets dict name to (received by the [receive] object)
 var unique_names = false;   // When enabled, force names to be unique when renaming slots by appending "bis" to them. Gets applied only to subsequently renamed presets.
+var autoname = false;       // Automatically name new presets when created as "Preset" followed by the slot id
 var use_uid = 0;            // Generating UID for each presets when enabled. Requires a [pattr preset_metadata]
 var recall_passthrough = true;  // By default (true), clicking a slot sends a recall message directly to [pattrstorage], and the jsui left outlet outputs a recall message once the recall is done. When disabled, clicking a slot will send a recall message straight from the jsui left outlet, so it's up to the user to forward the message to pattrstorage. It can be usefull for triggering interpolations with custom logic.
 var ui_rename = false;       // Use the attached textedit, if any, to edit slot names directly in the JSUI frame when clicking a slot while holding the control key. When disabled, the textedit remains untouched but gets focused when clicking a slot while holding the control key.
@@ -105,8 +106,8 @@ var previous_active_slot = 0;   //Previously recalled slot
 var previous_target = 0;        //Here to deal with ongoing interpolations
 var selected_slot = 0;          //Last selected slot. Relevant especially when select_mode = 1. Otherwise it is the same as active_slot
 
-var mess_with_presets = ['insert', 'lockall', 'read', 'readagain', 'remove', 'renumber']; // Received messages that can mess with presets and thus requiring a resync
-var to_ignore = ['active', 'alias', 'current', 'dump', 'edited', 'interp', 'priority', 'subscription', 'resolvealias']; // Messages that can come from psto and should be ignored to avoid feedback loops
+var mess_with_presets = ['insert', 'lockall', 'read', 'readagain', 'remove', 'renumber', 'storenext']; // Received messages that can mess with presets and thus requiring a resync
+var to_ignore = ['active', 'alias', 'current', 'dump', 'edited', 'interp', 'priority', 'subscription']; // Messages that can come from psto and should be ignored to avoid feedback loops
 var to_passthrough = ['clear', 'client_close', 'client_window', 'fade', 'fillempty', 'getactive', 'getalias', 'getclientlist', 'getcurrent', 'getedited', 'getinterp', 'getlockedslots', 'getpriority', 'getslotlist', 'getslotnamelist', 'getstoredvalue', 'getsubscriptionlist', 'grab', 'locate', 'purge', 'readagain', 'setall', 'setstoredvalue', 'storage_close', 'storagewindow', 'storeagain', 'subscribe', 'unsubscribe', 'writeagain', 'writejson', 'writexml']; // Messages that can be passed to psto 
 
 var ui_width = box.rect[2] - box.rect[0];
@@ -137,6 +138,7 @@ var requested_slot = -1; // Which slot we're waiting a value for (used in get_al
 var color_mode_candidate = 0; // Which color mode we're aiming
 var is_listening_to_subscriptionlist = 0; //Filters out received subscriptionlist messages when not updating slot color values
 var is_listening_to_clientlist = 0; //Filters out received clientlist messages when not updating slot color values
+var waiting_for_alias = null; // Flag when waiting for a specific alias
 var metadata_pattr = null;
 var metadata_pattr_address;
 var metadata_updated = false; // Flag to write presets file after filling possible empty preset_metadata
@@ -794,14 +796,21 @@ function connect_to_metadata_pattr() {
         return false;
     } else {
         metadata_pattr = obj;
-        get_metadata_pattr_address();
+        resolve_metadata_pattr_alias();
         return true;
     }
 }
 connect_to_metadata_pattr.local = 1;
 
+function resolve_metadata_pattr_alias() {
+    waiting_for_alias = 'preset_metadata';
+    to_pattrstorage('resolvealias', 'preset_metadata');
+    // See function resolvealias for next step
+}
+resolve_metadata_pattr_alias.local = 1;
+
 function get_metadata_pattr_address() {
-    is_listening_to_clientlist = is_listening_to_clientlist == 2 ? 2 : 1; // 2 if setting color mode, 1 otherwise
+    is_listening_to_clientlist = is_listening_to_clientlist === 2 ? 2 : 1; // 2 if setting color mode, 1 otherwise
     to_pattrstorage("getclientlist");
 }
 get_metadata_pattr_address.local = 1;
@@ -987,7 +996,7 @@ function slotname() {
         return;
     }
     if (slot > 0 && name != "(undefined)") {
-        if (is_updating_names == 1 && slots[slot].filled == false) {
+        if (is_updating_names == 1 && slots[slot].filled == false && name !== "<(unnamed)>") {
             // Removing parenthesis automatically added by pattrstorage if the preset has a name but isn't filled
             name = name.slice(1, -1);
         }
@@ -1018,6 +1027,7 @@ function setslotname() {
 }
 
 function format_slotname(name) {
+    if (name === "<(unnamed)>") return name;
     return unique_names ? make_slotname_unique(name) : name;
 }
 format_slotname.local = 1;
@@ -1026,7 +1036,7 @@ function make_slotname_unique(name) {
     // Leftover from before using an uid. Found the bis bis bis presets funny (rather than bunch of (undefined) so I left this here
     var current_name = name;
     for (var i = 0; i < filled_slots.length; i++) {
-        if (slots[filled_slots[i]].name == current_name && filled_slots[i] != selected_slot) {
+        if (slots[filled_slots[i]].name === current_name && filled_slots[i] !== selected_slot) {
             return make_slotname_unique(name + ' bis');
         }
     }
@@ -1152,54 +1162,60 @@ function recallmulti() {
 
 function store(v) {
     v = Math.floor(v);
-    if (v >= 0) {
-        if (slots[v] && slots[v].lock > 0) {
-            error('cannot overwrite locked slot ' + v + '\n');
-        } else {
-            var recalc_rows_flag = scrollable && v > slots_highest;
+    if (v < 0) return;
+    if (slots[v] && slots[v].lock > 0) {
+        error('cannot overwrite locked slot ' + v + '\n');
+    } else {
+        var recalc_rows_flag = scrollable && v > slots_highest;
 
-            if (metadata_pattr) {
-                if (filled_slots.indexOf(v) == -1) {
-                    // If storing preset in empty slot
-                    // Generating name and uid
-                    if (use_uid) {
-                        slots[v].uid = generateUID();
-                    }
-                    slots[v].init_color();
-    
-                    var preset_name = format_slotname('Preset ' + v);
-                    slotname(v, preset_name);
-                    to_pattrstorage("slotname", v, preset_name);
+        selected_slot = v; // We set selected_slot without calling set_active_slot because the preset might not still exist, but its id is required by make_slotname_unique()
+
+        var was_slot_empty = filled_slots.indexOf(v) == -1;
+        if (autoname && was_slot_empty && slots[v].name === null) {
+            // If storing preset in empty slot
+            // Generating name
+            var preset_name = format_slotname('Preset ' + v);
+            slotname(v, preset_name);
+            to_pattrstorage("slotname", v, preset_name);
+        }
+
+        if (metadata_pattr) {
+            if (was_slot_empty) {
+                // If storing preset in empty slot
+                // Generating uid
+                if (use_uid) {
+                    slots[v].uid = generateUID();
                 }
-
-                // Updating metadata in pattr object before storing in pattrstorage
-                var cstm = slots[v].color_custom;
-                var color_val = [slots[v].color_index, cstm[0], cstm[1], cstm[2], cstm[3]];
-                var meta_dict = {color: color_val, uid: slots[v].uid};
-                metadata_pattr.message(JSON.stringify(meta_dict));
+                slots[v].init_color();
             }
 
-            to_pattrstorage("store", v);
-            to_pattrstorage("getslotlist");
+            // Updating metadata in pattr object before storing in pattrstorage
+            var cstm = slots[v].color_custom;
+            var color_val = [slots[v].color_index, cstm[0], cstm[1], cstm[2], cstm[3]];
+            var meta_dict = {color: color_val, uid: slots[v].uid};
+            metadata_pattr.message(JSON.stringify(meta_dict));
+        }
 
-            active_slot_edited = 0;
-            run_edited_poll_task();
+        to_pattrstorage("store", v);
+        to_pattrstorage("getslotlist");
 
-            if (recalc_rows_flag) {
-                calc_rows_columns();
-            } else {
-                paint_base();
-            }
-            
-            if (!(ignore_slot_zero && v == 0)) {
-                set_active_slot(v);
-            }
-            
-            outlet(0, "store", v);
-            if (v) {
-                // We writagain only if stored preset is > 0
-                trigger_writeagain();
-            }
+        active_slot_edited = 0;
+        run_edited_poll_task();
+
+        if (recalc_rows_flag) {
+            calc_rows_columns();
+        } else {
+            paint_base();
+        }
+        
+        if (!(ignore_slot_zero && v === 0)) {
+            set_active_slot(v);
+        }
+        
+        outlet(0, "store", v);
+        if (v) {
+            // We writagain only if stored preset is > 0
+            trigger_writeagain();
         }
     }
 }
@@ -1355,6 +1371,23 @@ function read() {
 // Given that v8ui has a new read method that cannot be overriden, we need to use [substitute read readfile] between [pattrstorage] and [tc.prest]
 function readfile(f, s) {
     read(f, s);
+}
+
+function resolvealias(alias, client) {
+    post(pattrstorage_name, "resolvealias", alias, client, '\n');
+    if (alias === waiting_for_alias) {
+        if (waiting_for_alias === 'preset_metadata') {
+            if (client) {
+                // All good, alias already set
+                post("alias already found\n")
+                is_listening_to_clientlist = 0;
+                return
+            } else {
+                // No alias defined yet, we need to query the entire clientlist to get the correct address
+                get_metadata_pattr_address();
+            }
+        }
+    }
 }
 
 function clientlist() {
@@ -2413,6 +2446,8 @@ function setunique_names(v){
 }
 setunique_names.local = 1;
 
+declareattribute("autoname", null, null, 1, { style: "onoff", label: "Autoname new presets" });
+
 declareattribute("use_uid", "getuse_uid", "setuse_uid", 1, {style: "onoff", label: "Use UID"});
 function getuse_uid() {
 	return use_uid;
@@ -2536,19 +2571,9 @@ function post_keys(obj) {
     post('\n');
 }
 
-// Generating (fast but not compliant but more than enough for us) UID without crypto.randomUUID()
-// https://stackoverflow.com/a/21963136
-var lut = new Array(256);
-for (var i=0; i<256; i++) { lut[i] = (i<16?'0':'')+(i).toString(16); }
+// Generating a hash/UID
 function generateUID()
 {
-    var d0 = Math.random()*0xffffffff>>>0;
-    var d1 = Math.random()*0xffffffff>>>0;
-    var d2 = Math.random()*0xffffffff>>>0;
-    var d3 = Math.random()*0xffffffff>>>0;
-    return lut[d0&0xff]+lut[d0>>8&0xff]+lut[d0>>16&0xff]+lut[d0>>24&0xff]+'-'+
-    lut[d1&0xff]+lut[d1>>8&0xff]+'-'+lut[d1>>16&0x0f|0x40]+lut[d1>>24&0xff]+'-'+
-    lut[d2&0x3f|0x80]+lut[d2>>8&0xff]+'-'+lut[d2>>16&0xff]+lut[d2>>24&0xff]+
-    lut[d3&0xff]+lut[d3>>8&0xff]+lut[d3>>16&0xff]+lut[d3>>24&0xff];
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 }
 generateUID.local = 1;
