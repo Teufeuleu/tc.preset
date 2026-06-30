@@ -3,8 +3,8 @@
         "fileversion": 1,
         "appversion": {
             "major": 9,
-            "minor": 1,
-            "revision": 2,
+            "minor": 2,
+            "revision": 0,
             "architecture": "x64",
             "modernui": 1
         },
@@ -12,6 +12,7 @@
         "rect": [ 322.0, 100.0, 900.0, 648.0 ],
         "showrootpatcherontab": 0,
         "showontab": 0,
+        "integercoordinates": 1,
         "boxes": [
             {
                 "box": {
@@ -23,14 +24,15 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 1,
-                            "revision": 2,
+                            "minor": 2,
+                            "revision": 0,
                             "architecture": "x64",
                             "modernui": 1
                         },
                         "classnamespace": "box",
                         "rect": [ 0.0, 26.0, 900.0, 622.0 ],
                         "showontab": 1,
+                        "integercoordinates": 1,
                         "boxes": [
                             {
                                 "box": {
@@ -68,6 +70,7 @@
                             {
                                 "box": {
                                     "border": 0,
+                                    "embed": 0,
                                     "filename": "helpname.js",
                                     "id": "obj-8",
                                     "ignoreclick": 1,
@@ -118,13 +121,14 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 59.0, 119.0, 1000.0, 755.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
@@ -140,8 +144,10 @@
                                             {
                                                 "box": {
                                                     "border": 0,
+                                                    "embed": 0,
                                                     "embedstate": [
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
+                                                        [ "autoname", 0 ],
                                                         [ "autowriteagain", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                                         [ "bubblesize", 14 ],
@@ -174,6 +180,7 @@
                                                         [ "spacing", 4 ],
                                                         [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ],
                                                         [ "text_color", 0.85, 0.85, 0.85, 1 ],
+                                                        [ "timestamp", 0 ],
                                                         [ "ui_rename", 1 ],
                                                         [ "unique_names", 0 ],
                                                         [ "use_uid", 0 ]
@@ -259,19 +266,22 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 59.0, 119.0, 1000.0, 755.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
                                                     "border": 0,
+                                                    "embed": 0,
                                                     "embedstate": [
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
+                                                        [ "autoname", 0 ],
                                                         [ "autowriteagain", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                                         [ "bubblesize", 14 ],
@@ -304,6 +314,7 @@
                                                         [ "spacing", 4 ],
                                                         [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ],
                                                         [ "text_color", 0.85, 0.85, 0.85, 1 ],
+                                                        [ "timestamp", 0 ],
                                                         [ "ui_rename", 1 ],
                                                         [ "unique_names", 0 ],
                                                         [ "use_uid", 0 ]
@@ -377,54 +388,57 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 59.0, 119.0, 1000.0, 755.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
                                                     "border": 0,
                                                     "embedstate": [
-                                                        [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ],
-                                                        [ "fontsize", 13 ],
-                                                        [ "menu_mode", 0 ],
-                                                        [ "autowriteagain", 0 ],
-                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
-                                                        [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ],
-                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
-                                                        [ "fontname", "Arial" ],
-                                                        [ "select_mode", 0 ],
-                                                        [ "spacing", 4 ],
-                                                        [ "ui_rename", 0 ],
-                                                        [ "layout", 0 ],
-                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
-                                                        [ "display_interp", 1 ],
-                                                        [ "poll_edited", 0 ],
-                                                        [ "scrollable", 0 ],
-                                                        [ "use_uid", 0 ],
-                                                        [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ],
-                                                        [ "color_mode", 0 ],
-                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
-                                                        [ "min_rows", 10 ],
-                                                        [ "bubblesize", 14 ],
-                                                        [ "margin", 4 ],
-                                                        [ "text_color", 0.85, 0.85, 0.85, 1.0 ],
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ],
                                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
-                                                        [ "send_name", "none" ],
+                                                        [ "bubblesize", 14 ],
                                                         [ "edited_color", 1, 0.49, 0.263, 1 ],
-                                                        [ "recall_passthrough", 1 ],
-                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "spacing", 4 ],
+                                                        [ "layout", 0 ],
                                                         [ "unique_names", 0 ],
-                                                        [ "pattrstorage", "mypat" ],
+                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "select_mode", 0 ],
+                                                        [ "display_interp", 1 ],
+                                                        [ "scrollable", 0 ],
+                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
+                                                        [ "autowriteagain", 0 ],
+                                                        [ "color_mode", 0 ],
                                                         [ "slot_round", 0 ],
+                                                        [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ],
+                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ],
+                                                        [ "poll_edited", 0 ],
+                                                        [ "timestamp", 0 ],
+                                                        [ "send_name", "none" ],
+                                                        [ "margin", 4 ],
+                                                        [ "autoname", 0 ],
+                                                        [ "text_color", 0.85, 0.85, 0.85, 1.0 ],
+                                                        [ "fontsize", 13 ],
+                                                        [ "recall_passthrough", 1 ],
+                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
+                                                        [ "nbslot_edit", 1 ],
+                                                        [ "fontname", "Arial" ],
+                                                        [ "pattrstorage", "mypat" ],
                                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
+                                                        [ "use_uid", 0 ],
+                                                        [ "ui_rename", 0 ],
+                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
+                                                        [ "min_rows", 10 ],
                                                         [ "color_6", 0.316, 0.616, 0.377, 1 ],
-                                                        [ "nbslot_edit", 1 ]
+                                                        [ "menu_mode", 0 ],
+                                                        [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ]
                                                     ],
                                                     "filename": "tc.preset",
                                                     "id": "obj-1",
@@ -549,14 +563,15 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 1,
-                            "revision": 2,
+                            "minor": 2,
+                            "revision": 0,
                             "architecture": "x64",
                             "modernui": 1
                         },
                         "classnamespace": "box",
                         "rect": [ 0.0, 26.0, 900.0, 622.0 ],
                         "showontab": 1,
+                        "integercoordinates": 1,
                         "boxes": [],
                         "lines": []
                     },
@@ -590,14 +605,15 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 1,
-                            "revision": 2,
+                            "minor": 2,
+                            "revision": 0,
                             "architecture": "x64",
                             "modernui": 1
                         },
                         "classnamespace": "box",
                         "rect": [ 0.0, 26.0, 900.0, 622.0 ],
                         "showontab": 1,
+                        "integercoordinates": 1,
                         "boxes": [
                             {
                                 "box": {
@@ -1040,6 +1056,7 @@
                             {
                                 "box": {
                                     "border": 0,
+                                    "embed": 0,
                                     "filename": "helpname.js",
                                     "id": "obj-4",
                                     "ignoreclick": 1,
@@ -1061,8 +1078,10 @@
                             {
                                 "box": {
                                     "border": 0,
+                                    "embed": 0,
                                     "embedstate": [
                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
+                                        [ "autoname", 0 ],
                                         [ "autowriteagain", 0 ],
                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                         [ "bubblesize", 14 ],
@@ -1095,6 +1114,7 @@
                                         [ "spacing", 4 ],
                                         [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ],
                                         [ "text_color", 0.85, 0.85, 0.85, 1 ],
+                                        [ "timestamp", 0 ],
                                         [ "ui_rename", 0 ],
                                         [ "unique_names", 0 ],
                                         [ "use_uid", 0 ]
@@ -1341,14 +1361,15 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 1,
-                            "revision": 2,
+                            "minor": 2,
+                            "revision": 0,
                             "architecture": "x64",
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 0.0, 26.0, 900.0, 622.0 ],
+                        "rect": [ 322.0, 126.0, 900.0, 622.0 ],
                         "showontab": 1,
+                        "integercoordinates": 1,
                         "boxes": [
                             {
                                 "box": {
@@ -1385,13 +1406,14 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 59.0, 107.0, 640.0, 480.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
@@ -1729,8 +1751,10 @@
                             {
                                 "box": {
                                     "border": 0,
+                                    "embed": 0,
                                     "embedstate": [
                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
+                                        [ "autoname", 0 ],
                                         [ "autowriteagain", 0 ],
                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                         [ "bubblesize", 14 ],
@@ -1763,6 +1787,7 @@
                                         [ "spacing", 4 ],
                                         [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ],
                                         [ "text_color", 0.85, 0.85, 0.85, 1 ],
+                                        [ "timestamp", 0 ],
                                         [ "ui_rename", 1 ],
                                         [ "unique_names", 0 ],
                                         [ "use_uid", 0 ]
@@ -1804,6 +1829,7 @@
                             {
                                 "box": {
                                     "border": 0,
+                                    "embed": 0,
                                     "filename": "helpname.js",
                                     "id": "obj-4",
                                     "ignoreclick": 1,
@@ -2114,14 +2140,15 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 1,
-                            "revision": 2,
+                            "minor": 2,
+                            "revision": 0,
                             "architecture": "x64",
                             "modernui": 1
                         },
                         "classnamespace": "box",
                         "rect": [ 0.0, 26.0, 900.0, 622.0 ],
                         "showontab": 1,
+                        "integercoordinates": 1,
                         "boxes": [
                             {
                                 "box": {
@@ -2143,13 +2170,14 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 59.0, 119.0, 1000.0, 755.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
@@ -2166,42 +2194,44 @@
                                                 "box": {
                                                     "border": 0,
                                                     "embedstate": [
-                                                        [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ],
-                                                        [ "fontsize", 13 ],
-                                                        [ "menu_mode", 0 ],
-                                                        [ "autowriteagain", 0 ],
-                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
-                                                        [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ],
-                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
-                                                        [ "fontname", "Arial" ],
-                                                        [ "select_mode", 0 ],
-                                                        [ "spacing", 4 ],
-                                                        [ "ui_rename", 0 ],
-                                                        [ "layout", 0 ],
-                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
-                                                        [ "display_interp", 1 ],
-                                                        [ "poll_edited", 0 ],
-                                                        [ "scrollable", 0 ],
-                                                        [ "use_uid", 0 ],
-                                                        [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ],
-                                                        [ "color_mode", 0 ],
-                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
-                                                        [ "min_rows", 10 ],
-                                                        [ "bubblesize", 14 ],
-                                                        [ "margin", 4 ],
-                                                        [ "text_color", 0.85, 0.85, 0.85, 1.0 ],
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ],
                                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
-                                                        [ "send_name", "none" ],
+                                                        [ "bubblesize", 14 ],
                                                         [ "edited_color", 1, 0.49, 0.263, 1 ],
-                                                        [ "recall_passthrough", 1 ],
-                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "spacing", 4 ],
+                                                        [ "layout", 0 ],
                                                         [ "unique_names", 0 ],
-                                                        [ "pattrstorage", "mypat" ],
+                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "select_mode", 0 ],
+                                                        [ "display_interp", 1 ],
+                                                        [ "scrollable", 0 ],
+                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
+                                                        [ "autowriteagain", 0 ],
+                                                        [ "color_mode", 0 ],
                                                         [ "slot_round", 0 ],
+                                                        [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ],
+                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ],
+                                                        [ "poll_edited", 0 ],
+                                                        [ "timestamp", 0 ],
+                                                        [ "send_name", "none" ],
+                                                        [ "margin", 4 ],
+                                                        [ "autoname", 0 ],
+                                                        [ "text_color", 0.85, 0.85, 0.85, 1.0 ],
+                                                        [ "fontsize", 13 ],
+                                                        [ "recall_passthrough", 1 ],
+                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
+                                                        [ "nbslot_edit", 1 ],
+                                                        [ "fontname", "Arial" ],
+                                                        [ "pattrstorage", "mypat" ],
                                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
+                                                        [ "use_uid", 0 ],
+                                                        [ "ui_rename", 0 ],
+                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
+                                                        [ "min_rows", 10 ],
                                                         [ "color_6", 0.316, 0.616, 0.377, 1 ],
-                                                        [ "nbslot_edit", 1 ]
+                                                        [ "menu_mode", 0 ],
+                                                        [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ]
                                                     ],
                                                     "filename": "tc.preset",
                                                     "id": "obj-1",
@@ -2322,13 +2352,14 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 59.0, 119.0, 1000.0, 755.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
@@ -2371,8 +2402,10 @@
                                             {
                                                 "box": {
                                                     "border": 0,
+                                                    "embed": 0,
                                                     "embedstate": [
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
+                                                        [ "autoname", 0 ],
                                                         [ "autowriteagain", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                                         [ "bubblesize", 14 ],
@@ -2405,6 +2438,7 @@
                                                         [ "spacing", 4 ],
                                                         [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ],
                                                         [ "text_color", 0.85, 0.85, 0.85, 1 ],
+                                                        [ "timestamp", 0 ],
                                                         [ "ui_rename", 1 ],
                                                         [ "unique_names", 0 ],
                                                         [ "use_uid", 0 ]
@@ -2496,19 +2530,22 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 59.0, 119.0, 584.0, 605.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
                                                     "border": 0,
+                                                    "embed": 0,
                                                     "embedstate": [
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
+                                                        [ "autoname", 0 ],
                                                         [ "autowriteagain", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                                         [ "bubblesize", 14 ],
@@ -2541,6 +2578,7 @@
                                                         [ "spacing", 4 ],
                                                         [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ],
                                                         [ "text_color", 0.85, 0.85, 0.85, 1 ],
+                                                        [ "timestamp", 0 ],
                                                         [ "ui_rename", 0 ],
                                                         [ "unique_names", 0 ],
                                                         [ "use_uid", 0 ]
@@ -2755,13 +2793,14 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 59.0, 119.0, 1000.0, 755.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
@@ -2798,13 +2837,14 @@
                                                         "fileversion": 1,
                                                         "appversion": {
                                                             "major": 9,
-                                                            "minor": 1,
-                                                            "revision": 2,
+                                                            "minor": 2,
+                                                            "revision": 0,
                                                             "architecture": "x64",
                                                             "modernui": 1
                                                         },
                                                         "classnamespace": "box",
                                                         "rect": [ 439.0, 167.0, 640.0, 480.0 ],
+                                                        "integercoordinates": 1,
                                                         "boxes": [
                                                             {
                                                                 "box": {
@@ -3064,8 +3104,10 @@
                                             {
                                                 "box": {
                                                     "border": 0,
+                                                    "embed": 0,
                                                     "embedstate": [
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
+                                                        [ "autoname", 0 ],
                                                         [ "autowriteagain", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                                         [ "bubblesize", 14 ],
@@ -3098,6 +3140,7 @@
                                                         [ "spacing", 4 ],
                                                         [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ],
                                                         [ "text_color", 0.85, 0.85, 0.85, 1 ],
+                                                        [ "timestamp", 0 ],
                                                         [ "ui_rename", 1 ],
                                                         [ "unique_names", 0 ],
                                                         [ "use_uid", 0 ]
@@ -3218,14 +3261,15 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 1,
-                            "revision": 2,
+                            "minor": 2,
+                            "revision": 0,
                             "architecture": "x64",
                             "modernui": 1
                         },
                         "classnamespace": "box",
                         "rect": [ 0.0, 26.0, 900.0, 622.0 ],
                         "showontab": 1,
+                        "integercoordinates": 1,
                         "boxes": [
                             {
                                 "box": {
@@ -3323,8 +3367,10 @@
                             {
                                 "box": {
                                     "border": 0,
+                                    "embed": 0,
                                     "embedstate": [
                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
+                                        [ "autoname", 0 ],
                                         [ "autowriteagain", 0 ],
                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                         [ "bubblesize", 14 ],
@@ -3357,6 +3403,7 @@
                                         [ "spacing", 4 ],
                                         [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ],
                                         [ "text_color", 0.85, 0.85, 0.85, 1 ],
+                                        [ "timestamp", 0 ],
                                         [ "ui_rename", 1 ],
                                         [ "unique_names", 0 ],
                                         [ "use_uid", 0 ]
@@ -3398,6 +3445,7 @@
                             {
                                 "box": {
                                     "border": 0,
+                                    "embed": 0,
                                     "filename": "helpname.js",
                                     "id": "obj-4",
                                     "ignoreclick": 1,
@@ -3425,7 +3473,7 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 668.0, 50.0, 231.0, 91.0 ],
+                                    "patching_rect": [ 667.0, 65.0, 231.0, 91.0 ],
                                     "text": "...and: bgcolor, empty_slot_color, stored_slot_color, interp_slot_color, active_slot_color, fontname, fontsize, text_bg_color, text_color\n(see the tc.preset attributes in the inspector or in its Reference page)"
                                 }
                             },
@@ -3640,15 +3688,44 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 1,
-                            "revision": 2,
+                            "minor": 2,
+                            "revision": 0,
                             "architecture": "x64",
                             "modernui": 1
                         },
                         "classnamespace": "box",
-                        "rect": [ 322.0, 126.0, 900.0, 622.0 ],
+                        "rect": [ 0.0, 26.0, 900.0, 622.0 ],
                         "showontab": 1,
+                        "integercoordinates": 1,
                         "boxes": [
+                            {
+                                "box": {
+                                    "bubble": 1,
+                                    "bubbleside": 3,
+                                    "id": "obj-13",
+                                    "linecount": 3,
+                                    "maxclass": "comment",
+                                    "numinlets": 1,
+                                    "numoutlets": 0,
+                                    "patching_rect": [ 128.5, 561.0, 485.0, 51.0 ],
+                                    "text": "You can always access all preset info as a dictionary from the objects rightmost outlet, but also remotely from a [receive] named \"<pattrstorage_name>_presets_dict\". Presets are accessible either by their uid or their slot number."
+                                }
+                            },
+                            {
+                                "box": {
+                                    "bubble": 1,
+                                    "bubble_bgcolor": [ 0.388235294117647, 0.172549019607843, 0.172549019607843, 1.0 ],
+                                    "bubbleside": 2,
+                                    "id": "obj-28",
+                                    "linecount": 7,
+                                    "maxclass": "comment",
+                                    "numinlets": 1,
+                                    "numoutlets": 0,
+                                    "patching_rect": [ 548.0, 148.0, 288.0, 119.0 ],
+                                    "text": "For color modes 2 and 3, use_uid and timestamp to work, you need to add a pattr object named 'preset_metadata' to your patch. If using subscribe mode, make sure to add preset_metadata to the pattrstorage's subscribe list.\nPreset color data will be stored just like your other parameters.",
+                                    "textcolor": [ 0.815686274509804, 0.815686274509804, 0.815686274509804, 1.0 ]
+                                }
+                            },
                             {
                                 "box": {
                                     "id": "obj-2",
@@ -3656,7 +3733,7 @@
                                     "numinlets": 1,
                                     "numoutlets": 3,
                                     "outlettype": [ "", "", "" ],
-                                    "patching_rect": [ 614.0, 312.0, 156.0, 22.0 ],
+                                    "patching_rect": [ 614.0, 340.0, 156.0, 22.0 ],
                                     "saved_object_attributes": {
                                         "legacy": 0
                                     },
@@ -3683,15 +3760,14 @@
                             {
                                 "box": {
                                     "bubble": 1,
-                                    "bubblepoint": 0.37,
                                     "bubbleside": 2,
                                     "id": "obj-40",
-                                    "linecount": 5,
+                                    "linecount": 6,
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 591.5, 146.0, 249.0, 93.0 ],
-                                    "text": "When enabled, each stored preset gets a unique identifier, following the preset when it gets renamed, moved and overwritten. This can be useful when doing some complex preset management."
+                                    "patching_rect": [ 299.0, 374.0, 288.0, 106.0 ],
+                                    "text": "Additional info can be stored in preset_metadata:\n- uid: unique identifier, following the preset when it gets renamed, moved and overwritten. Useful when doing some complex preset management.\n- timestamp: remember when your preset was created/modified!"
                                 }
                             },
                             {
@@ -3702,7 +3778,7 @@
                                     "numoutlets": 3,
                                     "outlettype": [ "", "", "" ],
                                     "patching_rect": [ 636.0, 16.0, 40.0, 22.0 ],
-                                    "restore": [ -0.23, -0.5700000000000001, 0.26, 0.02, 0.72, -0.18, -0.46, 0.4, 0.16, -0.92, 0.77, 0.9500000000000001, -0.37, 0.25, -0.07, -0.38 ],
+                                    "restore": [ -0.31, 0.15, 0.08, -0.77, 0.62, 0.19, -0.35000000000000003, 0.9, 0.87, 0.92, -0.16, -0.7000000000000001, 0.11, 0.31, -0.09, -0.77 ],
                                     "saved_object_attributes": {
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0
@@ -3736,22 +3812,11 @@
                             },
                             {
                                 "box": {
-                                    "id": "obj-21",
-                                    "maxclass": "newobj",
-                                    "numinlets": 0,
-                                    "numoutlets": 1,
-                                    "outlettype": [ "" ],
-                                    "patching_rect": [ 614.0, 280.0, 119.0, 22.0 ],
-                                    "text": "r colors_presets_dict"
-                                }
-                            },
-                            {
-                                "box": {
                                     "id": "obj-22",
                                     "maxclass": "dict.view",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 614.0, 345.0, 253.0, 267.0 ]
+                                    "patching_rect": [ 614.0, 378.0, 248.5, 234.0 ]
                                 }
                             },
                             {
@@ -3764,13 +3829,14 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 703.0, 163.0, 460.0, 440.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
@@ -3779,7 +3845,7 @@
                                                     "maxclass": "comment",
                                                     "numinlets": 1,
                                                     "numoutlets": 0,
-                                                    "patching_rect": [ 188.0, 419.0, 206.0, 47.0 ],
+                                                    "patching_rect": [ 188.0, 377.0, 206.0, 47.0 ],
                                                     "text": "If you move presets around, or write presets to disk and read them back later, colors will still be here."
                                                 }
                                             },
@@ -3790,7 +3856,7 @@
                                                     "numinlets": 1,
                                                     "numoutlets": 1,
                                                     "outlettype": [ "" ],
-                                                    "patching_rect": [ 141.0, 370.0, 98.0, 22.0 ],
+                                                    "patching_rect": [ 141.0, 328.0, 98.0, 22.0 ],
                                                     "text": "prepend setcolor"
                                                 }
                                             },
@@ -3801,7 +3867,7 @@
                                                     "numinlets": 1,
                                                     "numoutlets": 2,
                                                     "outlettype": [ "int", "bang" ],
-                                                    "patching_rect": [ 141.0, 270.0, 29.5, 22.0 ],
+                                                    "patching_rect": [ 141.0, 228.0, 29.5, 22.0 ],
                                                     "text": "t i b"
                                                 }
                                             },
@@ -3816,13 +3882,14 @@
                                                         "fileversion": 1,
                                                         "appversion": {
                                                             "major": 9,
-                                                            "minor": 1,
-                                                            "revision": 2,
+                                                            "minor": 2,
+                                                            "revision": 0,
                                                             "architecture": "x64",
                                                             "modernui": 1
                                                         },
                                                         "classnamespace": "box",
                                                         "rect": [ 59.0, 119.0, 640.0, 480.0 ],
+                                                        "integercoordinates": 1,
                                                         "boxes": [
                                                             {
                                                                 "box": {
@@ -3945,7 +4012,7 @@
                                                             }
                                                         ]
                                                     },
-                                                    "patching_rect": [ 156.0, 303.0, 92.0, 22.0 ],
+                                                    "patching_rect": [ 156.0, 261.0, 92.0, 22.0 ],
                                                     "text": "p random_color"
                                                 }
                                             },
@@ -3956,7 +4023,7 @@
                                                     "numinlets": 2,
                                                     "numoutlets": 3,
                                                     "outlettype": [ "bang", "bang", "int" ],
-                                                    "patching_rect": [ 119.0, 244.0, 41.0, 22.0 ],
+                                                    "patching_rect": [ 119.0, 202.0, 41.0, 22.0 ],
                                                     "text": "uzi 20"
                                                 }
                                             },
@@ -3966,7 +4033,7 @@
                                                     "maxclass": "comment",
                                                     "numinlets": 1,
                                                     "numoutlets": 0,
-                                                    "patching_rect": [ 161.0, 169.0, 175.0, 20.0 ],
+                                                    "patching_rect": [ 161.0, 127.0, 175.0, 20.0 ],
                                                     "text": "Set selected preset color to red"
                                                 }
                                             },
@@ -3976,7 +4043,7 @@
                                                     "maxclass": "comment",
                                                     "numinlets": 1,
                                                     "numoutlets": 0,
-                                                    "patching_rect": [ 121.0, 129.0, 123.0, 20.0 ],
+                                                    "patching_rect": [ 121.0, 87.0, 123.0, 20.0 ],
                                                     "text": "Change preset colors"
                                                 }
                                             },
@@ -3987,7 +4054,7 @@
                                                     "numinlets": 2,
                                                     "numoutlets": 1,
                                                     "outlettype": [ "" ],
-                                                    "patching_rect": [ 52.0, 167.0, 104.0, 22.0 ],
+                                                    "patching_rect": [ 52.0, 125.0, 104.0, 22.0 ],
                                                     "text": "setcolor 1. 0. 0. 1."
                                                 }
                                             },
@@ -3998,7 +4065,7 @@
                                                     "numinlets": 5,
                                                     "numoutlets": 1,
                                                     "outlettype": [ "" ],
-                                                    "patching_rect": [ 141.0, 338.0, 97.0, 22.0 ],
+                                                    "patching_rect": [ 141.0, 296.0, 97.0, 22.0 ],
                                                     "text": "pack 0 0. 0. 0. 1."
                                                 }
                                             },
@@ -4010,7 +4077,7 @@
                                                     "numoutlets": 1,
                                                     "outlettype": [ "bang" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 119.0, 207.0, 24.0, 24.0 ]
+                                                    "patching_rect": [ 119.0, 165.0, 24.0, 24.0 ]
                                                 }
                                             },
                                             {
@@ -4019,7 +4086,7 @@
                                                     "maxclass": "comment",
                                                     "numinlets": 1,
                                                     "numoutlets": 0,
-                                                    "patching_rect": [ 149.0, 209.0, 265.0, 20.0 ],
+                                                    "patching_rect": [ 149.0, 167.0, 265.0, 20.0 ],
                                                     "text": "Set a random color for the first 20 presets"
                                                 }
                                             },
@@ -4029,7 +4096,7 @@
                                                     "maxclass": "comment",
                                                     "numinlets": 1,
                                                     "numoutlets": 0,
-                                                    "patching_rect": [ 142.0, 70.0, 163.0, 20.0 ],
+                                                    "patching_rect": [ 142.0, 28.0, 163.0, 20.0 ],
                                                     "text": "Set color mode to 3 (custom)"
                                                 }
                                             },
@@ -4040,7 +4107,7 @@
                                                     "numinlets": 2,
                                                     "numoutlets": 1,
                                                     "outlettype": [ "" ],
-                                                    "patching_rect": [ 26.0, 69.0, 81.0, 22.0 ],
+                                                    "patching_rect": [ 26.0, 27.0, 81.0, 22.0 ],
                                                     "text": "color_mode 3"
                                                 }
                                             },
@@ -4050,7 +4117,7 @@
                                                     "maxclass": "newobj",
                                                     "numinlets": 1,
                                                     "numoutlets": 0,
-                                                    "patching_rect": [ 26.0, 439.0, 81.0, 22.0 ],
+                                                    "patching_rect": [ 26.0, 397.0, 81.0, 22.0 ],
                                                     "text": "s to_tc.preset"
                                                 }
                                             },
@@ -4068,7 +4135,7 @@
                                                     "numoutlets": 3,
                                                     "outlettype": [ "", "", "int" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 115.0, 70.0, 20.0, 20.0 ],
+                                                    "patching_rect": [ 115.0, 28.0, 20.0, 20.0 ],
                                                     "rounded": 60.0,
                                                     "text": "1",
                                                     "textcolor": [ 0.34902, 0.34902, 0.34902, 1.0 ]
@@ -4088,7 +4155,7 @@
                                                     "numoutlets": 3,
                                                     "outlettype": [ "", "", "int" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 161.0, 432.5, 20.0, 20.0 ],
+                                                    "patching_rect": [ 161.0, 391.0, 20.0, 20.0 ],
                                                     "rounded": 60.0,
                                                     "text": "3",
                                                     "textcolor": [ 0.34902, 0.34902, 0.34902, 1.0 ]
@@ -4108,7 +4175,7 @@
                                                     "numoutlets": 3,
                                                     "outlettype": [ "", "", "int" ],
                                                     "parameter_enable": 0,
-                                                    "patching_rect": [ 94.0, 129.0, 20.0, 20.0 ],
+                                                    "patching_rect": [ 94.0, 87.0, 20.0, 20.0 ],
                                                     "rounded": 60.0,
                                                     "text": "2",
                                                     "textcolor": [ 0.34902, 0.34902, 0.34902, 1.0 ]
@@ -4184,7 +4251,7 @@
                                             }
                                         ]
                                     },
-                                    "patching_rect": [ 226.0, 181.0, 94.0, 22.0 ],
+                                    "patching_rect": [ 237.0, 261.0, 94.0, 22.0 ],
                                     "text": "p custom_mode"
                                 }
                             },
@@ -4195,7 +4262,7 @@
                                     "numinlets": 0,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 205.5, 340.0, 79.0, 22.0 ],
+                                    "patching_rect": [ 209.5, 309.0, 79.0, 22.0 ],
                                     "text": "r to_tc.preset"
                                 }
                             },
@@ -4209,13 +4276,14 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 703.0, 163.0, 481.0, 436.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
@@ -4495,7 +4563,7 @@
                                             }
                                         ]
                                     },
-                                    "patching_rect": [ 127.0, 181.0, 87.0, 22.0 ],
+                                    "patching_rect": [ 144.0, 261.0, 87.0, 22.0 ],
                                     "text": "p select_mode"
                                 }
                             },
@@ -4507,8 +4575,8 @@
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 327.0, 174.0, 160.0, 37.0 ],
-                                    "text": "Open these subpatchers to get more info"
+                                    "patching_rect": [ 336.0, 254.0, 193.0, 37.0 ],
+                                    "text": "Open these subpatchers to get more info about color modes"
                                 }
                             },
                             {
@@ -4521,13 +4589,14 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 724.0, 259.0, 378.0, 380.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
                                             {
                                                 "box": {
@@ -4556,7 +4625,7 @@
                                                     "maxclass": "comment",
                                                     "numinlets": 1,
                                                     "numoutlets": 0,
-                                                    "patching_rect": [ 44.0, 14.0, 321.0, 100.0 ],
+                                                    "patching_rect": [ 44.0, 14.0, 323.0, 100.0 ],
                                                     "text": "The color wheel is a set of six colors used in color_mode 1 (cycle) and 2 (select).\n\nYou can change each of the 6 colors from the color wheel either by using color_1 to color_6 messages, either by using a generic color_wheel message, or directly in the inspector when selecting the tc.preset object."
                                                 }
                                             },
@@ -4662,23 +4731,8 @@
                                             }
                                         ]
                                     },
-                                    "patching_rect": [ 33.0, 181.0, 83.0, 22.0 ],
+                                    "patching_rect": [ 54.0, 261.0, 83.0, 22.0 ],
                                     "text": "p color_wheel"
-                                }
-                            },
-                            {
-                                "box": {
-                                    "bubble": 1,
-                                    "bubble_bgcolor": [ 0.38823529411764707, 0.17254901960784313, 0.17254901960784313, 1.0 ],
-                                    "bubbleside": 2,
-                                    "id": "obj-28",
-                                    "linecount": 4,
-                                    "maxclass": "comment",
-                                    "numinlets": 1,
-                                    "numoutlets": 0,
-                                    "patching_rect": [ 182.0, 231.5, 393.0, 79.0 ],
-                                    "text": "For color modes 2 and 3, and use_uid to work, you need to add a pattr object named 'preset_metadata' to your patch. If using subscribe mode, make sure to add preset_metadata to the pattrstorage's subscribe list.\nPreset color data will be stored just like your other parameters.",
-                                    "textcolor": [ 0.8156862745098039, 0.8156862745098039, 0.8156862745098039, 1.0 ]
                                 }
                             },
                             {
@@ -4688,8 +4742,8 @@
                                     "numinlets": 1,
                                     "numoutlets": 3,
                                     "outlettype": [ "", "", "" ],
-                                    "patching_rect": [ 319.0, 312.5, 126.0, 22.0 ],
-                                    "restore": [ "{\"color\":[0,0.502,0.502,0.502,1],\"uid\":\"44918fd8-bfef-42ee-87ed-13929dc21d32\"}" ],
+                                    "patching_rect": [ 629.0, 269.0, 126.0, 22.0 ],
+                                    "restore": [ "{\"uid\":\"mr0o8lc56u8go\",\"created\":\"2026-06-30T13:17:24.869Z\",\"modified\":\"2026-06-30T13:17:24.869Z\"}" ],
                                     "saved_object_attributes": {
                                         "parameter_enable": 0,
                                         "parameter_mappable": 0
@@ -4710,14 +4764,26 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 1,
-                                            "revision": 2,
+                                            "minor": 2,
+                                            "revision": 0,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
                                         "classnamespace": "box",
                                         "rect": [ 574.0, 280.0, 640.0, 480.0 ],
+                                        "integercoordinates": 1,
                                         "boxes": [
+                                            {
+                                                "box": {
+                                                    "id": "obj-7",
+                                                    "maxclass": "button",
+                                                    "numinlets": 1,
+                                                    "numoutlets": 1,
+                                                    "outlettype": [ "bang" ],
+                                                    "parameter_enable": 0,
+                                                    "patching_rect": [ 50.0, 96.0, 24.0, 24.0 ]
+                                                }
+                                            },
                                             {
                                                 "box": {
                                                     "id": "obj-10",
@@ -4797,17 +4863,6 @@
                                             },
                                             {
                                                 "box": {
-                                                    "id": "obj-1",
-                                                    "maxclass": "newobj",
-                                                    "numinlets": 1,
-                                                    "numoutlets": 1,
-                                                    "outlettype": [ "" ],
-                                                    "patching_rect": [ 50.0, 98.0, 54.0, 22.0 ],
-                                                    "text": "deferlow"
-                                                }
-                                            },
-                                            {
-                                                "box": {
                                                     "id": "obj-12",
                                                     "maxclass": "newobj",
                                                     "numinlets": 1,
@@ -4826,17 +4881,6 @@
                                                     "outlettype": [ "bang", "bang", "int" ],
                                                     "patching_rect": [ 50.0, 131.0, 41.0, 22.0 ],
                                                     "text": "uzi 26"
-                                                }
-                                            },
-                                            {
-                                                "box": {
-                                                    "id": "obj-7",
-                                                    "maxclass": "newobj",
-                                                    "numinlets": 1,
-                                                    "numoutlets": 1,
-                                                    "outlettype": [ "bang" ],
-                                                    "patching_rect": [ 50.0, 65.0, 58.0, 22.0 ],
-                                                    "text": "loadbang"
                                                 }
                                             },
                                             {
@@ -4863,12 +4907,6 @@
                                             }
                                         ],
                                         "lines": [
-                                            {
-                                                "patchline": {
-                                                    "destination": [ "obj-11", 0 ],
-                                                    "source": [ "obj-1", 0 ]
-                                                }
-                                            },
                                             {
                                                 "patchline": {
                                                     "destination": [ "obj-13", 0 ],
@@ -4931,7 +4969,7 @@
                                             },
                                             {
                                                 "patchline": {
-                                                    "destination": [ "obj-1", 0 ],
+                                                    "destination": [ "obj-11", 0 ],
                                                     "source": [ "obj-7", 0 ]
                                                 }
                                             },
@@ -4943,15 +4981,17 @@
                                             }
                                         ]
                                     },
-                                    "patching_rect": [ 289.5, 340.0, 34.0, 22.0 ],
+                                    "patching_rect": [ 232.0, 340.0, 34.0, 22.0 ],
                                     "text": "p init"
                                 }
                             },
                             {
                                 "box": {
                                     "border": 0,
+                                    "embed": 0,
                                     "embedstate": [
                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
+                                        [ "autoname", 0 ],
                                         [ "autowriteagain", 0 ],
                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                         [ "bubblesize", 14 ],
@@ -4984,6 +5024,7 @@
                                         [ "spacing", 4 ],
                                         [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ],
                                         [ "text_color", 0.85, 0.85, 0.85, 1 ],
+                                        [ "timestamp", 1 ],
                                         [ "ui_rename", 0 ],
                                         [ "unique_names", 0 ],
                                         [ "use_uid", 1 ]
@@ -5011,30 +5052,24 @@
                                     "id": "obj-4",
                                     "ignoreclick": 1,
                                     "jsarguments": [ "tc.preset" ],
-                                    "maxclass": "v8ui",
+                                    "maxclass": "jsui",
                                     "numinlets": 1,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
                                     "parameter_enable": 0,
-                                    "patching_rect": [ 10.0, 10.0, 188.2880096435547, 57.599853515625 ],
-                                    "textfile": {
-                                        "filename": "helpname.js",
-                                        "flags": 0,
-                                        "embed": 0,
-                                        "autowatch": 1
-                                    }
+                                    "patching_rect": [ 10.0, 10.0, 188.2880096435547, 57.599853515625 ]
                                 }
                             },
                             {
                                 "box": {
                                     "fontsize": 13.0,
                                     "id": "obj-113",
-                                    "linecount": 4,
+                                    "linecount": 6,
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 10.0, 64.0, 470.0, 65.0 ],
-                                    "text": "When color_mode is set to 1 (Cycle), stored presets are shown in colors from color_1 to color_6, cyclically depending on their slot number.\nIn mode 2 (Select), you can freely choose one of the 6 colors for each preset.\nIn mode 3 (Custom), you are free to set any color in rgba format for any preset."
+                                    "patching_rect": [ 10.0, 64.0, 470.0, 94.0 ],
+                                    "text": "When color_mode is set to 1 (Cycle), stored presets are shown in colors from color_1 to color_6, cyclically depending on their slot number.\nIn mode 2 (Select), you can freely choose one of the 6 colors for each preset.\nIn mode 3 (Custom), you are free to set any color in rgba format for any preset.\nIn modes 2 and 3, colors are stored in a special pattr that must be named \"preset_metada\", which can be used to store other info."
                                 }
                             },
                             {
@@ -5047,7 +5082,7 @@
                                     "numinlets": 1,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
-                                    "patching_rect": [ 10.0, 342.0, 189.0, 22.0 ],
+                                    "patching_rect": [ 10.0, 309.0, 189.0, 22.0 ],
                                     "saved_object_attributes": {
                                         "client_rect": [ 100, 172, 596, 755 ],
                                         "parameter_enable": 0,
@@ -5062,97 +5097,42 @@
                                 "box": {
                                     "attr": "color_mode",
                                     "id": "obj-11",
+                                    "lock": 1,
                                     "maxclass": "attrui",
                                     "numinlets": 1,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
                                     "parameter_enable": 0,
-                                    "patching_rect": [ 58.0, 144.0, 225.0, 22.0 ]
-                                }
-                            },
-                            {
-                                "box": {
-                                    "attr": "color_1",
-                                    "id": "obj-13",
-                                    "maxclass": "attrui",
-                                    "numinlets": 1,
-                                    "numoutlets": 1,
-                                    "outlettype": [ "" ],
-                                    "parameter_enable": 0,
-                                    "patching_rect": [ 288.0, 378.0, 150.0, 22.0 ]
-                                }
-                            },
-                            {
-                                "box": {
-                                    "attr": "color_2",
-                                    "id": "obj-16",
-                                    "maxclass": "attrui",
-                                    "numinlets": 1,
-                                    "numoutlets": 1,
-                                    "outlettype": [ "" ],
-                                    "parameter_enable": 0,
-                                    "patching_rect": [ 288.0, 404.0, 150.0, 22.0 ]
-                                }
-                            },
-                            {
-                                "box": {
-                                    "attr": "color_3",
-                                    "id": "obj-17",
-                                    "maxclass": "attrui",
-                                    "numinlets": 1,
-                                    "numoutlets": 1,
-                                    "outlettype": [ "" ],
-                                    "parameter_enable": 0,
-                                    "patching_rect": [ 288.0, 428.0, 150.0, 22.0 ]
-                                }
-                            },
-                            {
-                                "box": {
-                                    "attr": "color_4",
-                                    "id": "obj-18",
-                                    "maxclass": "attrui",
-                                    "numinlets": 1,
-                                    "numoutlets": 1,
-                                    "outlettype": [ "" ],
-                                    "parameter_enable": 0,
-                                    "patching_rect": [ 288.0, 452.0, 150.0, 22.0 ]
-                                }
-                            },
-                            {
-                                "box": {
-                                    "attr": "color_5",
-                                    "id": "obj-19",
-                                    "maxclass": "attrui",
-                                    "numinlets": 1,
-                                    "numoutlets": 1,
-                                    "outlettype": [ "" ],
-                                    "parameter_enable": 0,
-                                    "patching_rect": [ 288.0, 476.0, 150.0, 22.0 ]
-                                }
-                            },
-                            {
-                                "box": {
-                                    "attr": "color_6",
-                                    "id": "obj-20",
-                                    "maxclass": "attrui",
-                                    "numinlets": 1,
-                                    "numoutlets": 1,
-                                    "outlettype": [ "" ],
-                                    "parameter_enable": 0,
-                                    "patching_rect": [ 288.0, 500.0, 150.0, 22.0 ]
+                                    "patching_rect": [ 38.0, 222.0, 149.0, 22.0 ],
+                                    "text_width": 73.0
                                 }
                             },
                             {
                                 "box": {
                                     "attr": "use_uid",
                                     "id": "obj-23",
+                                    "lock": 1,
                                     "maxclass": "attrui",
                                     "numinlets": 1,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
                                     "parameter_enable": 0,
-                                    "patching_rect": [ 614.0, 245.0, 87.0, 22.0 ],
-                                    "text_width": 64.0
+                                    "patching_rect": [ 355.0, 476.0, 75.0, 22.0 ],
+                                    "text_width": 53.0
+                                }
+                            },
+                            {
+                                "box": {
+                                    "attr": "timestamp",
+                                    "id": "obj-7",
+                                    "lock": 1,
+                                    "maxclass": "attrui",
+                                    "numinlets": 1,
+                                    "numoutlets": 1,
+                                    "outlettype": [ "" ],
+                                    "parameter_enable": 0,
+                                    "patching_rect": [ 446.0, 476.0, 97.0, 22.0 ],
+                                    "text_width": 73.0
                                 }
                             }
                         ],
@@ -5161,6 +5141,13 @@
                                 "patchline": {
                                     "destination": [ "obj-10", 0 ],
                                     "source": [ "obj-1", 0 ]
+                                }
+                            },
+                            {
+                                "patchline": {
+                                    "destination": [ "obj-2", 0 ],
+                                    "midpoints": [ 256.5, 534.0, 600.0, 534.0, 600.0, 336.0, 623.5, 336.0 ],
+                                    "source": [ "obj-10", 4 ]
                                 }
                             },
                             {
@@ -5177,36 +5164,6 @@
                             },
                             {
                                 "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-13", 0 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-16", 0 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-17", 0 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-18", 0 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-19", 0 ]
-                                }
-                            },
-                            {
-                                "patchline": {
                                     "destination": [ "obj-22", 0 ],
                                     "source": [ "obj-2", 0 ]
                                 }
@@ -5214,18 +5171,7 @@
                             {
                                 "patchline": {
                                     "destination": [ "obj-10", 0 ],
-                                    "source": [ "obj-20", 0 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-2", 0 ],
-                                    "source": [ "obj-21", 0 ]
-                                }
-                            },
-                            {
-                                "patchline": {
-                                    "destination": [ "obj-10", 0 ],
+                                    "midpoints": [ 364.5, 501.0, 276.0, 501.0, 276.0, 371.0, 19.5, 371.0 ],
                                     "source": [ "obj-23", 0 ]
                                 }
                             },
@@ -5247,6 +5193,13 @@
                                     "destination": [ "obj-39", 0 ],
                                     "source": [ "obj-38", 1 ]
                                 }
+                            },
+                            {
+                                "patchline": {
+                                    "destination": [ "obj-10", 0 ],
+                                    "midpoints": [ 455.5, 501.0, 276.0, 501.0, 276.0, 371.0, 19.5, 371.0 ],
+                                    "source": [ "obj-7", 0 ]
+                                }
                             }
                         ]
                     },
@@ -5265,8 +5218,8 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 1,
-                            "revision": 2,
+                            "minor": 2,
+                            "revision": 0,
                             "architecture": "x64",
                             "modernui": 1
                         },
@@ -5275,6 +5228,7 @@
                         "default_fontsize": 13.0,
                         "gridsize": [ 5.0, 5.0 ],
                         "showontab": 1,
+                        "integercoordinates": 1,
                         "boxes": [
                             {
                                 "box": {
@@ -5431,8 +5385,10 @@
                             {
                                 "box": {
                                     "border": 0,
+                                    "embed": 0,
                                     "embedstate": [
                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
+                                        [ "autoname", 0 ],
                                         [ "autowriteagain", 0 ],
                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                         [ "bubblesize", 14 ],
@@ -5465,6 +5421,7 @@
                                         [ "spacing", 4 ],
                                         [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ],
                                         [ "text_color", 0.85, 0.85, 0.85, 1 ],
+                                        [ "timestamp", 0 ],
                                         [ "ui_rename", 1 ],
                                         [ "unique_names", 0 ],
                                         [ "use_uid", 0 ]

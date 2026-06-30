@@ -128,6 +128,10 @@
 			<digest>Automatic writeagain</digest>
 			<description>When set to 1, the jsui will automatically send a "writeagain" message to its linked pattrstorage anytime a preset have been stored, moved, renamed, (un)locked or deleted, saving any change into the preset file immediately.</description>
 		</attribute>
+		<attribute name='autoname' get='1' set='1'  type='bool' size='1' >
+			<digest>Autoname new presets</digest>
+			<description>When enabled, presets stored in an empty slot get attributed a name starting with "Preset" followed by the slot number.</description>
+		</attribute>
 		<attribute name='bgcolor' get='1' set='1'  type='list' size='4' >
 			<digest>Background color</digest>
 			<description>Sets the background color of the object in RGBA format</description>
@@ -143,7 +147,7 @@
 				In mode 2, stored preset colors can be freely set to one of the six colors of the color wheel.
 				In mode 3, stored preset color can be set to any color in RGBA format. 
 				To define colors of the color wheel for modes 1 and 2, see color_1 to color_6 as well as the color_wheel message.
-				To define preset color as in mode 2 or 3, see the setcolor message. Modes 2 and 3 require a pattr object named 'preset_color' to be at the same patcher level as the tc.preset object.
+				To define preset color as in mode 2 or 3, see the setcolor message. Modes 2 and 3 require a [pattr preset_metadata] in the same patcher as [tc.preset]
 			</description>
 		</attribute>
 		<attribute name='color_1' get='1' set='1'  type='list' size='4' >
@@ -230,6 +234,12 @@
 				You need to double-click on a stored preset to recall it. If set to 0, stored presets are recalled by a single click (default preset object behavior).
 			</description>
 		</attribute>
+		<attribute name='send_name' get='1' set='1'  type='symbol' size='1' >
+			<digest>Send dictionary to </digest>
+			<description>
+			Sets the name of the receive objects to which send the presets dictionary (the same as the one output from the objects rightmost outlet). If no name is set, the dictionary will still be sent to receives named &lt;pattrstorage_name&gt;_presets_dict
+			</description>
+		</attribute>
 		<attribute name='slot_round' get='1' set='1'  type='float' size='1' >
 			<digest>Slot corner rounding</digest>
 			<description>Defines the rounding of the slots corners. A value of zero means square corners. A value equal or superior to half the bubblesize makes the slots as a circle.
@@ -244,6 +254,10 @@
 			<digest>Stored slot color</digest>
 			<description>Sets the stored preset color of the object in RGBA format</description>
 		</attribute>
+		<attribute name='timestamp' get='1' set='1'  type='bool' size='1' >
+			<digest>Generate timestamp metadata</digest>
+			<description>When enabled, a 'created' and 'modified' timestamp will be stored for each new preset stored in an empty slot. Overwritten presets will only have their 'modified' timestamp updated. Requires a [pattr preset_metadata] in the same patcher as [tc.preset]</description>
+		</attribute>
 		<attribute name='ui_rename' get='1' set='1'  type='bool' size='1' >
 			<digest>Rename slots in UI</digest>
 			<description>Use the attached textedit, if any, to edit slot names directly in the JSUI frame when clicking a slot while holding the control key. When disabled, the textedit remains untouched but gets focused when clicking a slot while holding the control key.</description>
@@ -254,7 +268,7 @@
 		</attribute>
 		<attribute name='use_uid' get='1' set='1'  type='bool' size='1' >
 			<digest>Generate unique identifiers for each stored preset</digest>
-			<description>When enabled, each stored preset gets a unique identifier, following the preset when it gets renamed, moved and overwritten. Requires a [pattr preset_metadata] at the same patcher of [tc.preset]. This can be useful when doing some complex preset management.</description>
+			<description>When enabled, each stored preset gets a unique identifier, following the preset when it gets renamed, moved and overwritten. Requires a [pattr preset_metadata] in the same patcher as [tc.preset]. This can be useful when doing some complex preset management.</description>
 		</attribute>
 	</attributelist>
 

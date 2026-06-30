@@ -823,7 +823,7 @@ function resolve_metadata_pattr_alias() {
 resolve_metadata_pattr_alias.local = 1;
 
 function get_metadata_pattr_address() {
-    is_listening_to_clientlist = is_listening_to_clientlist === 2 ? 2 : 1; // 2 if setting color mode, 1 otherwise
+    is_listening_to_clientlist = is_listening_to_clientlist > 1 ? is_listening_to_clientlist : 1; // 3 if setting timestamp, 2 if setting color mode, 1 otherwise
     to_pattrstorage("getclientlist");
 }
 get_metadata_pattr_address.local = 1;
@@ -2336,7 +2336,7 @@ function setcolor_mode(v){
             color_mode = v;
             paint_base();
         } else {
-            error("Connection with [pattr preset_metadata lost\n");
+            error("Connection with [pattr preset_metadata] lost\n");
             metadata_pattr = null;
         }
     } else {
@@ -2496,9 +2496,15 @@ setuse_uid.local = 1;
 declareattribute("timestamp", null, "settimestamp", 1, {style: "onoff", label: "Generate timestamp metadata"});
 function settimestamp(v){
     var new_val = v === 1;
-    if (new_val && !use_uid) {
-        error("timestamp requires use_uid to be enabled");
-        new_val = false;
+    if (new_val) {
+        if (metadata_pattr == null) {
+            is_listening_to_clientlist = 3;
+            connect_to_metadata_pattr();
+        } else if (!metadata_pattr.valid) {
+            error("Connection with [pattr preset_metadata] lost\n");
+            metadata_pattr = null;
+            new_val = 0;
+        }
     }
     timestamp = new_val;
 }
