@@ -24,7 +24,7 @@ autowatch = 0;
 // A "loadbang, pattrstorage test" message does the trick.
 
 inlets = 1
-setinletassist(0, "Connect to the linked pattrstorage");
+setinletassist(0, "Connect to pattrstorage");
 
 outlets = 5;
 setoutletassist(0, "Outputs last triggered action");
@@ -83,6 +83,7 @@ var send_name = "none";     // The global name to send presets dict name to (rec
 var unique_names = false;   // When enabled, force names to be unique when renaming slots by appending "bis" to them. Gets applied only to subsequently renamed presets.
 var autoname = false;       // Automatically name new presets when created as "Preset" followed by the slot id
 var use_uid = 0;            // Generating UID for each presets when enabled. Requires a [pattr preset_metadata]
+var timestamp = false;      // Generates a `created` and `modified` timestamp for each preset. Requires use_uid enabled
 var recall_passthrough = true;  // By default (true), clicking a slot sends a recall message directly to [pattrstorage], and the jsui left outlet outputs a recall message once the recall is done. When disabled, clicking a slot will send a recall message straight from the jsui left outlet, so it's up to the user to forward the message to pattrstorage. It can be usefull for triggering interpolations with custom logic.
 var ui_rename = false;       // Use the attached textedit, if any, to edit slot names directly in the JSUI frame when clicking a slot while holding the control key. When disabled, the textedit remains untouched but gets focused when clicking a slot while holding the control key.
 var poll_edited = 0;        // If >0, check if current preset is edited every X seconds defined by the variable value.
@@ -154,36 +155,25 @@ var poll_edited_task = new Task(do_poll_edited, this);
 
 var has_loaded = false;
 
-if (jsarguments.length>1) { // Depreciated, use "pattrstorage" attribute instead of jsarguments.
+if (jsarguments.length>1) { // Depreciated, use "pattrstorage" attribute instead of jsarguments, or directly connect tc.preset to pattrstorage after its creation.
     setpattrstorage(jsarguments[1]);
 }
 
 // FUNCTIONS
-function slot(left, top, right, bottom, name, lock, interp, color_index, color_custom, uid, filled) {
-    this.left = left;
-    this.top = top;
-    this.right = right;
-    this.bottom = bottom;
-    this.name = name;
-    this.lock = lock;
-    this.interp = interp;
-    this.color_index = color_index;
-    this.color_custom = color_custom;
-    this.uid = uid;
-    this.filled = filled;
-
-    this.init = function() {
-        this.left = 0;
-        this.top = 0;
-        this.right = 0;
-        this.bottom = 0;
-        this.name = null;
-        this.lock = 0;
-        this.interp = -1;
-        this.init_color();
-        this.uid = 0;
-        this.filled = false;
-    }
+function slot(left, top, right, bottom) {
+    this.left = left ? left : 0;
+    this.top = top ? top : 0;
+    this.right = right ? right : 0;
+    this.bottom = bottom ? bottom : 0;
+    this.name = null;
+    this.lock = 0;
+    this.interp = -1;
+    this.color_index = 0;
+    this.color_custom = stored_slot_color;
+    this.uid = 0;
+    this.filled = false;
+    this.created = null;
+    this.modified = null;
 
     this.init_color = function() {
         this.color_index = 0;
@@ -198,8 +188,33 @@ function slot(left, top, right, bottom, name, lock, interp, color_index, color_c
         this.color_custom = stored_slot_color;
         this.uid = 0;
         this.filled = false;
+        this.created = null;
+        this.modified = null;
+    }
+
+    this.set_geom = function(left, top, right, bottom) {
+        this.left = left;
+        this.top = top;
+        this.right = right;
+        this.bottom = bottom;
+    }
+
+    this.export_metadata = function () {
+        var meta_dict = {};
+        if (color_mode > 1) {
+            var cstm = this.color_custom;
+            var color_val = [this.color_index, cstm[0], cstm[1], cstm[2], cstm[3]];
+            meta_dict['color']= color_val;
+        }
+        if (use_uid) meta_dict['uid'] = this.uid;
+        if (timestamp) {
+            meta_dict['created'] = this.created;
+            meta_dict['modified'] = this.modified;
+        }
+        return JSON.stringify(meta_dict);
     }
 }
+slot.local = 1;
 
 function loadbang() {
     // post("loadbang\n");
@@ -210,7 +225,6 @@ function loadbang() {
         psto_auto_link_task.repeat();
     }
 	calc_rows_columns();
-
     find_textedit();
 }
 
@@ -275,9 +289,6 @@ function calc_rows_columns() {
             }
         }
     }
-    if (scrollable && nbslot_edit) {
-        
-    }
     true_slots_count_display = columns * rows - minus_slots_carry;
     slots_count_display = scrollable && nbslot_edit ? true_slots_count_display - 2 : true_slots_count_display;
         
@@ -289,19 +300,18 @@ function calc_rows_columns() {
             var right = left + slot_size;
             var cur = 1 + i * columns + j;
 
-            var prev_state = new slot();
-            prev_state.init();
-            if (typeof slots[cur] !== 'undefined') {
-                prev_state = slots[cur];
+            if (slots[cur]) {
+                slots[cur].set_geom(left, top, right, bottom);
+            } else {
+                slots[cur] = new slot(left, top, right, bottom);
             }
-            slots[cur] = new slot(left, top, right, bottom, prev_state.name, prev_state.lock, prev_state.interp, prev_state.color_index, prev_state.color_custom, prev_state.uid, prev_state.filled);
+            
         }
     }
 	
     if (slots_count_display < slots_highest) {
         for (var i = slots_count_display + 1; i <= slots_highest; i++) {
             slots[i] = new slot();
-            slots[i].init();
         }
     }
 	paint_base(); 
@@ -313,24 +323,24 @@ function draw_slot(id, scale, cont) {
     cont = typeof cont !== 'undefined' ? cont : mgraphics;  // Sets drawing context to mgraphics by default if not passed as argument
 
     var offset = slot_size * (1 - scale);
-
+    var slot = slots[id];
 
     if(is_painting_base) {
-        draw_slot_bubble(slots[id].left * scale, slots[id].top *scale, slot_size * scale, slot_size * scale, cont);
+        draw_slot_bubble(slot.left * scale, slot.top *scale, slot_size * scale, slot_size * scale, cont);
 
     } else {
-        draw_slot_bubble(slots[id].left + offset, slots[id].top + offset, slot_size * scale, slot_size * scale, cont);
+        draw_slot_bubble(slot.left + offset, slot.top + offset, slot_size * scale, slot_size * scale, cont);
     }
     cont.fill();
 
     if (layout == 1) {
         // slot text background
         var bg_txt_pos_x = margin + slot_size + spacing;
-        var bg_txt_pos_y = slots[id].top;
+        var bg_txt_pos_y = slot.top;
         var bg_txt_dim_w = ui_width - (2*margin + slot_size + spacing);
         var bg_txt_dim_h = slot_size;
 
-        if (slots[id].filled) {
+        if (slot.filled) {
             cont.set_source_rgba(stored_slot_color);
         } else {
             cont.set_source_rgba(empty_slot_color);
@@ -361,12 +371,12 @@ function draw_slot(id, scale, cont) {
         cont.set_line_width(Math.floor(slot_size * 0.3));
         if (id > true_slots_count_display - 2) {
             cont.set_source_rgba(stored_slot_color);
-            cont.move_to((slots[id].left + slot_size * 0.1) * scale, (slots[id].top  + half_slot_size) * scale);
+            cont.move_to((slot.left + slot_size * 0.1) * scale, (slot.top  + half_slot_size) * scale);
             cont.rel_line_to(slot_size * 0.8 * scale, 0);
             cont.stroke();
         }
         if (id > true_slots_count_display - 1) {
-            cont.move_to((slots[id].left + half_slot_size) * scale, (slots[id].top + slot_size * 0.1) * scale);
+            cont.move_to((slot.left + half_slot_size) * scale, (slot.top + slot_size * 0.1) * scale);
             cont.rel_line_to(0, slot_size * 0.8 * scale);
             cont.stroke();
         }
@@ -405,13 +415,14 @@ draw_text_bubble.local = 1;
 
 function format_slot_name(id) {
     var text = id;
+    var slot = slots[id];
     // If slot is locked, add brackets around its number
-    if (slots[id].lock == 1) {
+    if (slot.lock == 1) {
         text = '[' + text + ']';
     }
     // If slot has a name, append it to the preset name
-    if ([null, '<(unnamed)>'].indexOf(slots[id].name) < 0 ) {
-        text += ': ' + slots[id].name;
+    if ([null, '<(unnamed)>'].indexOf(slot.name) < 0 ) {
+        text += ': ' + slot.name;
     }
     text = text.toString();
     return text;
@@ -436,13 +447,14 @@ function paint_base() {
     // All slots
     for (var i = 1; i <= true_slots_count_display; i++) {
         if (i != drag_slot) { //We mask the slot that is currently dragged as it is drawn at the mouse position already
-            if (slots[i].filled == true) {
+            var slot = slots[i];
+            if (slot.filled == true) {
                 if (color_mode == 1) {
                     mg.set_source_rgba(color_wheel_custom[i % color_wheel_size]);
                 } else if (color_mode == 2) {
-                    mg.set_source_rgba(color_wheel_custom[Math.abs(slots[i].color_index) % color_wheel_size]);
+                    mg.set_source_rgba(color_wheel_custom[Math.abs(slot.color_index) % color_wheel_size]);
                 } else if (color_mode == 3) {
-                    mg.set_source_rgba(slots[i].color_custom);
+                    mg.set_source_rgba(slot.color_custom);
                 } else {
                     mg.set_source_rgba(stored_slot_color);
                 }
@@ -525,12 +537,13 @@ function paint()
         if (is_dragging == 0 && display_interp && is_interpolating) {
             
             for (var i = 1; i <= slots_count_display; i++) {
-                var interp = slots[i].interp;
+                var slot = slots[i];
+                var interp = slot.interp;
                 if (interp >= 0) {
                     mgraphics.set_source_rgba(interp_slot_color);
-                    draw_slot_bubble(slots[i].left, slots[i].top, slot_size, slot_size);
+                    draw_slot_bubble(slot.left, slot.top, slot_size, slot_size);
                     mgraphics.stroke();
-                    draw_slot_bubble(slots[i].left, slots[i].top + slot_size * (1-interp), slot_size, slot_size * interp);
+                    draw_slot_bubble(slot.left, slot.top + slot_size * (1-interp), slot_size, slot_size * interp);
                     mgraphics.fill();
                 }
             }
@@ -816,9 +829,7 @@ function get_metadata_pattr_address() {
 get_metadata_pattr_address.local = 1;
 
 function update_preset_metadata_pattr(s) {
-    var cstm = slots[s].color_custom;
-    var color_val = [slots[s].color_index, cstm[0], cstm[1], cstm[2], cstm[3]];
-    to_pattrstorage("setstoredvalue", "preset_metadata", s, JSON.stringify({color: color_val, uid: slots[s].uid}));
+    to_pattrstorage("setstoredvalue", "preset_metadata", s, slots[s].export_metadata());
 }
 update_preset_metadata_pattr.local = 1;
 
@@ -861,6 +872,7 @@ function get_preset_metadata(s) {
 get_preset_metadata.local = 1;
 
 function preset_metadata(v) {
+    // Parsing received data from preset_metadata pattr
     var meta_dict = {};
     if (requested_slot > -1 && v) {
         meta_dict = JSON.parse(v);
@@ -879,9 +891,13 @@ function preset_metadata(v) {
                 slots[requested_slot].color_custom = stored_slot_color;
             }
         }
-        if (use_uid && meta_dict.hasOwnProperty('uid') && meta_dict.uid) {
+        if (meta_dict.hasOwnProperty('uid') && meta_dict.uid) {
             slots[requested_slot].uid = meta_dict.uid;
         } 
+        if (meta_dict.hasOwnProperty('created')) {
+            slots[requested_slot].created = meta_dict.created;
+            slots[requested_slot].modified = meta_dict.modified;
+        }
     }
 }
 
@@ -973,11 +989,9 @@ function slotlist() {
         if (slots_count_display < slots_highest) {
             for (var i = slots_count_display + 1; i <= slots_highest; i++) {
                 slots[i] = new slot();
-                slots[i].init();
             }
         }
         for (var i = 0; i < filled_slots.length; i++) {
-            // to_pattrstorage("getslotname", filled_slots[i]);
             slots[filled_slots[i]].filled = true;
         }
         is_updating_names = 1;
@@ -1187,13 +1201,20 @@ function store(v) {
                     slots[v].uid = generateUID();
                 }
                 slots[v].init_color();
+                if (timestamp) {
+                    var date = new Date().toISOString();
+                    slots[v].created = date;
+                    slots[v].modified = date;
+                }
+            } else {
+                if (timestamp) {
+                    var date = new Date().toISOString();
+                    slots[v].modified = date;
+                }
             }
 
             // Updating metadata in pattr object before storing in pattrstorage
-            var cstm = slots[v].color_custom;
-            var color_val = [slots[v].color_index, cstm[0], cstm[1], cstm[2], cstm[3]];
-            var meta_dict = {color: color_val, uid: slots[v].uid};
-            metadata_pattr.message(JSON.stringify(meta_dict));
+            metadata_pattr.message(slots[v].export_metadata());
         }
 
         to_pattrstorage("store", v);
@@ -1374,12 +1395,10 @@ function readfile(f, s) {
 }
 
 function resolvealias(alias, client) {
-    post(pattrstorage_name, "resolvealias", alias, client, '\n');
     if (alias === waiting_for_alias) {
         if (waiting_for_alias === 'preset_metadata') {
             if (client) {
                 // All good, alias already set
-                post("alias already found\n")
                 is_listening_to_clientlist = 0;
                 return
             } else {
@@ -1474,7 +1493,7 @@ function select(v) {
 }
 
 function slots_clear() {
-    slots[0].init();
+    slots[0].clear();
     slots[0].name = "(tmp)";
 	for (var i = 1; i < slots.length; i++) {
 		slots[i].clear();
@@ -1484,13 +1503,14 @@ slots_clear.local = 1;
 
 function get_slot_index(x, y) {
     // Returns which slot is hovered by the mouse
-	for (var i = 1; i <= true_slots_count_display; i++) {
+    for (var i = 1; i <= true_slots_count_display; i++) {
+        var slot = slots[i];
         if (layout === 0) {
-            if (y > (slots[i].top - half_spacing) && y < (slots[i].bottom + half_spacing) && x > (slots[i].left - half_spacing) && x < (slots[i].right + half_spacing)) {
+            if (y > (slot.top - half_spacing) && y < (slot.bottom + half_spacing) && x > (slot.left - half_spacing) && x < (slot.right + half_spacing)) {
                 return i;
             }
         } else if (layout === 1) {
-            if (y > (slots[i].top - half_spacing) && y < (slots[i].bottom + half_spacing)) {
+            if (y > (slot.top - half_spacing) && y < (slot.bottom + half_spacing)) {
                 return i;
             }
         }
@@ -1545,18 +1565,25 @@ function update_filled_slots_dict() {
     var by_uid = {};
     for (var i = 0; i < filled_slots.length; i++) {
         var slot_index = filled_slots[i];
+        var slot = slots[slot_index];
         var tmp_dict = {
             index: slot_index,                                      // Preset slot number (unique, non-persistent)
-            name: slots[slot_index].name,                           // Preset name (non unique, non-persistent)
-            uid: slots[slot_index].uid,                             // Preset uid (unique and persistent across preset renaming, overwriting and moving) Useful for keeping track of preset across changes
-            u_name: slot_index + ' | ' + slots[slot_index].name,    // '3 | Third preset': (unique, non-persistent) Useful for easy preset listing and retrieving
-            lock: slots[slot_index].lock,                           // Preset lock state
-            color_index: slots[slot_index].color_index,             // Preset color index (when color_mode = 2)
-            color_custom: slots[slot_index].color_custom,            // Preset color (when color_mode = 3)
+            name: slot.name,                           // Preset name (non unique, non-persistent)
+            u_name: slot_index + ' | ' + slot.name,    // '3 | Third preset': (unique, non-persistent) Useful for easy preset listing and retrieving
+            lock: slot.lock,                           // Preset lock state
         };
-        // post('updating by_uid', slots[slot_index].uid, '\n');
+        if (color_mode > 1) {
+            tmp_dict['color_index'] = slot.color_index; // Preset color index (when color_mode = 2)
+            tmp_dict['color_custom'] = slot.color_custom;  // Preset color (when color_mode = 3)
+        }
+        if (use_uid) tmp_dict['uid'] = slot.uid; // Preset uid (unique and persistent across preset renaming, overwriting and moving) Useful for keeping track of preset across changes
+        // post('updating by_uid', slot.uid, '\n');
+        if (timestamp) {
+            tmp_dict['created'] = slot.created;
+            tmp_dict['modified'] = slot.modified;
+        }
         by_slot[slot_index] = tmp_dict;
-        if (use_uid) by_uid[slots[slot_index].uid] = tmp_dict;
+        if (use_uid) by_uid[slot.uid] = tmp_dict;
     }
     filled_slots_dict.setparse('by_slot', JSON.stringify(by_slot));
     if (use_uid) filled_slots_dict.setparse('by_uid', JSON.stringify(by_uid));
@@ -1564,7 +1591,6 @@ function update_filled_slots_dict() {
     var tmp_send_name = send_name == "none" ? pattrstorage_name + '_presets_dict' : send_name;
     outlet(4, 'dictionary', filled_slots_dict.name);
     messnamed(tmp_send_name, 'dictionary', filled_slots_dict.name);
-
 }
 update_filled_slots_dict.local = 1;
 
@@ -2464,6 +2490,17 @@ function setuse_uid(v){
     use_uid = new_val;
 }
 setuse_uid.local = 1;
+
+declareattribute("timestamp", null, "settimestamp", 1, {style: "onoff", label: "Generate timestamp metadata"});
+function settimestamp(v){
+    var new_val = v === 1;
+    if (new_val && !use_uid) {
+        error("timestamp requires use_uid to be enabled");
+        new_val = false;
+    }
+    timestamp = new_val;
+}
+settimestamp.local = 1;
 
 declareattribute("recall_passthrough", "getrecall_passthrough", "setrecall_passthrough", 1, {style: "onoff", label: "Recall Passthrough"});
 function getrecall_passthrough() {
