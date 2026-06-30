@@ -257,13 +257,16 @@ function psto_auto_link() {
     }
 }
 
-function calc_rows_columns() {
+function calc_rows_columns(src) {
     half_margin = margin / 2;
 	half_spacing = spacing / 2;
-	half_slot_size = slot_size / 2;
+    half_slot_size = slot_size / 2;
+
+    var previous_rows = rows;
+    var previous_columns = columns;
 
     slots[0] = new slot(0, 0, 0, 0, "(tmp)", 0, -1, 0, stored_slot_color); // Slot 0 is valid, but not represented in the GUI (and never saved by pattrstorage)
-
+    
     var minus_slots_carry = 0;
     if (layout == 0) {
         columns = Math.floor((ui_width - margin + spacing) / (slot_size + spacing));
@@ -289,6 +292,10 @@ function calc_rows_columns() {
             }
         }
     }
+
+    // Preventing useless redraws when resizing
+    if (src === "resize" && previous_rows === rows && previous_columns === columns) return false;
+    
     true_slots_count_display = columns * rows - minus_slots_carry;
     slots_count_display = scrollable && nbslot_edit ? true_slots_count_display - 2 : true_slots_count_display;
         
@@ -301,8 +308,10 @@ function calc_rows_columns() {
             var cur = 1 + i * columns + j;
 
             if (slots[cur]) {
+                // Filled slot, we only update geometry
                 slots[cur].set_geom(left, top, right, bottom);
             } else {
+                // Empty slot, possibly not initialized (if above slots_highest)
                 slots[cur] = new slot(left, top, right, bottom);
             }
             
@@ -314,7 +323,8 @@ function calc_rows_columns() {
             slots[i] = new slot();
         }
     }
-	paint_base(); 
+    paint_base();
+    return true
 }
 calc_rows_columns.local = 1;
 
@@ -436,7 +446,7 @@ function paint_base() {
     // Background
     bg_width = layout == 0 ? columns * (slot_size + spacing) - spacing + 2 * margin : ui_width;
     bg_height = rows * (slot_size + spacing) - spacing + 2 * margin;
-	mg = new MGraphics(ui_width*2, bg_height*2);
+	mg = new MGraphics(bg_width*2, bg_height*2);
     mg.set_source_rgba(background_color);
     mg.rectangle(0, 0, bg_width*2, bg_height*2);
     mg.fill();
@@ -1912,9 +1922,11 @@ function onresize(w,h)
 {
     ui_width = w;
     ui_height = h;
-	calc_rows_columns();
-    to_pattrstorage("getslotlist");
-	paint_base();
+    var changed = calc_rows_columns("resize");
+    if (changed) {
+        to_pattrstorage("getslotlist");
+        paint_base();
+	}
 }
 onresize.local = 1;
 
