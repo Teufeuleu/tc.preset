@@ -1779,8 +1779,10 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
         if (select_mode) {
             output = "select";
         }
-		if (shift) {
-			output = "store";
+        if (shift) {
+            if (!option && !ctrl) {
+                output = "store";
+            }
 			if (option && slots[last_hovered].filled) {
 				output = "delete";
 			}
