@@ -22,6 +22,7 @@ A [jsui]/[v8ui] replacement for the [preset] object in Cycling'74 Max.
 - Select mode: simple click selects the slot, double click recalls it (allows for organizing presets without recalling them)
 - Color mode: various ways to colorize preset slots
 - UID: generate unique identifiers for each preset so you can "follow" them when they're moved, renamed or re-saved. Practical in case of advanced preset management
+- Timestamps: automatically save a 'created' and 'modified' date for each preset
 ...and more!
 
 ## How to install
@@ -49,7 +50,7 @@ Consider donating if you like this package.
 [![Paypal donation button](https://pics.paypal.com/00/s/YjdhYzU5ZDItYjM0Yi00MGE1LWEzMWEtZGQ2NzVjMDI3MDg2/file.PNG)](https://www.paypal.com/donate/?hosted_button_id=AVGJ5JLTP76K8)
 
 ## License
-Copyright (C) 2025 Théophile Clet <contact@tflcl.xyz> - https://tflcl.xyz.
+Copyright (C) 2026 Théophile Clet <contact@tflcl.xyz> - https://tflcl.xyz.
 
 GPL-3.0-or-later
 
