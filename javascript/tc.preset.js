@@ -980,9 +980,7 @@ function msg_int(v) {
 }
 
 function msg_float(v) {
-    var s = Math.floor(v);
-    var i = v % 1;
-    to_pattrstorage("recall", s, s+1, i);
+    to_pattrstorage(v);
 }
 
 function pattrstorage(v) {
@@ -1088,10 +1086,13 @@ function recall() {
     } else if (args.length == 3) {
         src_slot = Math.abs(args[0]);
         trg_slot = Math.abs(args[1]);
-        interp = Math.min( 1, Math.max(0, args[2]));
+        interp = Math.min(1, Math.max(0, args[2]));
     }
 
-    if ((src_slot == 0 || filled_slots.indexOf(src_slot) > -1) && (trg_slot == 0 || filled_slots.indexOf(trg_slot) > -1 )) {
+    var src_slot_exists = filled_slots.indexOf(src_slot) > -1;
+    var trg_slot_exists = filled_slots.indexOf(trg_slot) > -1;
+
+    if ((src_slot == 0 || src_slot_exists) || (trg_slot == 0 || trg_slot_exists )) {
         for (var i = 0; i < filled_slots.length; i++) {
             slots[filled_slots[i]].interp = -1;
         }
@@ -1105,7 +1106,7 @@ function recall() {
                 src_slot = active_slot;
             }
         }
-        if (interp == 0.0) {
+        if (interp == 0.0 && src_slot_exists) {
             slots[src_slot].interp = -1;
             slots[trg_slot].interp = -1;
             is_interpolating = 0;
@@ -1119,7 +1120,7 @@ function recall() {
             set_active_slot(src_slot);
             active_slot_edited = 0;
             run_edited_poll_task();
-        } else if (interp == 1.0) {
+        } else if (interp == 1.0 && trg_slot_exists) {
             slots[src_slot].interp = -1;
             slots[trg_slot].interp = -1;
             is_interpolating = 0;
@@ -1128,8 +1129,8 @@ function recall() {
             active_slot_edited = 0;
             run_edited_poll_task();
         } else {
-            slots[src_slot].interp = 1 - interp;
-            slots[trg_slot].interp = interp;
+            if (src_slot_exists) slots[src_slot].interp = 1 - interp;
+            if (trg_slot_exists) slots[trg_slot].interp = interp;
             is_interpolating = 1;
             active_slot = 0;
             // if (src_slot != trg_slot) {
