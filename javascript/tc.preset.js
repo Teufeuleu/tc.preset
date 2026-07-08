@@ -80,6 +80,7 @@ var min_rows = 10;          // Minimum number of rows to display if scrollable i
 var color_mode = 0;         // Change the way the filled slots (stored presets) color is handeld. 0: stored_slot_color. 1: looping through color_1 to color_6. 2: Freely assign colors 1 to 6. 3: Set any color to any preset
 var select_mode = 0;        // 0: single click to select and recall the slot. 1: single click to select the slot, double click to recall it.
 var click_mode = 0;         // Sets the behavior of single clicks. 0: normal (recall), 1: select, 2: store, 3: delete
+var drag_mode = 1;          // Sets the behavior of drag operations. 0: disabled, 1: move preset (default), 2: in-line interpolation
 var send_name = "none";     // The global name to send presets dict name to (received by the [receive] object)
 var unique_names = false;   // When enabled, force names to be unique when renaming slots by appending "bis" to them. Gets applied only to subsequently renamed presets.
 var autoname = false;       // Automatically name new presets when created as "Preset" followed by the slot id
@@ -198,6 +199,10 @@ function slot(left, top, right, bottom) {
         this.top = top;
         this.right = right;
         this.bottom = bottom;
+        this.center = {
+            x: (left + right) / 2,
+            y: (top + bottom) / 2,
+        }
     }
 
     this.export_metadata = function () {
@@ -503,7 +508,7 @@ function paint()
         mgraphics.set_line_width(1);
         
         // Active slot
-        if (is_dragging == 0 && active_slot > 0 && active_slot <= slots_count_display) {
+        if (is_dragging !== 1 && active_slot > 0 && active_slot <= slots_count_display) {
             var opacity = active_slot_color[3];
             var opacity = control_hold && last_hovered == active_slot ? active_slot_color[3] * 0.7 : active_slot_color[3];
             mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], opacity);
@@ -521,7 +526,7 @@ function paint()
         }
 
         // Previous active slot
-        if (is_dragging == 0 && previous_active_slot > 0 && previous_active_slot <= slots_count_display) {
+        if (is_dragging === 0 && previous_active_slot > 0 && previous_active_slot <= slots_count_display) {
             mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], active_slot_color[3] * 0.5);
             if (color_mode) {
                 if (!control_hold) {
@@ -545,7 +550,7 @@ function paint()
         }
 
         // Interpolated slots
-        if (is_dragging == 0 && display_interp && is_interpolating) {
+        if (is_dragging !== 1 && display_interp && is_interpolating) {
             
             for (var i = 1; i <= slots_count_display; i++) {
                 var slot = slots[i];
@@ -575,7 +580,7 @@ function paint()
         // }
 
         // Hovered slot
-        if (last_hovered > -1) {
+        if ((last_hovered > -1) && ((drag_mode < 2) || (drag_mode === 2 && !is_dragging))) {
 
             // Slot border
             if (slots[last_hovered].filled == false || (slots[last_hovered].filled == true && !control_hold)) {
@@ -682,7 +687,7 @@ function paint()
         }
 
         // Drag slot
-        if (is_dragging) {
+        if (is_dragging === 1) {
             if (layout == 0) {
                 mgraphics.translate(last_x, last_y );
                 mgraphics.rotate(0.15);
@@ -934,7 +939,7 @@ function anything() {
                     previous_active_slot = 0;
                 }
                                 
-                if (is_dragging == 0 && is_moving == 0) {
+                if (is_dragging === 0 && is_moving === 0) {
                     to_pattrstorage("delete", v);
                     to_pattrstorage("getslotlist");
                     set_active_slot(active_slot);
@@ -1854,51 +1859,86 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
 {
     if (pattrstorage_name != null) {
         y -=  y_offset;
-        if (is_dragging == 0 && last_hovered > 0 && slots[last_hovered].filled == true) {
-            // To prevent mistakes, is_dragging is set to 1 only when dragging for more than 10 pixels
-            var dist_from_start = Math.sqrt((x-last_x)*(x-last_x)+(y-last_y)*(y-last_y));
-            if (dist_from_start > 10) {
-                is_dragging = 1;
-                drag_slot = last_hovered;
-                paint_base(); // We repaint the base with the dragged slot removed from the grid
-            }
-
-        } else if (is_dragging == 1) {
-            last_hovered = get_slot_index(x, y);
-            last_hovered_is_preset_slot = scrollable && nbslot_edit && last_hovered > (true_slots_count_display - 2) ? false : true;
-            if (!last_hovered_is_preset_slot) {
-                last_hovered = 0;
-            }
-            if (!but) {
-                // When the button is released, the dragging ceases
-                if (last_hovered > 0 && last_hovered != drag_slot && last_hovered_is_preset_slot) {
-                    move(drag_slot, last_hovered);
-                } else {
-                    // Drag released but not somewhere we can throw a slot in
-                    is_dragging = 0;
-                    drag_slot = -1;
-                    paint_base();
+        if (drag_mode === 1) {
+            if (is_dragging === 0 && last_hovered > 0 && slots[last_hovered].filled == true) {
+                // To prevent mistakes, is_dragging is set to 1 only when dragging for more than 10 pixels
+                var dist_from_start = Math.sqrt((x-last_x)*(x-last_x)+(y-last_y)*(y-last_y));
+                if (dist_from_start > 10) {
+                    is_dragging = 1;
+                    drag_slot = last_hovered;
+                    paint_base(); // We repaint the base with the dragged slot removed from the grid
                 }
-            } else {
-                // Click still hold, we keep dragging
-                if (scrollable) {
-                    // Auto-scroll if mouse out of bounds
-                    if (y+y_offset < 0 && y-(last_y-drag_scroll) < 0) {
-                        drag_scroll = 2;
-                    } else if (y+y_offset > ui_height && y-(last_y-drag_scroll) > 0) {
-                        drag_scroll = -2;
+    
+            } else if (is_dragging == 1) {
+                last_hovered = get_slot_index(x, y);
+                last_hovered_is_preset_slot = scrollable && nbslot_edit && last_hovered > (true_slots_count_display - 2) ? false : true;
+                if (!last_hovered_is_preset_slot) {
+                    last_hovered = 0;
+                }
+                if (!but) {
+                    // When the button is released, the dragging ceases
+                    if (last_hovered > 0 && last_hovered != drag_slot && last_hovered_is_preset_slot) {
+                        move(drag_slot, last_hovered);
                     } else {
-                        drag_scroll = 0;
+                        // Drag released but not somewhere we can throw a slot in
+                        is_dragging = 0;
+                        drag_slot = -1;
+                        paint_base();
                     }
-                    y_offset += drag_scroll;
-                    y_offset = Math.min(y_offset, 0);
-                    y_offset = Math.max(y_offset, -1 * (bg_height - ui_height));
+                } else {
+                    // Click still hold, we keep dragging
+                    if (scrollable) {
+                        // Auto-scroll if mouse out of bounds
+                        if (y+y_offset < 0 && y-(last_y-drag_scroll) < 0) {
+                            drag_scroll = 2;
+                        } else if (y+y_offset > ui_height && y-(last_y-drag_scroll) > 0) {
+                            drag_scroll = -2;
+                        } else {
+                            drag_scroll = 0;
+                        }
+                        y_offset += drag_scroll;
+                        y_offset = Math.min(y_offset, 0);
+                        y_offset = Math.max(y_offset, -1 * (bg_height - ui_height));
+                    }
+                    
+                    mgraphics.redraw();
                 }
-                
-                mgraphics.redraw();
+                last_x = x;
+                last_y = y;
             }
-            last_x = x;
-            last_y = y;
+        } else if (drag_mode === 2) {
+            // var hovered = get_slot_index(x, y);
+            // if (hovered > 0) last_hovered = hovered;
+            // last_hovered_is_preset_slot = scrollable && nbslot_edit && last_hovered > (true_slots_count_display - 2) ? false : true;
+            // is_dragging = but;
+            // post("last_hovered", last_hovered, '\n');
+            if (is_dragging == 0) {
+                var dist_from_start = Math.sqrt((x-last_x)*(x-last_x)+(y-last_y)*(y-last_y));
+                if (dist_from_start > 5) {
+                    is_dragging = 2;
+                }
+            }
+            if (is_dragging === 2) {
+                // What should be done:
+                // 1. find closest filled slot
+                // 2. if relative_dist < 0 interpolate toward previous filled preset. Or toward next one otherwise
+                var relative_dist_from_start = (x - slots[last_hovered].center.x) / (slot_size + spacing);
+                var current_slot = Math.max(Math.round(relative_dist_from_start), 1);
+                var target_slot = relative_dist_from_start - current_slot > 0 ? filled_slots[filled_slots.indexOf(active_slot) - 1] : filled_slots[filled_slots.indexOf(active_slot) + 1];
+                var interp_amount = target_slot - (last_hovered + relative_dist_from_start);
+                post("-----------------------------\n");
+                post("last_hovered", last_hovered, '\n');
+                post("relative_dist_from_start", relative_dist_from_start, '\n');
+                post("current_slot", current_slot, '\n');
+                post("target_slot", target_slot, '\n');
+                post("interp_amount", interp_amount, '\n');
+                to_pattrstorage("recall", active_slot, target_slot, interp_amount);
+                last_x = x;
+                last_y = y;
+                if (!but) {
+                    is_dragging = 0;
+                }
+            }
         }
     }
 }
@@ -2323,6 +2363,8 @@ function setselect_mode(v) {
     if (select_mode) this.box.message("click_mode", v);
 }
 setselect_mode.local = 1;
+
+declareattribute("drag_mode", null, null, 1, { style: "enumindex", enumvals: ["Disabled", "Move", "In-Line Interp"], default: 1, label: "Drag Mode", paint: 1});
 
 declareattribute("color_mode", "getcolor_mode", "setcolor_mode", 1, {type: "long", min: 0, max: 3, style: "enumindex", enumvals: ["Classic", "Cycle", "Select", "Custom"], label: "Color Mode", category: "Appearance"});
 function getcolor_mode() {
