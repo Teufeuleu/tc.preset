@@ -140,6 +140,12 @@
 			<digest>Slot size</digest>
 			<description>Size of the preset slots</description>
 		</attribute>
+		<attribute name='click_mode' get='1' set='1'  type='int' size='1' >
+			<digest>Click Mode</digest>
+			<description>Sets the behavior of single clicks. When set to 1 (select mode), a single click on a stored preset selects it without recalling it. A double-click is required to recall it. It allows to drag it, set its name and lock state while keeping the last recalled preset active.
+			Other modes (2, 3) allow to respectively store or delete presets with single clicks.
+			</description>
+		</attribute>
 		<attribute name='color_mode' get='1' set='1'  type='int' size='1' >
 			<digest>Color mode</digest>
 			<description>When set to 0, all preset slots have the same color (same as the preset object) defined by the stored_slot_color attribute.
@@ -230,7 +236,7 @@
 		</attribute>
 		<attribute name='select_mode' get='1' set='1'  type='int' size='1' >
 			<digest>Preset selection mode</digest>
-			<description>When set to 1, a single click on a stored preset selects it without recalling it. It allows to drag it, set its name and lock state while keeping the last recalled preset active.
+			<description>(Depreciated, will be removed in next major version. Use click_mode instead) When set to 1, a single click on a stored preset selects it without recalling it. It allows to drag it, set its name and lock state while keeping the last recalled preset active.
 				You need to double-click on a stored preset to recall it. If set to 0, stored presets are recalled by a single click (default preset object behavior).
 			</description>
 		</attribute>

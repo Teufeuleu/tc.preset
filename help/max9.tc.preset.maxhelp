@@ -3,8 +3,8 @@
         "fileversion": 1,
         "appversion": {
             "major": 9,
-            "minor": 2,
-            "revision": 0,
+            "minor": 1,
+            "revision": 4,
             "architecture": "x64",
             "modernui": 1
         },
@@ -24,8 +24,8 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 2,
-                            "revision": 0,
+                            "minor": 1,
+                            "revision": 4,
                             "architecture": "x64",
                             "modernui": 1
                         },
@@ -70,7 +70,6 @@
                             {
                                 "box": {
                                     "border": 0,
-                                    "embed": 0,
                                     "filename": "helpname.js",
                                     "id": "obj-8",
                                     "ignoreclick": 1,
@@ -121,8 +120,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -144,13 +143,13 @@
                                             {
                                                 "box": {
                                                     "border": 0,
-                                                    "embed": 0,
                                                     "embedstate": [
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
                                                         [ "autoname", 0 ],
                                                         [ "autowriteagain", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                                         [ "bubblesize", 14 ],
+                                                        [ "click_mode", 0 ],
                                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                                         [ "color_2", 0.679, 0.405, 0.669, 1 ],
                                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
@@ -266,8 +265,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -278,13 +277,13 @@
                                             {
                                                 "box": {
                                                     "border": 0,
-                                                    "embed": 0,
                                                     "embedstate": [
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
                                                         [ "autoname", 0 ],
                                                         [ "autowriteagain", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                                         [ "bubblesize", 14 ],
+                                                        [ "click_mode", 0 ],
                                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                                         [ "color_2", 0.679, 0.405, 0.669, 1 ],
                                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
@@ -388,8 +387,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -401,44 +400,45 @@
                                                 "box": {
                                                     "border": 0,
                                                     "embedstate": [
-                                                        [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ],
-                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
-                                                        [ "bubblesize", 14 ],
-                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
-                                                        [ "spacing", 4 ],
-                                                        [ "layout", 0 ],
-                                                        [ "unique_names", 0 ],
-                                                        [ "ignoreslotzero", 1 ],
-                                                        [ "select_mode", 0 ],
-                                                        [ "display_interp", 1 ],
-                                                        [ "scrollable", 0 ],
-                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
-                                                        [ "autowriteagain", 0 ],
-                                                        [ "color_mode", 0 ],
                                                         [ "slot_round", 0 ],
-                                                        [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ],
-                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "click_mode", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ],
-                                                        [ "poll_edited", 0 ],
+                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
+                                                        [ "select_mode", 0 ],
+                                                        [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ],
+                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
+                                                        [ "ui_rename", 0 ],
+                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
                                                         [ "timestamp", 0 ],
-                                                        [ "send_name", "none" ],
-                                                        [ "margin", 4 ],
-                                                        [ "autoname", 0 ],
-                                                        [ "text_color", 0.85, 0.85, 0.85, 1.0 ],
-                                                        [ "fontsize", 13 ],
+                                                        [ "layout", 0 ],
+                                                        [ "spacing", 4 ],
+                                                        [ "display_interp", 1 ],
+                                                        [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ],
+                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
+                                                        [ "min_rows", 10 ],
+                                                        [ "use_uid", 0 ],
+                                                        [ "poll_edited", 0 ],
+                                                        [ "unique_names", 0 ],
                                                         [ "recall_passthrough", 1 ],
-                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
+                                                        [ "text_color", 0.85, 0.85, 0.85, 1.0 ],
+                                                        [ "autowriteagain", 0 ],
+                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
+                                                        [ "bubblesize", 14 ],
                                                         [ "nbslot_edit", 1 ],
+                                                        [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ],
+                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "scrollable", 0 ],
+                                                        [ "margin", 4 ],
+                                                        [ "menu_mode", 0 ],
+                                                        [ "color_mode", 0 ],
+                                                        [ "fontsize", 13 ],
+                                                        [ "send_name", "none" ],
+                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
+                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
                                                         [ "fontname", "Arial" ],
                                                         [ "pattrstorage", "mypat" ],
-                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
-                                                        [ "use_uid", 0 ],
-                                                        [ "ui_rename", 0 ],
-                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
-                                                        [ "min_rows", 10 ],
-                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
-                                                        [ "menu_mode", 0 ],
-                                                        [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ]
+                                                        [ "autoname", 0 ]
                                                     ],
                                                     "filename": "tc.preset",
                                                     "id": "obj-1",
@@ -563,8 +563,8 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 2,
-                            "revision": 0,
+                            "minor": 1,
+                            "revision": 4,
                             "architecture": "x64",
                             "modernui": 1
                         },
@@ -605,8 +605,8 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 2,
-                            "revision": 0,
+                            "minor": 1,
+                            "revision": 4,
                             "architecture": "x64",
                             "modernui": 1
                         },
@@ -1056,7 +1056,6 @@
                             {
                                 "box": {
                                     "border": 0,
-                                    "embed": 0,
                                     "filename": "helpname.js",
                                     "id": "obj-4",
                                     "ignoreclick": 1,
@@ -1078,13 +1077,13 @@
                             {
                                 "box": {
                                     "border": 0,
-                                    "embed": 0,
                                     "embedstate": [
                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
                                         [ "autoname", 0 ],
                                         [ "autowriteagain", 0 ],
                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                         [ "bubblesize", 14 ],
+                                        [ "click_mode", 0 ],
                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                         [ "color_2", 0.679, 0.405, 0.669, 1 ],
                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
@@ -1361,8 +1360,8 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 2,
-                            "revision": 0,
+                            "minor": 1,
+                            "revision": 4,
                             "architecture": "x64",
                             "modernui": 1
                         },
@@ -1406,8 +1405,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -1751,13 +1750,13 @@
                             {
                                 "box": {
                                     "border": 0,
-                                    "embed": 0,
                                     "embedstate": [
                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
                                         [ "autoname", 0 ],
                                         [ "autowriteagain", 0 ],
                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                         [ "bubblesize", 14 ],
+                                        [ "click_mode", 1 ],
                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                         [ "color_2", 0.679, 0.405, 0.669, 1 ],
                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
@@ -1781,7 +1780,7 @@
                                         [ "poll_edited", 1 ],
                                         [ "recall_passthrough", 0 ],
                                         [ "scrollable", 0 ],
-                                        [ "select_mode", 1 ],
+                                        [ "select_mode", 0 ],
                                         [ "send_name", "none" ],
                                         [ "slot_round", 0 ],
                                         [ "spacing", 4 ],
@@ -1829,7 +1828,6 @@
                             {
                                 "box": {
                                     "border": 0,
-                                    "embed": 0,
                                     "filename": "helpname.js",
                                     "id": "obj-4",
                                     "ignoreclick": 1,
@@ -1851,12 +1849,12 @@
                             {
                                 "box": {
                                     "id": "obj-115",
-                                    "linecount": 5,
+                                    "linecount": 6,
                                     "maxclass": "comment",
                                     "numinlets": 1,
                                     "numoutlets": 0,
-                                    "patching_rect": [ 10.0, 101.0, 247.0, 74.0 ],
-                                    "text": "When select mode is enabled, a single click selects a stored preset without recalling it. A double click recalls the preset. It allows to drag it, set its name and lock state while keeping the last recalled preset active."
+                                    "patching_rect": [ 10.0, 101.0, 253.0, 87.0 ],
+                                    "text": "Click mode sets the behavior of single clicks. In Select mode, a single click selects a stored preset without recalling it. A double click recalls the preset. It allows to drag it, set its name and lock state while keeping the last recalled preset active."
                                 }
                             },
                             {
@@ -1907,14 +1905,15 @@
                             },
                             {
                                 "box": {
-                                    "attr": "select_mode",
+                                    "attr": "click_mode",
                                     "id": "obj-127",
                                     "maxclass": "attrui",
                                     "numinlets": 1,
                                     "numoutlets": 1,
                                     "outlettype": [ "" ],
                                     "parameter_enable": 0,
-                                    "patching_rect": [ 10.0, 77.0, 123.0, 22.0 ]
+                                    "patching_rect": [ 10.0, 77.0, 167.0, 22.0 ],
+                                    "text_width": 80.0
                                 }
                             },
                             {
@@ -2140,8 +2139,8 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 2,
-                            "revision": 0,
+                            "minor": 1,
+                            "revision": 4,
                             "architecture": "x64",
                             "modernui": 1
                         },
@@ -2170,8 +2169,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -2194,44 +2193,45 @@
                                                 "box": {
                                                     "border": 0,
                                                     "embedstate": [
-                                                        [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ],
-                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
-                                                        [ "bubblesize", 14 ],
-                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
-                                                        [ "spacing", 4 ],
-                                                        [ "layout", 0 ],
-                                                        [ "unique_names", 0 ],
-                                                        [ "ignoreslotzero", 1 ],
-                                                        [ "select_mode", 0 ],
-                                                        [ "display_interp", 1 ],
-                                                        [ "scrollable", 0 ],
-                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
-                                                        [ "autowriteagain", 0 ],
-                                                        [ "color_mode", 0 ],
                                                         [ "slot_round", 0 ],
-                                                        [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ],
-                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "click_mode", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ],
-                                                        [ "poll_edited", 0 ],
+                                                        [ "ignoreslotzero", 1 ],
+                                                        [ "edited_color", 1, 0.49, 0.263, 1 ],
+                                                        [ "select_mode", 0 ],
+                                                        [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ],
+                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
+                                                        [ "ui_rename", 0 ],
+                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
                                                         [ "timestamp", 0 ],
-                                                        [ "send_name", "none" ],
-                                                        [ "margin", 4 ],
-                                                        [ "autoname", 0 ],
-                                                        [ "text_color", 0.85, 0.85, 0.85, 1.0 ],
-                                                        [ "fontsize", 13 ],
+                                                        [ "layout", 0 ],
+                                                        [ "spacing", 4 ],
+                                                        [ "display_interp", 1 ],
+                                                        [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ],
+                                                        [ "color_3", 0.527, 0.459, 0.756, 1 ],
+                                                        [ "min_rows", 10 ],
+                                                        [ "use_uid", 0 ],
+                                                        [ "poll_edited", 0 ],
+                                                        [ "unique_names", 0 ],
                                                         [ "recall_passthrough", 1 ],
-                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
+                                                        [ "text_color", 0.85, 0.85, 0.85, 1.0 ],
+                                                        [ "autowriteagain", 0 ],
+                                                        [ "color_5", 0.283, 0.606, 0.559, 1 ],
+                                                        [ "bubblesize", 14 ],
                                                         [ "nbslot_edit", 1 ],
+                                                        [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ],
+                                                        [ "color_2", 0.679, 0.405, 0.669, 1 ],
+                                                        [ "scrollable", 0 ],
+                                                        [ "margin", 4 ],
+                                                        [ "menu_mode", 0 ],
+                                                        [ "color_mode", 0 ],
+                                                        [ "fontsize", 13 ],
+                                                        [ "send_name", "none" ],
+                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
+                                                        [ "color_4", 0.367, 0.542, 0.712, 1 ],
                                                         [ "fontname", "Arial" ],
                                                         [ "pattrstorage", "mypat" ],
-                                                        [ "color_1", 0.743, 0.41, 0.501, 1 ],
-                                                        [ "use_uid", 0 ],
-                                                        [ "ui_rename", 0 ],
-                                                        [ "interp_slot_color", 1, 1, 1, 0.8 ],
-                                                        [ "min_rows", 10 ],
-                                                        [ "color_6", 0.316, 0.616, 0.377, 1 ],
-                                                        [ "menu_mode", 0 ],
-                                                        [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ]
+                                                        [ "autoname", 0 ]
                                                     ],
                                                     "filename": "tc.preset",
                                                     "id": "obj-1",
@@ -2352,8 +2352,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -2402,13 +2402,13 @@
                                             {
                                                 "box": {
                                                     "border": 0,
-                                                    "embed": 0,
                                                     "embedstate": [
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
                                                         [ "autoname", 0 ],
                                                         [ "autowriteagain", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                                         [ "bubblesize", 14 ],
+                                                        [ "click_mode", 0 ],
                                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                                         [ "color_2", 0.679, 0.405, 0.669, 1 ],
                                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
@@ -2530,8 +2530,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -2542,13 +2542,13 @@
                                             {
                                                 "box": {
                                                     "border": 0,
-                                                    "embed": 0,
                                                     "embedstate": [
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
                                                         [ "autoname", 0 ],
                                                         [ "autowriteagain", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                                         [ "bubblesize", 14 ],
+                                                        [ "click_mode", 0 ],
                                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                                         [ "color_2", 0.679, 0.405, 0.669, 1 ],
                                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
@@ -2793,8 +2793,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -2837,8 +2837,8 @@
                                                         "fileversion": 1,
                                                         "appversion": {
                                                             "major": 9,
-                                                            "minor": 2,
-                                                            "revision": 0,
+                                                            "minor": 1,
+                                                            "revision": 4,
                                                             "architecture": "x64",
                                                             "modernui": 1
                                                         },
@@ -3104,13 +3104,13 @@
                                             {
                                                 "box": {
                                                     "border": 0,
-                                                    "embed": 0,
                                                     "embedstate": [
                                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
                                                         [ "autoname", 0 ],
                                                         [ "autowriteagain", 0 ],
                                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                                         [ "bubblesize", 14 ],
+                                                        [ "click_mode", 0 ],
                                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                                         [ "color_2", 0.679, 0.405, 0.669, 1 ],
                                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
@@ -3261,8 +3261,8 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 2,
-                            "revision": 0,
+                            "minor": 1,
+                            "revision": 4,
                             "architecture": "x64",
                             "modernui": 1
                         },
@@ -3367,13 +3367,13 @@
                             {
                                 "box": {
                                     "border": 0,
-                                    "embed": 0,
                                     "embedstate": [
                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
                                         [ "autoname", 0 ],
                                         [ "autowriteagain", 0 ],
                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                         [ "bubblesize", 14 ],
+                                        [ "click_mode", 0 ],
                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                         [ "color_2", 0.679, 0.405, 0.669, 1 ],
                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
@@ -3445,7 +3445,6 @@
                             {
                                 "box": {
                                     "border": 0,
-                                    "embed": 0,
                                     "filename": "helpname.js",
                                     "id": "obj-4",
                                     "ignoreclick": 1,
@@ -3688,8 +3687,8 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 2,
-                            "revision": 0,
+                            "minor": 1,
+                            "revision": 4,
                             "architecture": "x64",
                             "modernui": 1
                         },
@@ -3829,8 +3828,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -3882,8 +3881,8 @@
                                                         "fileversion": 1,
                                                         "appversion": {
                                                             "major": 9,
-                                                            "minor": 2,
-                                                            "revision": 0,
+                                                            "minor": 1,
+                                                            "revision": 4,
                                                             "architecture": "x64",
                                                             "modernui": 1
                                                         },
@@ -4276,8 +4275,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -4589,8 +4588,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -4764,8 +4763,8 @@
                                         "fileversion": 1,
                                         "appversion": {
                                             "major": 9,
-                                            "minor": 2,
-                                            "revision": 0,
+                                            "minor": 1,
+                                            "revision": 4,
                                             "architecture": "x64",
                                             "modernui": 1
                                         },
@@ -4988,13 +4987,13 @@
                             {
                                 "box": {
                                     "border": 0,
-                                    "embed": 0,
                                     "embedstate": [
                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
                                         [ "autoname", 0 ],
                                         [ "autowriteagain", 0 ],
                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                         [ "bubblesize", 14 ],
+                                        [ "click_mode", 0 ],
                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                         [ "color_2", 0.679, 0.405, 0.669, 1 ],
                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],
@@ -5218,8 +5217,8 @@
                         "fileversion": 1,
                         "appversion": {
                             "major": 9,
-                            "minor": 2,
-                            "revision": 0,
+                            "minor": 1,
+                            "revision": 4,
                             "architecture": "x64",
                             "modernui": 1
                         },
@@ -5385,13 +5384,13 @@
                             {
                                 "box": {
                                     "border": 0,
-                                    "embed": 0,
                                     "embedstate": [
                                         [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ],
                                         [ "autoname", 0 ],
                                         [ "autowriteagain", 0 ],
                                         [ "bgcolor", 0.125, 0.125, 0.125, 1 ],
                                         [ "bubblesize", 14 ],
+                                        [ "click_mode", 0 ],
                                         [ "color_1", 0.743, 0.41, 0.501, 1 ],
                                         [ "color_2", 0.679, 0.405, 0.669, 1 ],
                                         [ "color_3", 0.527, 0.459, 0.756, 1 ],

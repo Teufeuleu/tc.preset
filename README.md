@@ -23,6 +23,7 @@ A [jsui]/[v8ui] replacement for the [preset] object in Cycling'74 Max.
 - Color mode: various ways to colorize preset slots
 - UID: generate unique identifiers for each preset so you can "follow" them when they're moved, renamed or re-saved. Practical in case of advanced preset management
 - Timestamps: automatically save a 'created' and 'modified' date for each preset
+- Click mode: set the behavior of single clicks: recall, select without recall, store, delete
 ...and more!
 
 ## How to install

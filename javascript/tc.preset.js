@@ -79,6 +79,7 @@ var scrollable = 0;         // Defines weither the object can be scrolled or not
 var min_rows = 10;          // Minimum number of rows to display if scrollable is enabled
 var color_mode = 0;         // Change the way the filled slots (stored presets) color is handeld. 0: stored_slot_color. 1: looping through color_1 to color_6. 2: Freely assign colors 1 to 6. 3: Set any color to any preset
 var select_mode = 0;        // 0: single click to select and recall the slot. 1: single click to select the slot, double click to recall it.
+var click_mode = 0;         // Sets the behavior of single clicks. 0: normal (recall), 1: select, 2: store, 3: delete
 var send_name = "none";     // The global name to send presets dict name to (received by the [receive] object)
 var unique_names = false;   // When enabled, force names to be unique when renaming slots by appending "bis" to them. Gets applied only to subsequently renamed presets.
 var autoname = false;       // Automatically name new presets when created as "Preset" followed by the slot id
@@ -1786,20 +1787,16 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
     }
 	if (last_hovered > -1 && pattrstorage_name != null && last_hovered_is_preset_slot) {
 		var output = "recall";
-        if (select_mode) {
+        if (click_mode === 1) {
             output = "select";
         }
-        if (shift) {
-            if (!option && !ctrl) {
-                output = "store";
-            }
-			if (option && slots[last_hovered].filled) {
-				output = "delete";
-			}
-            if (ctrl && slots[last_hovered].filled) {
-                output = "lock";
-            }
-		} else if (ctrl && slots[last_hovered].filled) {
+        if (click_mode === 2 ||(shift && !option && !ctrl)) {
+            output = "store";
+        } else if (click_mode === 3 ||(shift && option && slots[last_hovered].filled)) {
+			output = "delete";
+		} else if (shift && ctrl && slots[last_hovered].filled) {
+            output = "lock";
+        } else if (!shift && ctrl && slots[last_hovered].filled) {
             output = "rename";
         } else if (slots[last_hovered].filled == false) {
 			return;
@@ -1839,7 +1836,7 @@ onclick.local = 1;
 
 function ondblclick(x,y,but,cmd,shift,capslock,option,ctrl)
 {
-	if (select_mode && last_hovered > -1 && pattrstorage_name != null && slots[last_hovered].filled) {
+	if (click_mode === 1 && last_hovered > -1 && pattrstorage_name != null && slots[last_hovered].filled) {
         if (recall_passthrough) {
             to_pattrstorage("recall", last_hovered);
         } else {
@@ -2312,19 +2309,17 @@ function setmin_rows(v){
 }
 setmin_rows.local = 1;
 
-declareattribute("select_mode", "getselect_mode", "setselect_mode", 1, {style: "onoff", label: "Select Mode"});
+declareattribute("click_mode", null, null, 1, { style: "enumindex", enumvals: ["Recall", "Select", "Store", "Delete"], default: 0, label: "Click Mode", paint: 1});
+
+declareattribute("select_mode", "getselect_mode", "setselect_mode", 1, {style: "onoff", label: "Select Mode", invisible: 1});
 function getselect_mode() {
 	return select_mode;
 }
 getselect_mode.local = 1;
 
-function setselect_mode(v){
-	if (v == 1) {
-        select_mode = 1;
-    } else {
-        select_mode = 0;
-    }
-    mgraphics.redraw();
+function setselect_mode(v) {
+    select_mode = v ? 1 : 0;
+    if (select_mode) this.box.message("click_mode", v);
 }
 setselect_mode.local = 1;
 
