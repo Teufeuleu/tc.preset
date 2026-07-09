@@ -464,7 +464,7 @@ function paint_base() {
     for (var i = 1; i <= true_slots_count_display; i++) {
         if (i != drag_slot) { //We mask the slot that is currently dragged as it is drawn at the mouse position already
             var slot = slots[i];
-            if (slot.filled == true) {
+            if (slot.filled === true) {
                 if (color_mode == 1) {
                     mg.set_source_rgba(color_wheel_custom[i % color_wheel_size]);
                 } else if (color_mode == 2) {
@@ -583,7 +583,7 @@ function paint()
         if ((last_hovered > -1) && ((drag_mode < 2) || (drag_mode === 2 && !is_dragging))) {
 
             // Slot border
-            if (slots[last_hovered].filled == false || (slots[last_hovered].filled == true && !control_hold)) {
+            if (slots[last_hovered].filled === false || (slots[last_hovered].filled === true && !control_hold)) {
                 mgraphics.set_source_rgba(text_color[0], text_color[1], text_color[2], 0.8 * text_color[3]);
                 mgraphics.set_line_width(1);
                 draw_slot_bubble(slots[last_hovered].left, slots[last_hovered].top, slot_size, slot_size);
@@ -594,7 +594,7 @@ function paint()
                 var stroke_width = Math.round(1 + slot_size / 10);
                 stroke_width = Math.max(2, stroke_width);
                 if (shift_hold) {
-                    if (control_hold && slots[last_hovered].filled == true) {
+                    if (control_hold && slots[last_hovered].filled === true) {
                         // About to lock/unlock
                         var bracket_size = slot_size * 0.2;
                         mgraphics.set_source_rgba(text_color);
@@ -608,7 +608,7 @@ function paint()
                         mgraphics.rel_line_to(0, slot_size);
                         mgraphics.rel_line_to(-bracket_size, 0);
                         mgraphics.stroke();
-                    } else if (option_hold && !control_hold  && slots[last_hovered].filled == true) {
+                    } else if (option_hold && !control_hold  && slots[last_hovered].filled === true) {
                         // About to delete
                         mgraphics.set_source_rgba(0, 0, 0, 0.5);
                         draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
@@ -619,7 +619,7 @@ function paint()
                         draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
                         mgraphics.fill();
                     }
-                } else if (control_hold && slots[last_hovered].filled == true) {
+                } else if (control_hold && slots[last_hovered].filled === true) {
                     // About to rename
                     mgraphics.set_source_rgba(text_color);
                     mgraphics.set_line_width(stroke_width);
@@ -930,7 +930,7 @@ function anything() {
             } else {
                 slots[v].name = null;
                 slots[v].interp = -1;
-                slots[v].filled = 0;
+                slots[v].filled = false;
                 if (active_slot == v) {
                     active_slot = 0;
                     selected_slot = 0;
@@ -1024,7 +1024,7 @@ function slotname() {
         return;
     }
     if (slot > 0 && name != "(undefined)") {
-        if (is_updating_names == 1 && slots[slot].filled == false && name !== "<(unnamed)>") {
+        if (is_updating_names == 1 && slots[slot].filled === false && name !== "<(unnamed)>") {
             // Removing parenthesis automatically added by pattrstorage if the preset has a name but isn't filled
             name = name.slice(1, -1);
         }
@@ -1164,22 +1164,27 @@ function recallmulti() {
     var args = arrayfromargs(arguments);
     var interp_slots = [];
     var summed_weight = 0;
+
+    for (var i = 0; i < filled_slots.length; i++) {
+        slots[filled_slots[i]].interp = -1;
+    }
     
     for (var i = 0; i < args.length; i++) {
+        var slot = Math.floor(args[i]);
         var weight = args[i] % 1.;
         if (weight == 0) weight = 1;
         summed_weight += weight;
-        interp_slots.push([Math.floor(args[i]), weight]);
+        interp_slots.push([slot, weight]);
     }
 
     for (var i = 0; i < interp_slots.length; i++) {
         var nb = interp_slots[i][0];
-        if (slots[nb].filled == true) {
+        if (slots[nb].filled === true) {
             interp_slots[i][1] /= summed_weight;
         }  else {
             interp_slots[i][1] = -1;
         }
-        slots[nb].interp = interp_slots[i][1]
+        slots[nb].interp = interp_slots[i][1];
     }
 
     is_interpolating = 1;
@@ -1300,7 +1305,7 @@ function move() {
     if (args.length < 2) return;
     var src_slot = args[0]; // Preset to move
     var dst_slot = args[1]; // Destination slot
-    if (src_slot == dst_slot || !(src_slot <= slots_highest && dst_slot <= slots_count_display) || slots[src_slot].filled == false) {
+    if (src_slot == dst_slot || !(src_slot <= slots_highest && dst_slot <= slots_count_display) || slots[src_slot].filled === false) {
         if (is_dragging) {
             
         }
@@ -1312,7 +1317,7 @@ function move() {
     var cur_prev_active_slot = previous_active_slot;
     var cur_selected_slot = selected_slot;
     var offset = ((dst_slot <= src_slot) && slots[dst_slot].filled) ? 1 : 0;
-    var offset_others = slots[dst_slot].filled == true ? 1 : 0;
+    var offset_others = slots[dst_slot].filled === true ? 1 : 0;
     var src_slot_lock = slots[src_slot].lock;
     var recalc_rows_flag = 0;
 
@@ -1321,7 +1326,7 @@ function move() {
         lock(src_slot, 0);
     }
     // If new slot is empty we just move the drag preset here. If it's not, we move al next slots to the right
-    if (slots[dst_slot].filled == true) {
+    if (slots[dst_slot].filled === true) {
         if (slots_highest == slots_count_display) {
             // If there's a stored preset in the last displayed slot, it will be pushed to a new row at insert, so we need to add a new row at redraw
             recalc_rows_flag = 1;
@@ -1804,7 +1809,7 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
             output = "lock";
         } else if (!shift && ctrl && slots[last_hovered].filled) {
             output = "rename";
-        } else if (slots[last_hovered].filled == false) {
+        } else if (slots[last_hovered].filled === false) {
 			return;
 		}
         if (output == "recall" && recall_passthrough == false) {
@@ -1860,7 +1865,7 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
     if (pattrstorage_name != null) {
         y -=  y_offset;
         if (drag_mode === 1) {
-            if (is_dragging === 0 && last_hovered > 0 && slots[last_hovered].filled == true) {
+            if (is_dragging === 0 && last_hovered > 0 && slots[last_hovered].filled === true) {
                 // To prevent mistakes, is_dragging is set to 1 only when dragging for more than 10 pixels
                 var dist_from_start = Math.sqrt((x-last_x)*(x-last_x)+(y-last_y)*(y-last_y));
                 if (dist_from_start > 10) {
@@ -1907,32 +1912,78 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                 last_y = y;
             }
         } else if (drag_mode === 2) {
-            // var hovered = get_slot_index(x, y);
-            // if (hovered > 0) last_hovered = hovered;
-            // last_hovered_is_preset_slot = scrollable && nbslot_edit && last_hovered > (true_slots_count_display - 2) ? false : true;
-            // is_dragging = but;
-            // post("last_hovered", last_hovered, '\n');
+            // Drag to interpolate across adjacent (previous and next) presets
             if (is_dragging == 0) {
                 var dist_from_start = Math.sqrt((x-last_x)*(x-last_x)+(y-last_y)*(y-last_y));
-                if (dist_from_start > 5) {
+                if (dist_from_start > 3) {
                     is_dragging = 2;
                 }
             }
-            if (is_dragging === 2) {
-                // What should be done:
-                // 1. find closest filled slot
-                // 2. if relative_dist < 0 interpolate toward previous filled preset. Or toward next one otherwise
+            // last_hovered retains the slot where the drag began
+            if (is_dragging === 2 && last_hovered > -1) {
                 var relative_dist_from_start = (x - slots[last_hovered].center.x) / (slot_size + spacing);
-                var current_slot = Math.max(Math.round(relative_dist_from_start), 1);
-                var target_slot = relative_dist_from_start - current_slot > 0 ? filled_slots[filled_slots.indexOf(active_slot) - 1] : filled_slots[filled_slots.indexOf(active_slot) + 1];
-                var interp_amount = target_slot - (last_hovered + relative_dist_from_start);
-                post("-----------------------------\n");
-                post("last_hovered", last_hovered, '\n');
-                post("relative_dist_from_start", relative_dist_from_start, '\n');
-                post("current_slot", current_slot, '\n');
-                post("target_slot", target_slot, '\n');
-                post("interp_amount", interp_amount, '\n');
-                to_pattrstorage("recall", active_slot, target_slot, interp_amount);
+                var current_slot = Math.max(Math.round(last_hovered - 0.5 + relative_dist_from_start), 1);
+                var prev_filled_slot = -1;
+                var next_filled_slot = -1;
+                for (var i = 0; i < filled_slots.length; i++) {
+                    var p = filled_slots[i];
+                    if (p <= current_slot) {
+                        if (prev_filled_slot === -1 || p > prev_filled_slot) {
+                            prev_filled_slot = p;
+                        }
+                    } else if (p > current_slot) {
+                        if (next_filled_slot === -1 || p < next_filled_slot) {
+                            next_filled_slot = p;
+                        }
+                    }
+                }
+                var interp_amount = 0;
+                if (prev_filled_slot === -1) {
+                    prev_filled_slot = next_filled_slot;
+                    interp_amount = 1;
+                } else if (next_filled_slot === -1) {
+                    next_filled_slot = prev_filled_slot;
+                    interp_amount = 1;
+                } else if (prev_filled_slot > 0 && next_filled_slot > 0) {
+                    interp_amount = (last_hovered + relative_dist_from_start - prev_filled_slot) / (next_filled_slot - prev_filled_slot);
+                    interp_amount = Math.min(interp_amount, Math.max(interp_amount, 0), 1);
+                }
+                if (prev_filled_slot !== -1 || next_filled_slot !== -1) {
+                    to_pattrstorage("recall", prev_filled_slot, next_filled_slot, interp_amount);
+                }
+                last_x = x;
+                last_y = y;
+                if (!but) {
+                    is_dragging = 0;
+                }
+            }
+        }  else if (drag_mode === 3) {
+            // Drag to interpolate across adjacent (previous and next) presets
+            if (is_dragging == 0) {
+                var dist_from_start = Math.sqrt((x-last_x)*(x-last_x)+(y-last_y)*(y-last_y));
+                if (dist_from_start > 3) {
+                    is_dragging = 3;
+                }
+            }
+            // last_hovered retains the slot where the drag began
+            if (is_dragging === 3 && last_hovered > -1) {
+                var radius = 2;
+                var nearby_slots = [];
+                var max_dist = 0;
+                for (var i = 0; i < filled_slots.length; i++) {
+                    var s_pos = slots[filled_slots[i]].center;
+                    var dist_from_mouse = Math.sqrt((x - s_pos.x) * (x - s_pos.x) + (y - s_pos.y) * (y - s_pos.y)) / (slot_size + spacing);
+                    if (dist_from_mouse < radius) {
+                        var interp_factor = 1 - (dist_from_mouse / radius);
+                        nearby_slots.push(filled_slots[i] + interp_factor);
+                        if (max_dist < dist_from_mouse) max_dist = dist_from_mouse;
+                    }
+                }
+                if (nearby_slots.length) {
+                    var args = ["recallmulti"].concat(nearby_slots);
+                    to_pattrstorage.apply(null, args);
+                    recallmulti.apply(null, nearby_slots);
+                }
                 last_x = x;
                 last_y = y;
                 if (!but) {
@@ -2364,7 +2415,7 @@ function setselect_mode(v) {
 }
 setselect_mode.local = 1;
 
-declareattribute("drag_mode", null, null, 1, { style: "enumindex", enumvals: ["Disabled", "Move", "In-Line Interp"], default: 1, label: "Drag Mode", paint: 1});
+declareattribute("drag_mode", null, null, 1, { style: "enumindex", enumvals: ["Disabled", "Move", "In-Line Interp", "Interp"], default: 1, label: "Drag Mode", paint: 1});
 
 declareattribute("color_mode", "getcolor_mode", "setcolor_mode", 1, {type: "long", min: 0, max: 3, style: "enumindex", enumvals: ["Classic", "Cycle", "Select", "Custom"], label: "Color Mode", category: "Appearance"});
 function getcolor_mode() {
