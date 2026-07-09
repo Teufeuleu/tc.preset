@@ -2082,12 +2082,7 @@ function setslotsize(v){
 }
 setslotsize.local = 1;
 
-declareattribute("slot_round", "getslotround", "setslotround", 1, {type: "long", default: 0, label: "Slot Round", category: "Appearance"});
-function getslotround() {
-	return slot_round;
-}
-getslotround.local = 1;
-
+declareattribute("slot_round", null, "setslotround", 1, {type: "long", default: 0, label: "Slot Round", category: "Appearance"});
 function setslotround(v){
     if (arguments.length) {
         slot_round = Math.max(0, Math.min(slot_size, v));
@@ -2099,12 +2094,7 @@ function setslotround(v){
 }
 setslotround.local = 1;
 
-declareattribute("margin", "getmargin", "setmargin", 1, {type: "long", default: 4, label: "Margin", category: "Appearance"});
-function getmargin() {
-	return margin;
-}
-getmargin.local = 1;
-
+declareattribute("margin", null, "setmargin", 1, {type: "long", default: 4, label: "Margin", category: "Appearance"});
 function setmargin(v){
     if (arguments.length) {
         margin = Math.max(0, v);
@@ -2115,12 +2105,7 @@ function setmargin(v){
 }
 setmargin.local = 1;
 
-declareattribute("spacing", "getspacing", "setspacing", 1, {type: "long", default: 4, label: "Spacing", category: "Appearance"});
-function getspacing() {
-	return spacing;
-}
-getspacing.local = 1;
-
+declareattribute("spacing", null, "setspacing", 1, {type: "long", default: 4, label: "Spacing", category: "Appearance"});
 function setspacing(v){
     if (arguments.length) {
         spacing = Math.max(1, v);
@@ -2150,12 +2135,7 @@ function setbgcolor(){
 }
 setbgcolor.local = 1;
 
-declareattribute("empty_slot_color", "getemptycolor", "setemptycolor", 1, {style: "rgba", label: "Empty Slot Color", category: "Appearance"});
-function getemptycolor() {
-	return empty_slot_color;
-}
-getemptycolor.local = 1;
-
+declareattribute("empty_slot_color", null, "setemptycolor", 1, {style: "rgba", label: "Empty Slot Color", category: "Appearance"});
 function setemptycolor(){
     if (arguments.length == 4) {
         empty_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -2168,12 +2148,7 @@ function setemptycolor(){
 }
 setemptycolor.local = 1;
 
-declareattribute("active_slot_color", "getactiveslotcolor", "setactiveslotcolor", 1, {style: "rgba", label: "Active Slot Color", category: "Appearance"});
-function getactiveslotcolor() {
-	return active_slot_color;
-}
-getactiveslotcolor.local = 1;
-
+declareattribute("active_slot_color", null, "setactiveslotcolor", 1, {style: "rgba", label: "Active Slot Color", category: "Appearance"});
 function setactiveslotcolor(){
     if (arguments.length == 4) {
         active_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -2186,12 +2161,7 @@ function setactiveslotcolor(){
 }
 setactiveslotcolor.local = 1;
 
-declareattribute("stored_slot_color", "getstoredslotcolor", "setstoredslotcolor", 1, {style: "rgba", label: "Stored Slot Color", category: "Appearance"});
-function getstoredslotcolor() {
-	return stored_slot_color;
-}
-getstoredslotcolor.local = 1;
-
+declareattribute("stored_slot_color", null, "setstoredslotcolor", 1, {style: "rgba", label: "Stored Slot Color", category: "Appearance"});
 function setstoredslotcolor(){
     if (arguments.length == 4) {
         stored_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -2204,12 +2174,7 @@ function setstoredslotcolor(){
 }
 setstoredslotcolor.local = 1;
 
-declareattribute("interp_slot_color", "getinterpslotcolor", "setinterpslotcolor", 1, {style: "rgba", label: "Interpolating slot color", category: "Appearance"});
-function getinterpslotcolor() {
-	return interp_slot_color;
-}
-getinterpslotcolor.local = 1;
-
+declareattribute("interp_slot_color", null, "setinterpslotcolor", 1, {style: "rgba", label: "Interpolating slot color", category: "Appearance"});
 function setinterpslotcolor(){
     if (arguments.length == 4) {
         interp_slot_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -2222,11 +2187,7 @@ function setinterpslotcolor(){
 }
 setinterpslotcolor.local = 1;
 
-declareattribute("text_color", "gettextcolor", "settextcolor", 1, {style: "rgba", label: "Text Color", category: "Appearance"});
-function gettextcolor() {
-	return text_color;
-}
-gettextcolor.local = 1;
+declareattribute("text_color", null, "settextcolor", 1, {style: "rgba", label: "Text Color", category: "Appearance"});
 function settextcolor(){
     if (arguments.length == 4) {
         text_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -2295,12 +2256,7 @@ function setfontname(v){
 }
 setfontname.local = 1;
 
-declareattribute("menu_mode", "getmenu_mode", "setmenu_mode", 1, {style: "enumindex", enumvals: ["Preset number + name", "Preset number", "Preset name"], label: "Menu Mode"});
-function getmenu_mode() {
-	return menu_mode;
-}
-getmenu_mode.local = 1;
-
+declareattribute("menu_mode", null, "setmenu_mode", 1, {style: "enumindex", enumvals: ["Preset number + name", "Preset number", "Preset name"], label: "Menu Mode"});
 function setmenu_mode(v){
     if (arguments.length == 1) {
         menu_mode = Math.min(Math.max(0, parseInt(v)), 2);
@@ -2339,12 +2295,7 @@ function setignoreslotzero(v){
 }
 setignoreslotzero.local = 1;
 
-declareattribute("display_interp", "getdisplayinterp", "setdisplayinterp", 1, {style: "onoff", label: "Display Interpolations", category: "Appearance"});
-function getdisplayinterp() {
-	return display_interp;
-}
-getdisplayinterp.local = 1;
-
+declareattribute("display_interp", null, "setdisplayinterp", 1, { style: "onoff", label: "Display Interpolations", category: "Appearance" });
 function setdisplayinterp(v){
 	if (v == 0) {
         display_interp = 0;
@@ -2354,12 +2305,7 @@ function setdisplayinterp(v){
 }
 setdisplayinterp.local = 1;
 
-declareattribute("layout", "getlayout", "setlayout", 1, {style: "enumindex", enumvals: ["Grid", "List"], label: "Layout", category: "Appearance"});
-function getlayout() {
-	return layout;
-}
-getlayout.local = 1;
-
+declareattribute("layout", null, "setlayout", 1, {style: "enumindex", enumvals: ["Grid", "List"], label: "Layout", category: "Appearance"});
 function setlayout(v){
 	if (v == 0) {
         layout = 0;
@@ -2371,12 +2317,7 @@ function setlayout(v){
 }
 setlayout.local = 1;
 
-declareattribute("scrollable", "getscrollable", "setscrollable", 1, {style: "onoff", label: "Scrollable"});
-function getscrollable() {
-	return scrollable;
-}
-getscrollable.local = 1;
-
+declareattribute("scrollable", null, "setscrollable", 1, {style: "onoff", label: "Scrollable"});
 function setscrollable(v){
 	if (v == 0) {
         scrollable = 0;
@@ -2388,11 +2329,7 @@ function setscrollable(v){
 }
 setscrollable.local = 1;
 
-declareattribute("min_rows", "getmin_rows", "setmin_rows", 1, {type: "long", min: 1, label: "Minimum Rows"});
-function getmin_rows() {
-	return min_rows;
-}
-getmin_rows.local = 1;
+declareattribute("min_rows", null, "setmin_rows", 1, {type: "long", min: 1, label: "Minimum Rows"});
 function setmin_rows(v){
 	if (v > 0) {
         min_rows = v;
@@ -2405,12 +2342,7 @@ setmin_rows.local = 1;
 
 declareattribute("click_mode", null, null, 1, { style: "enumindex", enumvals: ["Recall", "Select", "Store", "Delete"], default: 0, label: "Click Mode", paint: 1});
 
-declareattribute("select_mode", "getselect_mode", "setselect_mode", 1, {style: "onoff", label: "Select Mode", invisible: 1});
-function getselect_mode() {
-	return select_mode;
-}
-getselect_mode.local = 1;
-
+declareattribute("select_mode", null, "setselect_mode", 1, {style: "onoff", label: "Select Mode", invisible: 1});
 function setselect_mode(v) {
     select_mode = v ? 1 : 0;
     if (select_mode) this.box.message("click_mode", v);
@@ -2421,12 +2353,7 @@ declareattribute("drag_mode", null, null, 1, { style: "enumindex", enumvals: ["D
 
 declareattribute("drag_interp_radius", null, null, 1, { type: "float", min: 1, default: 1, label: "Drag Interpolation Radius" });
 
-declareattribute("color_mode", "getcolor_mode", "setcolor_mode", 1, {type: "long", min: 0, max: 3, style: "enumindex", enumvals: ["Classic", "Cycle", "Select", "Custom"], label: "Color Mode", category: "Appearance"});
-function getcolor_mode() {
-	return color_mode;
-}
-getcolor_mode.local = 1;
-
+declareattribute("color_mode", null, "setcolor_mode", 1, {type: "long", min: 0, max: 3, style: "enumindex", enumvals: ["Classic", "Cycle", "Select", "Custom"], label: "Color Mode", category: "Appearance"});
 function setcolor_mode(v){
     v = Math.floor(v);
     v = Math.max(0, Math.min(3, v));
@@ -2451,12 +2378,7 @@ function setcolor_mode(v){
 }
 setcolor_mode.local = 1;
 
-declareattribute("color_1", "getcolor1", "setcolor1", 1, {style: "rgba", label: "Color 1", category: "Appearance"});
-function getcolor1() {
-	return color_1;
-}
-getcolor1.local = 1;
-
+declareattribute("color_1", null, "setcolor1", 1, {style: "rgba", label: "Color 1", category: "Appearance"});
 function setcolor1(){
     if (arguments.length == 4) {
         color_wheel(1, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2468,12 +2390,7 @@ function setcolor1(){
 }
 setcolor1.local = 1;
 
-declareattribute("color_2", "getcolor2", "setcolor2", 1, {style: "rgba", label: "Color 2", category: "Appearance"});
-function getcolor2() {
-	return color_2;
-}
-getcolor2.local = 1;
-
+declareattribute("color_2", null, "setcolor2", 1, {style: "rgba", label: "Color 2", category: "Appearance"});
 function setcolor2(){
     if (arguments.length == 4) {
         color_wheel(2, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2485,12 +2402,7 @@ function setcolor2(){
 }
 setcolor2.local = 1;
 
-declareattribute("color_3", "getcolor3", "setcolor3", 1, {style: "rgba", label: "Color 3", category: "Appearance"});
-function getcolor3() {
-	return color_3;
-}
-getcolor3.local = 1;
-
+declareattribute("color_3", null, "setcolor3", 1, {style: "rgba", label: "Color 3", category: "Appearance"});
 function setcolor3(){
     if (arguments.length == 4) {
         color_wheel(3, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2502,12 +2414,7 @@ function setcolor3(){
 }
 setcolor3.local = 1;
 
-declareattribute("color_4", "getcolor4", "setcolor4", 1, {style: "rgba", label: "Color 4", category: "Appearance"});
-function getcolor4() {
-	return color_4;
-}
-getcolor4.local = 1;
-
+declareattribute("color_4", null, "setcolor4", 1, {style: "rgba", label: "Color 4", category: "Appearance"});
 function setcolor4(){
     if (arguments.length == 4) {
         color_wheel(4, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2519,12 +2426,7 @@ function setcolor4(){
 }
 setcolor4.local = 1;
 
-declareattribute("color_5", "getcolor5", "setcolor5", 1, {style: "rgba", label: "Color 5", category: "Appearance"});
-function getcolor5() {
-	return color_5;
-}
-getcolor5.local = 1;
-
+declareattribute("color_5", null, "setcolor5", 1, {style: "rgba", label: "Color 5", category: "Appearance"});
 function setcolor5(){
     if (arguments.length == 4) {
         color_wheel(5, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2536,12 +2438,7 @@ function setcolor5(){
 }
 setcolor5.local = 1;
 
-declareattribute("color_6", "getcolor6", "setcolor6", 1, {style: "rgba", label: "Color 6", category: "Appearance"});
-function getcolor6() {
-	return color_6;
-}
-getcolor6.local = 1;
-
+declareattribute("color_6", null, "setcolor6", 1, {style: "rgba", label: "Color 6", category: "Appearance"});
 function setcolor6(){
     if (arguments.length == 4) {
         color_wheel(6, arguments[0], arguments[1], arguments[2], arguments[3]);
@@ -2553,12 +2450,7 @@ function setcolor6(){
 }
 setcolor6.local = 1;
 
-declareattribute("send_name", "getsendname", "setsendname", 1, {type: "symbol", label: "Send Dictionary To"});
-function getsendname() {
-	return send_name;
-}
-getsendname.local = 1;
-
+declareattribute("send_name", null, "setsendname", 1, {type: "symbol", label: "Send Dictionary To"});
 function setsendname(){
     if (arguments.length > 0) {
         send_name = arguments[0];
@@ -2568,12 +2460,7 @@ function setsendname(){
 }
 setsendname.local = 1;
 
-declareattribute("unique_names", "getunique_names", "setunique_names", 1, {style: "onoff", label: "Force Unique Names"});
-function getunique_names() {
-	return unique_names;
-}
-getunique_names.local = 1;
-
+declareattribute("unique_names", null, "setunique_names", 1, {style: "onoff", label: "Force Unique Names"});
 function setunique_names(v){
     unique_names = v > 0;
 }
@@ -2581,12 +2468,7 @@ setunique_names.local = 1;
 
 declareattribute("autoname", null, null, 1, { style: "onoff", label: "Autoname new presets" });
 
-declareattribute("use_uid", "getuse_uid", "setuse_uid", 1, {style: "onoff", label: "Use UID"});
-function getuse_uid() {
-	return use_uid;
-}
-getuse_uid.local = 1;
-
+declareattribute("use_uid", null, "setuse_uid", 1, {style: "onoff", label: "Use UID"});
 function setuse_uid(v){
     var new_val = v == 1 ? 1 : 0;
     if (new_val != use_uid && new_val == 1) {
@@ -2615,23 +2497,13 @@ function settimestamp(v){
 }
 settimestamp.local = 1;
 
-declareattribute("recall_passthrough", "getrecall_passthrough", "setrecall_passthrough", 1, {style: "onoff", label: "Recall Passthrough"});
-function getrecall_passthrough() {
-	return recall_passthrough;
-}
-getrecall_passthrough.local = 1;
-
+declareattribute("recall_passthrough", null, "setrecall_passthrough", 1, {style: "onoff", label: "Recall Passthrough"});
 function setrecall_passthrough(v){
     recall_passthrough = v > 0;
 }
 setrecall_passthrough.local = 1;
 
-declareattribute("ui_rename", "getui_rename", "setui_rename", 1, {style: "onoff", label: "Rename In UI"});
-function getui_rename() {
-	return ui_rename;
-}
-getui_rename.local = 1;
-
+declareattribute("ui_rename", null, "setui_rename", 1, {style: "onoff", label: "Rename In UI"});
 function setui_rename(v){
     ui_rename = v > 0;
     if (ui_rename) {
@@ -2640,12 +2512,7 @@ function setui_rename(v){
 }
 setui_rename.local = 1;
 
-declareattribute("poll_edited", "getpoll_edited", "setpoll_edited", 1, {type: "float", min: 0, label: "Poll Edited State"});
-function getpoll_edited() {
-	return poll_edited;
-}
-getpoll_edited.local = 1;
-
+declareattribute("poll_edited", null, "setpoll_edited", 1, {type: "float", min: 0, label: "Poll Edited State"});
 function setpoll_edited(v){
     poll_edited = v == 0 ? 0 : Math.max(0.1, Math.abs(v));
     if (poll_edited > 0) {
@@ -2676,12 +2543,7 @@ function do_poll_edited() {
 }
 do_poll_edited.local = 1;
 
-declareattribute("edited_color", "getedited_color", "setedited_color", 1, {style: "rgba", label: "Edited Dot Color", category: "Appearance"});
-function getedited_color() {
-	return edited_color;
-}
-getedited_color.local = 1;
-
+declareattribute("edited_color", null, "setedited_color", 1, {style: "rgba", label: "Edited Dot Color", category: "Appearance"});
 function setedited_color(){
     if (arguments.length == 4) {
         edited_color = [arguments[0], arguments[1], arguments[2], arguments[3]];
@@ -2701,12 +2563,7 @@ function edited(v) {
     }
 }
 
-declareattribute("nbslot_edit", "getnbslot_edit", "setnbslot_edit", 1, {style: "onoff", label: "Add/remove rows of presets"});
-function getnbslot_edit() {
-	return nbslot_edit;
-}
-getnbslot_edit.local = 1;
-
+declareattribute("nbslot_edit", null, "setnbslot_edit", 1, {style: "onoff", label: "Add/remove rows of presets"});
 function setnbslot_edit(v){
     nbslot_edit = v > 0;
     y_offset = 0;
