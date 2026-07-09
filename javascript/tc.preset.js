@@ -319,13 +319,14 @@ function calc_rows_columns(src) {
                 slots[cur].set_geom(left, top, right, bottom);
             } else {
                 // Empty slot, possibly not initialized (if above slots_highest)
-                slots[cur] = new slot(left, top, right, bottom);
+                slots[cur] = new slot();
+                slots[cur].set_geom(left, top, right, bottom);
             }
             
         }
     }
 	
-    if (slots_count_display < slots_highest) {
+    if (slots.length < slots_highest ) {
         for (var i = slots_count_display + 1; i <= slots_highest; i++) {
             slots[i] = new slot();
         }
@@ -1497,7 +1498,6 @@ find_pattrstorage.local = 1;
 
 function to_pattrstorage() {
     if (pattrstorage_obj != null) {
-        // post('sending to pattrstorage: ', arrayfromargs(arguments), '\n');
         pattrstorage_obj.message(arrayfromargs(arguments));
     }
 }
@@ -1600,7 +1600,6 @@ function update_filled_slots_dict() {
             tmp_dict['color_custom'] = slot.color_custom;  // Preset color (when color_mode = 3)
         }
         if (use_uid) tmp_dict['uid'] = slot.uid; // Preset uid (unique and persistent across preset renaming, overwriting and moving) Useful for keeping track of preset across changes
-        // post('updating by_uid', slot.uid, '\n');
         if (timestamp) {
             tmp_dict['created'] = slot.created;
             tmp_dict['modified'] = slot.modified;
@@ -1971,12 +1970,15 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                 var nearby_slots = [];
                 var max_dist = 0;
                 for (var i = 0; i < filled_slots.length; i++) {
-                    var s_pos = slots[filled_slots[i]].center;
-                    var dist_from_mouse = Math.sqrt((x - s_pos.x) * (x - s_pos.x) + (y - s_pos.y) * (y - s_pos.y)) / (slot_size + spacing);
-                    if (dist_from_mouse < drag_interp_radius) {
-                        var interp_factor = 1 - (dist_from_mouse / drag_interp_radius);
-                        nearby_slots.push(filled_slots[i] + interp_factor);
-                        if (max_dist < dist_from_mouse) max_dist = dist_from_mouse;
+                    // Interpolating only through displayed slots;
+                    if (filled_slots[i] <= slots_count_display) {
+                        var s_pos = slots[filled_slots[i]].center;
+                        var dist_from_mouse = Math.sqrt((x - s_pos.x) * (x - s_pos.x) + (y - s_pos.y) * (y - s_pos.y)) / (slot_size + spacing);
+                        if (dist_from_mouse < drag_interp_radius) {
+                            var interp_factor = 1 - (dist_from_mouse / drag_interp_radius);
+                            nearby_slots.push(filled_slots[i] + interp_factor);
+                            if (max_dist < dist_from_mouse) max_dist = dist_from_mouse;
+                        }
                     }
                 }
                 if (nearby_slots.length) {
