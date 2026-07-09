@@ -582,7 +582,7 @@ function paint()
         // }
 
         // Hovered slot
-        if ((last_hovered > -1) && ((drag_mode < 2) || (drag_mode === 2 && !is_dragging))) {
+        if ((last_hovered > -1) && ((drag_mode < 2) || (drag_mode >= 2 && !is_dragging))) {
 
             // Slot border
             if (slots[last_hovered].filled === false || (slots[last_hovered].filled === true && !control_hold)) {
@@ -1921,7 +1921,9 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
             }
             // last_hovered retains the slot where the drag began
             if (is_dragging === 2 && last_hovered > -1) {
-                var relative_dist_from_start = (x - slots[last_hovered].center.x) / (slot_size + spacing);
+                var relative_dist_from_start =
+                    layout === 0 ? (x - slots[last_hovered].center.x) / (slot_size + spacing) :
+                    (y - slots[last_hovered].center.y) / (slot_size + spacing);
                 var current_slot = Math.max(Math.round(last_hovered - 0.5 + relative_dist_from_start), 1);
                 var prev_filled_slot = -1;
                 var next_filled_slot = -1;
@@ -1975,7 +1977,8 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                         var s_pos = slots[filled_slots[i]].center;
                         var dist_from_mouse = Math.sqrt((x - s_pos.x) * (x - s_pos.x) + (y - s_pos.y) * (y - s_pos.y)) / (slot_size + spacing);
                         if (dist_from_mouse < drag_interp_radius) {
-                            var interp_factor = 1 - (dist_from_mouse / drag_interp_radius);
+                            var interp_factor = Math.pow((dist_from_mouse / drag_interp_radius) - 1, 4)
+                            // var interp_factor = 1 - (dist_from_mouse / drag_interp_radius);
                             nearby_slots.push(filled_slots[i] + interp_factor);
                             if (max_dist < dist_from_mouse) max_dist = dist_from_mouse;
                         }
