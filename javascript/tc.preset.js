@@ -88,6 +88,7 @@ var autoname = false;       // Automatically name new presets when created as "P
 var use_uid = 0;            // Generating UID for each presets when enabled. Requires a [pattr preset_metadata]
 var timestamp = false;      // Generates a `created` and `modified` timestamp for each preset. Requires use_uid enabled
 var recall_passthrough = true;  // By default (true), clicking a slot sends a recall message directly to [pattrstorage], and the jsui left outlet outputs a recall message once the recall is done. When disabled, clicking a slot will send a recall message straight from the jsui left outlet, so it's up to the user to forward the message to pattrstorage. It can be usefull for triggering interpolations with custom logic.
+var store_passthrough = true;   // Same as recall_passthrough but for store messages triggered with shift+click. The store message message has to be routed back into [tc.preset] to be effective.
 var ui_rename = false;       // Use the attached textedit, if any, to edit slot names directly in the JSUI frame when clicking a slot while holding the control key. When disabled, the textedit remains untouched but gets focused when clicking a slot while holding the control key.
 var poll_edited = 0;        // If >0, check if current preset is edited every X seconds defined by the variable value.
 var nbslot_edit = true;     // If nbslot_edit and scrollable are enabled, the last two visible slots are replaced by buttons to add or remove lines of slot.
@@ -1256,8 +1257,10 @@ function store(v) {
         if (!(ignore_slot_zero && v === 0)) {
             set_active_slot(v);
         }
-        
-        outlet(0, "store", v);
+
+        if (store_passthrough) {
+            outlet(0, "store", v);
+        }
         if (v) {
             // We writagain only if stored preset is > 0
             trigger_writeagain();
@@ -1816,7 +1819,11 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
             // if recall_passthrough == true, send the recall message to pattrstorage directly
             outlet(0, 'recall', last_hovered);
         } else if (output == "store") {
-            store(last_hovered);
+            if (store_passthrough) {
+                store(last_hovered);
+            } else {
+                outlet(0, 'store', last_hovered);
+            }
         } else if (output == "select") {
             select(last_hovered);
             // mgraphics.redraw();
@@ -2505,6 +2512,12 @@ function setrecall_passthrough(v){
     recall_passthrough = v > 0;
 }
 setrecall_passthrough.local = 1;
+
+declareattribute("store_passthrough", null, "setstore_passthrough", 1, {style: "onoff", label: "Store Passthrough"});
+function setstore_passthrough(v){
+    store_passthrough = v > 0;
+}
+setstore_passthrough.local = 1;
 
 declareattribute("ui_rename", null, "setui_rename", 1, {style: "onoff", label: "Rename In UI"});
 function setui_rename(v){
