@@ -82,6 +82,7 @@ var select_mode = 0;        // 0: single click to select and recall the slot. 1:
 var click_mode = 0;         // Sets the behavior of single clicks. 0: normal (recall), 1: select, 2: store, 3: delete
 var drag_mode = 1;          // Sets the behavior of drag operations. 0: disabled, 1: move preset (default), 2: in-line interpolation, 3: zone interpolation
 var drag_interp_radius = 1; // In use with drag_mode 3
+var interp_rolloff = 6;
 var send_name = "none";     // The global name to send presets dict name to (received by the [receive] object)
 var unique_names = false;   // When enabled, force names to be unique when renaming slots by appending "bis" to them. Gets applied only to subsequently renamed presets.
 var autoname = false;       // Automatically name new presets when created as "Preset" followed by the slot id
@@ -1978,21 +1979,30 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
             if (is_dragging === 3 && last_hovered > -1) {
                 var nearby_slots = [];
                 var max_dist = 0;
+                var pow = interp_rolloff / (20 * Math.log(2) / Math.log(10));
+                var accum = 0;
                 for (var i = 0; i < filled_slots.length; i++) {
                     // Interpolating only through displayed slots;
                     if (filled_slots[i] <= slots_count_display) {
                         var s_pos = slots[filled_slots[i]].center;
                         var dist_from_mouse = Math.sqrt((x - s_pos.x) * (x - s_pos.x) + (y - s_pos.y) * (y - s_pos.y)) / (slot_size + spacing);
                         if (dist_from_mouse < drag_interp_radius) {
-                            var interp_factor = Math.pow((dist_from_mouse / drag_interp_radius) - 1, 4)
-                            // var interp_factor = 1 - (dist_from_mouse / drag_interp_radius);
-                            nearby_slots.push(filled_slots[i] + interp_factor);
-                            if (max_dist < dist_from_mouse) max_dist = dist_from_mouse;
+                            var interp_factor = 1 / Math.pow(dist_from_mouse + 0.00001, pow);
+                            nearby_slots.push([filled_slots[i], interp_factor]);
+                            accum += Math.pow(interp_factor, 2);
+                            // var interp_factor = Math.min(Math.pow(((dist_from_mouse / drag_interp_radius) - 1), 4), 0.9999999);
+                            // nearby_slots.push(filled_slots[i] + interp_factor);
+                            // if (max_dist < dist_from_mouse) max_dist = dist_from_mouse;
                         }
                     }
                 }
+                accum = 1 / Math.sqrt(accum);
+                for (var i = 0; i < nearby_slots.length; i++) {
+                    nearby_slots[i] = nearby_slots[i][0] + Math.min(nearby_slots[i][1] * accum, 0.9999999);
+                }
                 if (nearby_slots.length) {
                     var args = ["recallmulti"].concat(nearby_slots);
+                    // .apply(nul, args): ES5 notation for spread operator ...args
                     to_pattrstorage.apply(null, args);
                     recallmulti.apply(null, nearby_slots);
                 }
