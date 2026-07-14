@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 344.0, 246.0, 899.0, 646.0 ],
+		"rect" : [ 344.0, 246.0, 904.0, 646.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -43,6 +43,410 @@
 		"integercoordinates" : 1,
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-2",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"patcher" : 					{
+						"fileversion" : 1,
+						"appversion" : 						{
+							"major" : 8,
+							"minor" : 6,
+							"revision" : 5,
+							"architecture" : "x64",
+							"modernui" : 1
+						}
+,
+						"classnamespace" : "box",
+						"rect" : [ 344.0, 272.0, 904.0, 620.0 ],
+						"bglocked" : 0,
+						"openinpresentation" : 0,
+						"default_fontsize" : 12.0,
+						"default_fontface" : 0,
+						"default_fontname" : "Arial",
+						"gridonopen" : 1,
+						"gridsize" : [ 15.0, 15.0 ],
+						"gridsnaponopen" : 1,
+						"objectsnaponopen" : 1,
+						"statusbarvisible" : 2,
+						"toolbarvisible" : 1,
+						"lefttoolbarpinned" : 0,
+						"toptoolbarpinned" : 0,
+						"righttoolbarpinned" : 0,
+						"bottomtoolbarpinned" : 0,
+						"toolbars_unpinned_last_save" : 0,
+						"tallnewobj" : 0,
+						"boxanimatetime" : 200,
+						"enablehscroll" : 1,
+						"enablevscroll" : 1,
+						"devicewidth" : 0.0,
+						"description" : "",
+						"digest" : "",
+						"tags" : "",
+						"style" : "",
+						"subpatcher_template" : "",
+						"showontab" : 1,
+						"assistshowspatchername" : 0,
+						"integercoordinates" : 1,
+						"boxes" : [ 							{
+								"box" : 								{
+									"bubble" : 1,
+									"bubblepoint" : 0.0,
+									"id" : "obj-16",
+									"linecount" : 2,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 203.0, 499.0, 207.0, 37.0 ],
+									"text" : "Click and drag around to recall multiple presets with interpolation!"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"hidden" : 1,
+									"id" : "obj-15",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 186.0, 180.0, 89.0, 22.0 ],
+									"text" : "loadmess set 2"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"hidden" : 1,
+									"id" : "obj-13",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 44.0, 70.0, 89.0, 22.0 ],
+									"text" : "loadmess set 2"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-9",
+									"maxclass" : "tab",
+									"mode" : 1,
+									"numinlets" : 1,
+									"numoutlets" : 3,
+									"outlettype" : [ "int", "", "" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 44.0, 98.0, 180.0, 24.0 ],
+									"tabs" : [ "off", "move", "interpolate" ]
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-8",
+									"maxclass" : "tab",
+									"numinlets" : 1,
+									"numoutlets" : 3,
+									"outlettype" : [ "int", "", "" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 186.0, 209.0, 150.0, 26.0 ],
+									"tabs" : [ "off", "in-line", "multi" ]
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-14",
+									"linecount" : 9,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 545.0, 367.0, 274.0, 127.0 ],
+									"text" : "If recall_passthrough is disabled, the recall/recallmulti messages are output from tc.preset leftmost outlet without triggering any recall. This allows to trigger custom logic before the interpolation happens.\nSimple recall messages can then be re-routed directly to pattrstorage, while recallmulti messages (happening with interp_mode 2) have to be routed to both pattrstorage and tc.preset."
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"bubble" : 1,
+									"id" : "obj-12",
+									"linecount" : 6,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 338.0, 174.0, 463.0, 91.0 ],
+									"text" : "interp_mode defines the way interpolation through dragging behaves:\nIn mode 0, interpolating by dragging is disabled\nIn mode 1, interpolation happens across adjacent presets\nIn mode 2, interpolation happens with any filled preset around the mouse. Presets are weighted by a gaussian distribution of their distance from the mouse cursor. You can select the \"range\" of interpolated presets by changing interp_multi_radius"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"bubble" : 1,
+									"id" : "obj-11",
+									"linecount" : 6,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 229.0, 65.0, 485.0, 91.0 ],
+									"text" : "With drag_mode you can chose the behavior of a click+drag on a filled slot:\n0: Nothing happens\n1: Move preset (default)\n2: Interpolate through presets, according to interp_mode\n\nWhen mode 1 is selected, you can hold option|alt to access mode 2, and vice versa."
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"dontreplace" : 1,
+									"id" : "obj-3",
+									"maxclass" : "message",
+									"numinlets" : 2,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 10.0, 514.0, 107.0, 22.0 ]
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-38",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 3,
+									"outlettype" : [ "", "", "" ],
+									"patching_rect" : [ 286.0, 378.0, 40.0, 22.0 ],
+									"restore" : [ -0.491674737222271, -0.13386532069175, -0.202102600162062, 0.112940503294379, 0.61887056400379, 0.375818456094497, 0.691588247313825, 0.526121526460706, 0.431649499259424, -0.09358295094112, -0.001737060618565, -0.460217681717535, -0.458843066739609, -0.561134533604532, -0.46144612532222, -0.206967618908832 ],
+									"saved_object_attributes" : 									{
+										"parameter_enable" : 0,
+										"parameter_mappable" : 0
+									}
+,
+									"text" : "pattr",
+									"varname" : "u099005226"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-34",
+									"maxclass" : "multislider",
+									"numinlets" : 1,
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 297.0, 405.0, 136.0, 78.0 ],
+									"size" : 16,
+									"varname" : "multislider"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"border" : 0,
+									"embedstate" : [ [ "bgcolor", 0.125, 0.125, 0.125, 1 ], [ "fontname", "Arial" ], [ "pattrstorage", "tcpreset_help" ], [ "interp_mode", 2 ], [ "timestamp", 0 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "menu_mode", 0 ], [ "ignoreslotzero", 0 ], [ "autoname", 0 ], [ "select_mode", 0 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1 ], [ "poll_edited", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "spacing", 4 ], [ "unique_names", 0 ], [ "display_interp", 1 ], [ "slot_round", 0 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1 ], [ "ui_rename", 0 ], [ "interp_multi_radius", 2 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "send_name", "none" ], [ "use_uid", 0 ], [ "bubblesize", 32 ], [ "scrollable", 0 ], [ "store_passthrough", 1 ], [ "drag_mode", 2 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "text_color", 0.85, 0.85, 0.85, 1 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "recall_passthrough", 1 ], [ "margin", 4 ], [ "click_mode", 1 ], [ "min_rows", 10 ], [ "color_mode", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 13 ], [ "nbslot_edit", 1 ], [ "layout", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "autowriteagain", 0 ] ],
+									"filename" : "tc.preset.js",
+									"id" : "obj-10",
+									"maxclass" : "jsui",
+									"numinlets" : 1,
+									"numoutlets" : 5,
+									"outlettype" : [ "", "", "", "", "" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 10.0, 378.0, 257.0, 112.0 ]
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-1",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 10.0, 342.0, 229.0, 22.0 ],
+									"saved_object_attributes" : 									{
+										"client_rect" : [ 100, 172, 596, 755 ],
+										"parameter_enable" : 0,
+										"parameter_mappable" : 0,
+										"storage_rect" : [ 365, 44, 816, 172 ]
+									}
+,
+									"text" : "pattrstorage tcpreset_help @savemode 0",
+									"varname" : "tcpreset_help"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"border" : 0,
+									"filename" : "helpname.js",
+									"id" : "obj-4",
+									"ignoreclick" : 1,
+									"jsarguments" : [ "tc.preset" ],
+									"maxclass" : "jsui",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 10.0, 10.0, 188.288009643554688, 57.599853515625 ]
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"attr" : "interp_mode",
+									"id" : "obj-5",
+									"lock" : 1,
+									"maxclass" : "attrui",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 186.0, 242.0, 116.0, 22.0 ],
+									"text_width" : 87.0
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"attr" : "interp_multi_radius",
+									"id" : "obj-6",
+									"lock" : 1,
+									"maxclass" : "attrui",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 630.0, 267.0, 171.0, 22.0 ],
+									"text_width" : 121.0
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"attr" : "drag_mode",
+									"id" : "obj-7",
+									"lock" : 1,
+									"maxclass" : "attrui",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 44.0, 130.0, 113.0, 22.0 ],
+									"text_width" : 81.0
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"attr" : "recall_passthrough",
+									"id" : "obj-2",
+									"lock" : 1,
+									"maxclass" : "attrui",
+									"numinlets" : 1,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"parameter_enable" : 0,
+									"patching_rect" : [ 545.0, 342.0, 150.0, 22.0 ],
+									"text_width" : 118.0
+								}
+
+							}
+ ],
+						"lines" : [ 							{
+								"patchline" : 								{
+									"destination" : [ "obj-10", 0 ],
+									"source" : [ "obj-1", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-3", 1 ],
+									"source" : [ "obj-10", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-9", 0 ],
+									"hidden" : 1,
+									"source" : [ "obj-13", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-8", 0 ],
+									"hidden" : 1,
+									"source" : [ "obj-15", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-10", 0 ],
+									"source" : [ "obj-2", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-34", 0 ],
+									"source" : [ "obj-38", 1 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-10", 0 ],
+									"source" : [ "obj-5", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-10", 0 ],
+									"source" : [ "obj-6", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-10", 0 ],
+									"source" : [ "obj-7", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-5", 0 ],
+									"source" : [ "obj-8", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-7", 0 ],
+									"source" : [ "obj-9", 0 ]
+								}
+
+							}
+ ]
+					}
+,
+					"patching_rect" : [ 462.0, 27.0, 84.0, 22.0 ],
+					"saved_object_attributes" : 					{
+						"description" : "",
+						"digest" : "",
+						"globalpatchername" : "",
+						"tags" : ""
+					}
+,
+					"text" : "p interpolation",
+					"varname" : "behavior[1]"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-19",
 					"maxclass" : "newobj",
 					"numinlets" : 0,
@@ -58,7 +462,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 899.0, 620.0 ],
+						"rect" : [ 0.0, 26.0, 904.0, 620.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -92,7 +496,7 @@
 						"lines" : [  ]
 					}
 ,
-					"patching_rect" : [ 756.0, 25.7999267578125, 50.0, 22.0 ],
+					"patching_rect" : [ 816.0, 27.0, 50.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -139,7 +543,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 899.0, 620.0 ],
+						"rect" : [ 0.0, 26.0, 904.0, 620.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -666,7 +1070,7 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "spacing", 4 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "min_rows", 10 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "nbslot_edit", 1 ], [ "send_name", "none" ], [ "layout", 0 ], [ "use_uid", 0 ], [ "timestamp", 0 ], [ "autoname", 0 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "scrollable", 0 ], [ "margin", 4 ], [ "ui_rename", 0 ], [ "fontsize", 13 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "bubblesize", 14 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "display_interp", 1 ], [ "poll_edited", 0 ], [ "slot_round", 0 ], [ "fontname", "Arial" ], [ "pattrstorage", "tcpreset_help" ], [ "color_mode", 0 ], [ "click_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "menu_mode", 0 ], [ "select_mode", 0 ], [ "ignoreslotzero", 1 ], [ "unique_names", 0 ], [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "autowriteagain", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ] ],
+									"embedstate" : [ [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "fontname", "Arial" ], [ "pattrstorage", "tcpreset_help" ], [ "interp_mode", 1 ], [ "timestamp", 0 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "menu_mode", 0 ], [ "ignoreslotzero", 1 ], [ "autoname", 0 ], [ "select_mode", 0 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "poll_edited", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "spacing", 4 ], [ "unique_names", 0 ], [ "display_interp", 1 ], [ "slot_round", 0 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "ui_rename", 0 ], [ "interp_multi_radius", 1.5 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "send_name", "none" ], [ "use_uid", 0 ], [ "bubblesize", 14 ], [ "scrollable", 0 ], [ "store_passthrough", 1 ], [ "drag_mode", 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "recall_passthrough", 1 ], [ "margin", 4 ], [ "click_mode", 0 ], [ "min_rows", 10 ], [ "color_mode", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 13 ], [ "nbslot_edit", 1 ], [ "layout", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "autowriteagain", 0 ] ],
 									"filename" : "tc.preset.js",
 									"id" : "obj-10",
 									"maxclass" : "jsui",
@@ -952,7 +1356,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 344.0, 272.0, 899.0, 620.0 ],
+						"rect" : [ 0.0, 26.0, 904.0, 620.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -1520,7 +1924,7 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "spacing", 4 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "recall_passthrough", 0 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "min_rows", 10 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "nbslot_edit", 1 ], [ "send_name", "none" ], [ "layout", 0 ], [ "use_uid", 0 ], [ "timestamp", 0 ], [ "autoname", 0 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "scrollable", 0 ], [ "margin", 4 ], [ "ui_rename", 1 ], [ "fontsize", 13 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "bubblesize", 14 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "display_interp", 1 ], [ "poll_edited", 1 ], [ "slot_round", 0 ], [ "fontname", "Arial" ], [ "pattrstorage", "tcpreset_help" ], [ "color_mode", 0 ], [ "click_mode", 1 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "menu_mode", 0 ], [ "select_mode", 0 ], [ "ignoreslotzero", 1 ], [ "unique_names", 0 ], [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "autowriteagain", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ] ],
+									"embedstate" : [ [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "fontname", "Arial" ], [ "pattrstorage", "tcpreset_help" ], [ "interp_mode", 1 ], [ "timestamp", 0 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "menu_mode", 0 ], [ "ignoreslotzero", 1 ], [ "autoname", 0 ], [ "select_mode", 0 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "poll_edited", 1 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "spacing", 4 ], [ "unique_names", 0 ], [ "display_interp", 1 ], [ "slot_round", 0 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "ui_rename", 1 ], [ "interp_multi_radius", 1.5 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "send_name", "none" ], [ "use_uid", 0 ], [ "bubblesize", 14 ], [ "scrollable", 0 ], [ "store_passthrough", 1 ], [ "drag_mode", 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "recall_passthrough", 0 ], [ "margin", 4 ], [ "click_mode", 1 ], [ "min_rows", 10 ], [ "color_mode", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 13 ], [ "nbslot_edit", 1 ], [ "layout", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "autowriteagain", 0 ] ],
 									"filename" : "tc.preset.js",
 									"id" : "obj-10",
 									"maxclass" : "jsui",
@@ -1575,7 +1979,7 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 10.0, 101.0, 250.0, 87.0 ],
+									"patching_rect" : [ 10.0, 101.0, 254.0, 87.0 ],
 									"text" : "Click mode sets the behavior of single clicks. In Select mode, a single click selects a stored preset without recalling it. A double click recalls the preset. It allows to drag it, set its name and lock state while keeping the last recalled preset active."
 								}
 
@@ -1913,7 +2317,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 899.0, 620.0 ],
+						"rect" : [ 0.0, 26.0, 904.0, 620.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -2043,7 +2447,7 @@
 , 											{
 												"box" : 												{
 													"border" : 0,
-													"embedstate" : [ [ "spacing", 4 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "min_rows", 10 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "nbslot_edit", 1 ], [ "send_name", "none" ], [ "layout", 1 ], [ "use_uid", 0 ], [ "timestamp", 0 ], [ "autoname", 0 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "scrollable", 1 ], [ "margin", 4 ], [ "ui_rename", 1 ], [ "fontsize", 13 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "bubblesize", 14 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "display_interp", 1 ], [ "poll_edited", 0 ], [ "slot_round", 0 ], [ "fontname", "Arial" ], [ "pattrstorage", "mypat" ], [ "color_mode", 0 ], [ "click_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "menu_mode", 0 ], [ "select_mode", 0 ], [ "ignoreslotzero", 1 ], [ "unique_names", 0 ], [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "autowriteagain", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ] ],
+													"embedstate" : [ [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "fontname", "Arial" ], [ "pattrstorage", "mypat" ], [ "interp_mode", 1 ], [ "timestamp", 0 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "menu_mode", 0 ], [ "ignoreslotzero", 1 ], [ "autoname", 0 ], [ "select_mode", 0 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "poll_edited", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "spacing", 4 ], [ "unique_names", 0 ], [ "display_interp", 1 ], [ "slot_round", 0 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "ui_rename", 1 ], [ "interp_multi_radius", 1.5 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "send_name", "none" ], [ "use_uid", 0 ], [ "bubblesize", 14 ], [ "scrollable", 1 ], [ "store_passthrough", 1 ], [ "drag_mode", 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "recall_passthrough", 1 ], [ "margin", 4 ], [ "click_mode", 0 ], [ "min_rows", 10 ], [ "color_mode", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 13 ], [ "nbslot_edit", 1 ], [ "layout", 1 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "autowriteagain", 0 ] ],
 													"filename" : "tc.preset.js",
 													"id" : "obj-10",
 													"maxclass" : "jsui",
@@ -2185,7 +2589,7 @@
 , 											{
 												"box" : 												{
 													"border" : 0,
-													"embedstate" : [ [ "spacing", 4 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "min_rows", 10 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "nbslot_edit", 1 ], [ "send_name", "none" ], [ "layout", 0 ], [ "use_uid", 0 ], [ "timestamp", 0 ], [ "autoname", 0 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "scrollable", 0 ], [ "margin", 4 ], [ "ui_rename", 0 ], [ "fontsize", 13 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "bubblesize", 14 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "display_interp", 1 ], [ "poll_edited", 0 ], [ "slot_round", 0 ], [ "fontname", "Arial" ], [ "pattrstorage", "mypat" ], [ "color_mode", 0 ], [ "click_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "menu_mode", 0 ], [ "select_mode", 0 ], [ "ignoreslotzero", 1 ], [ "unique_names", 0 ], [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "autowriteagain", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ] ],
+													"embedstate" : [ [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "fontname", "Arial" ], [ "pattrstorage", "mypat" ], [ "interp_mode", 1 ], [ "timestamp", 0 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "menu_mode", 0 ], [ "ignoreslotzero", 1 ], [ "autoname", 0 ], [ "select_mode", 0 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "poll_edited", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "spacing", 4 ], [ "unique_names", 0 ], [ "display_interp", 1 ], [ "slot_round", 0 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "ui_rename", 0 ], [ "interp_multi_radius", 1.5 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "send_name", "none" ], [ "use_uid", 0 ], [ "bubblesize", 14 ], [ "scrollable", 0 ], [ "store_passthrough", 1 ], [ "drag_mode", 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "recall_passthrough", 1 ], [ "margin", 4 ], [ "click_mode", 0 ], [ "min_rows", 10 ], [ "color_mode", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 13 ], [ "nbslot_edit", 1 ], [ "layout", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "autowriteagain", 0 ] ],
 													"filename" : "tc.preset.js",
 													"id" : "obj-2",
 													"maxclass" : "jsui",
@@ -2820,7 +3224,7 @@
 , 											{
 												"box" : 												{
 													"border" : 0,
-													"embedstate" : [ [ "spacing", 4 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "recall_passthrough", 0 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "min_rows", 10 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "nbslot_edit", 1 ], [ "send_name", "none" ], [ "layout", 0 ], [ "use_uid", 0 ], [ "timestamp", 0 ], [ "autoname", 0 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "scrollable", 0 ], [ "margin", 4 ], [ "ui_rename", 1 ], [ "fontsize", 13 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "bubblesize", 14 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "display_interp", 1 ], [ "poll_edited", 0 ], [ "slot_round", 0 ], [ "fontname", "Arial" ], [ "pattrstorage", "mypat" ], [ "color_mode", 0 ], [ "click_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "menu_mode", 0 ], [ "select_mode", 0 ], [ "ignoreslotzero", 1 ], [ "unique_names", 0 ], [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "autowriteagain", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ] ],
+													"embedstate" : [ [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "fontname", "Arial" ], [ "pattrstorage", "mypat" ], [ "interp_mode", 1 ], [ "timestamp", 0 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "menu_mode", 0 ], [ "ignoreslotzero", 1 ], [ "autoname", 0 ], [ "select_mode", 0 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "poll_edited", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "spacing", 4 ], [ "unique_names", 0 ], [ "display_interp", 1 ], [ "slot_round", 0 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "ui_rename", 1 ], [ "interp_multi_radius", 1.5 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "send_name", "none" ], [ "use_uid", 0 ], [ "bubblesize", 14 ], [ "scrollable", 0 ], [ "store_passthrough", 1 ], [ "drag_mode", 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "recall_passthrough", 0 ], [ "margin", 4 ], [ "click_mode", 0 ], [ "min_rows", 10 ], [ "color_mode", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 13 ], [ "nbslot_edit", 1 ], [ "layout", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "autowriteagain", 0 ] ],
 													"filename" : "tc.preset.js",
 													"id" : "obj-10",
 													"maxclass" : "jsui",
@@ -2929,7 +3333,7 @@
 						"lines" : [  ]
 					}
 ,
-					"patching_rect" : [ 687.0, 25.7999267578125, 63.0, 22.0 ],
+					"patching_rect" : [ 749.0, 27.0, 63.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -2959,7 +3363,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 899.0, 620.0 ],
+						"rect" : [ 0.0, 26.0, 904.0, 620.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -3119,7 +3523,7 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "spacing", 4 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "min_rows", 10 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "nbslot_edit", 1 ], [ "send_name", "none" ], [ "layout", 1 ], [ "use_uid", 0 ], [ "timestamp", 0 ], [ "autoname", 0 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "scrollable", 1 ], [ "margin", 4 ], [ "ui_rename", 0 ], [ "fontsize", 13 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "bubblesize", 14 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "display_interp", 1 ], [ "poll_edited", 0 ], [ "slot_round", 0 ], [ "fontname", "Arial" ], [ "pattrstorage", "tcpreset_help" ], [ "color_mode", 0 ], [ "click_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "menu_mode", 0 ], [ "select_mode", 0 ], [ "ignoreslotzero", 1 ], [ "unique_names", 0 ], [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "autowriteagain", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ] ],
+									"embedstate" : [ [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "fontname", "Arial" ], [ "pattrstorage", "tcpreset_help" ], [ "interp_mode", 1 ], [ "timestamp", 0 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "menu_mode", 0 ], [ "ignoreslotzero", 1 ], [ "autoname", 0 ], [ "select_mode", 0 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "poll_edited", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "spacing", 4 ], [ "unique_names", 0 ], [ "display_interp", 1 ], [ "slot_round", 0 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "ui_rename", 0 ], [ "interp_multi_radius", 1.5 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "send_name", "none" ], [ "use_uid", 0 ], [ "bubblesize", 14 ], [ "scrollable", 1 ], [ "store_passthrough", 1 ], [ "drag_mode", 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "recall_passthrough", 1 ], [ "margin", 4 ], [ "click_mode", 0 ], [ "min_rows", 10 ], [ "color_mode", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 13 ], [ "nbslot_edit", 1 ], [ "layout", 1 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "autowriteagain", 0 ] ],
 									"filename" : "tc.preset.js",
 									"id" : "obj-10",
 									"maxclass" : "jsui",
@@ -3414,7 +3818,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 468.0, 26.7999267578125, 82.0, 22.0 ],
+					"patching_rect" : [ 551.0, 27.0, 82.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -3444,7 +3848,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 899.0, 620.0 ],
+						"rect" : [ 0.0, 26.0, 904.0, 620.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -5085,7 +5489,7 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "spacing", 4 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "min_rows", 10 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "nbslot_edit", 1 ], [ "send_name", "none" ], [ "layout", 0 ], [ "use_uid", 1 ], [ "timestamp", 1 ], [ "autoname", 0 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "scrollable", 0 ], [ "margin", 4 ], [ "ui_rename", 0 ], [ "fontsize", 13 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "bubblesize", 14 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "display_interp", 1 ], [ "poll_edited", 0 ], [ "slot_round", 0 ], [ "fontname", "Arial" ], [ "pattrstorage", "colors" ], [ "color_mode", 1 ], [ "click_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "menu_mode", 0 ], [ "select_mode", 0 ], [ "ignoreslotzero", 1 ], [ "unique_names", 0 ], [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "autowriteagain", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ] ],
+									"embedstate" : [ [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "fontname", "Arial" ], [ "pattrstorage", "colors" ], [ "interp_mode", 1 ], [ "timestamp", 1 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "menu_mode", 0 ], [ "ignoreslotzero", 1 ], [ "autoname", 0 ], [ "select_mode", 0 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "poll_edited", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "spacing", 4 ], [ "unique_names", 0 ], [ "display_interp", 1 ], [ "slot_round", 0 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "ui_rename", 0 ], [ "interp_multi_radius", 1.5 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "send_name", "none" ], [ "use_uid", 1 ], [ "bubblesize", 14 ], [ "scrollable", 0 ], [ "store_passthrough", 1 ], [ "drag_mode", 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "recall_passthrough", 1 ], [ "margin", 4 ], [ "click_mode", 0 ], [ "min_rows", 10 ], [ "color_mode", 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 13 ], [ "nbslot_edit", 1 ], [ "layout", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "autowriteagain", 0 ] ],
 									"filename" : "tc.preset.js",
 									"id" : "obj-10",
 									"maxclass" : "jsui",
@@ -5288,7 +5692,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 567.0, 26.7999267578125, 112.0, 22.0 ],
+					"patching_rect" : [ 635.0, 27.0, 112.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -5318,7 +5722,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 899.0, 620.0 ],
+						"rect" : [ 0.0, 26.0, 904.0, 620.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -5539,7 +5943,7 @@
 , 							{
 								"box" : 								{
 									"border" : 0,
-									"embedstate" : [ [ "spacing", 4 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "recall_passthrough", 1 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "min_rows", 10 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "nbslot_edit", 1 ], [ "send_name", "none" ], [ "layout", 0 ], [ "use_uid", 0 ], [ "timestamp", 0 ], [ "autoname", 0 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "scrollable", 0 ], [ "margin", 4 ], [ "ui_rename", 0 ], [ "fontsize", 13 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "bubblesize", 14 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "display_interp", 1 ], [ "poll_edited", 0 ], [ "slot_round", 0 ], [ "fontname", "Arial" ], [ "pattrstorage", "tcpreset_help" ], [ "color_mode", 0 ], [ "click_mode", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "menu_mode", 0 ], [ "select_mode", 0 ], [ "ignoreslotzero", 1 ], [ "unique_names", 0 ], [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "autowriteagain", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ] ],
+									"embedstate" : [ [ "bgcolor", 0.125, 0.125, 0.125, 1.0 ], [ "fontname", "Arial" ], [ "pattrstorage", "tcpreset_help" ], [ "interp_mode", 1 ], [ "timestamp", 0 ], [ "stored_slot_color", 0.458595350062755, 0.458595237564901, 0.458595266962388, 1.0 ], [ "edited_color", 1, 0.49, 0.263, 1 ], [ "color_4", 0.367, 0.542, 0.712, 1 ], [ "menu_mode", 0 ], [ "ignoreslotzero", 1 ], [ "autoname", 0 ], [ "select_mode", 0 ], [ "active_slot_color", 0.618934978328545, 0.744701397656435, 0.953750108255376, 1.0 ], [ "poll_edited", 0 ], [ "color_3", 0.527, 0.459, 0.756, 1 ], [ "spacing", 4 ], [ "unique_names", 0 ], [ "display_interp", 1 ], [ "slot_round", 0 ], [ "empty_slot_color", 0.221327066888467, 0.221327006361825, 0.221327022178404, 1.0 ], [ "ui_rename", 0 ], [ "interp_multi_radius", 1.5 ], [ "color_2", 0.679, 0.405, 0.669, 1 ], [ "send_name", "none" ], [ "use_uid", 0 ], [ "bubblesize", 14 ], [ "scrollable", 0 ], [ "store_passthrough", 1 ], [ "drag_mode", 1 ], [ "color_1", 0.743, 0.41, 0.501, 1 ], [ "text_color", 0.85, 0.85, 0.85, 1.0 ], [ "color_6", 0.316, 0.616, 0.377, 1 ], [ "recall_passthrough", 1 ], [ "margin", 4 ], [ "click_mode", 0 ], [ "min_rows", 10 ], [ "color_mode", 0 ], [ "interp_slot_color", 1, 1, 1, 0.8 ], [ "fontsize", 13 ], [ "nbslot_edit", 1 ], [ "layout", 0 ], [ "color_5", 0.283, 0.606, 0.559, 1 ], [ "autowriteagain", 0 ] ],
 									"filename" : "tc.preset.js",
 									"id" : "obj-10",
 									"maxclass" : "jsui",
