@@ -1926,7 +1926,7 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                     last_y = y;
                     break;
                 case 2: // Interpolating
-                    if (interp_mode === 1) {
+                    if (interp_mode === 1 && last_hovered > 0) {
                         var relative_dist_from_start =
                             layout === 0 ? (x - slots[last_hovered].center.x) / (slot_size + spacing) :
                                 (y - slots[last_hovered].center.y) / (slot_size + spacing);
