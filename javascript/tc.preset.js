@@ -132,6 +132,8 @@ var drag_scroll = 0; // handle scrolling when dragging outside of boundaries
 var shift_hold = 0;
 var option_hold = 0;
 var control_hold = 0;
+var cmd_hold = 0;
+var modifier = null; // null lock rename delete store drag_swap
 var is_updating_names = 0;
 var is_interpolating = 0;
 var is_moving = 0;
@@ -533,7 +535,7 @@ function paint()
         if (is_dragging === 0 && previous_active_slot > 0 && previous_active_slot <= slots_count_display) {
             mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], active_slot_color[3] * 0.5);
             if (color_mode) {
-                if (!control_hold) {
+                if (modifier === null) {
                     draw_slot_bubble(slots[previous_active_slot].left+1, slots[previous_active_slot].top+1, slot_size-2, slot_size-2);
                     mgraphics.set_line_width(2);
                     mgraphics.stroke();
@@ -546,7 +548,7 @@ function paint()
 
 
         // Selected slot
-        if (selected_slot > 0 && selected_slot <= slots_count_display && !(control_hold && last_hovered == selected_slot) && selected_slot != drag_slot) {
+        if (selected_slot > 0 && selected_slot <= slots_count_display && !(modifier === "rename" && last_hovered == selected_slot) && selected_slot != drag_slot) {
             mgraphics.set_source_rgba(active_slot_color);
             mgraphics.set_line_width(1);
             draw_slot_bubble(slots[selected_slot].left - 0.5, slots[selected_slot].top - 0.5, slot_size + 1, slot_size + 1);
@@ -585,51 +587,61 @@ function paint()
 
         // Hovered slot
         if ((last_hovered > -1) && !is_dragging) {
+            var last_hovered_slot = slots[last_hovered];
 
             // Slot border
-            if (slots[last_hovered].filled === false || (slots[last_hovered].filled === true && !control_hold)) {
+            if (last_hovered_slot.filled === false || (last_hovered_slot.filled === true && modifier === null)) {
                 mgraphics.set_source_rgba(text_color[0], text_color[1], text_color[2], 0.8 * text_color[3]);
                 mgraphics.set_line_width(1);
-                draw_slot_bubble(slots[last_hovered].left, slots[last_hovered].top, slot_size, slot_size);
+                draw_slot_bubble(last_hovered_slot.left, last_hovered_slot.top, slot_size, slot_size);
                 mgraphics.stroke();
             }
 
             if (last_hovered_is_preset_slot) {
                 var stroke_width = Math.round(1 + slot_size / 10);
                 stroke_width = Math.max(2, stroke_width);
-                if (shift_hold) {
-                    if (control_hold && slots[last_hovered].filled === true) {
-                        // About to lock/unlock
-                        var bracket_size = slot_size * 0.2;
-                        mgraphics.set_source_rgba(text_color);
-                        mgraphics.set_line_width(stroke_width);
-                        mgraphics.move_to(slots[last_hovered].left + bracket_size, slots[last_hovered].top);
-                        mgraphics.rel_line_to(-bracket_size, 0);
-                        mgraphics.rel_line_to(0, slot_size);
-                        mgraphics.rel_line_to(bracket_size, 0);
-                        mgraphics.move_to(slots[last_hovered].right - bracket_size, slots[last_hovered].top);
-                        mgraphics.rel_line_to(bracket_size, 0);
-                        mgraphics.rel_line_to(0, slot_size);
-                        mgraphics.rel_line_to(-bracket_size, 0);
-                        mgraphics.stroke();
-                    } else if (option_hold && !control_hold  && slots[last_hovered].filled === true) {
-                        // About to delete
-                        mgraphics.set_source_rgba(0, 0, 0, 0.5);
-                        draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
-                        mgraphics.fill();
-                    } else if (!control_hold && !option_hold){
-                        // About to store
-                        mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], 0.7);
-                        draw_slot_bubble(slots[last_hovered].left + 1, slots[last_hovered].top + 1, slot_size-2, slot_size-2);
-                        mgraphics.fill();
-                    }
-                } else if (control_hold && slots[last_hovered].filled === true) {
+                if (modifier === "lock") {
+                    // About to lock/unlock
+                    var bracket_size = slot_size * 0.2;
+                    mgraphics.set_source_rgba(text_color);
+                    mgraphics.set_line_width(stroke_width);
+                    mgraphics.move_to(last_hovered_slot.left + bracket_size, last_hovered_slot.top);
+                    mgraphics.rel_line_to(-bracket_size, 0);
+                    mgraphics.rel_line_to(0, slot_size);
+                    mgraphics.rel_line_to(bracket_size, 0);
+                    mgraphics.move_to(last_hovered_slot.right - bracket_size, last_hovered_slot.top);
+                    mgraphics.rel_line_to(bracket_size, 0);
+                    mgraphics.rel_line_to(0, slot_size);
+                    mgraphics.rel_line_to(-bracket_size, 0);
+                    mgraphics.stroke();
+                } else if (modifier === "delete" && last_hovered_slot.filled) {
+                    // About to delete
+                    mgraphics.set_source_rgba(0, 0, 0, 0.5);
+                    draw_slot_bubble(last_hovered_slot.left + 1, last_hovered_slot.top + 1, slot_size-2, slot_size-2);
+                    mgraphics.fill();
+                    
+                    var cross_size = 0.6;
+                    var cross_offset = slot_size * (1 - cross_size) * 0.5;
+                    mgraphics.set_source_rgba(text_color);
+                    mgraphics.set_line_width(stroke_width);
+                    mgraphics.move_to(last_hovered_slot.left + cross_offset, last_hovered_slot.top + cross_offset);
+                    mgraphics.rel_line_to(slot_size * cross_size, slot_size * cross_size);
+                    mgraphics.move_to(last_hovered_slot.right - cross_offset, last_hovered_slot.top + cross_offset);
+                    mgraphics.rel_line_to(-slot_size * cross_size, slot_size * cross_size);
+                    mgraphics.stroke();
+                } else if (modifier === "store"){
+                    // About to store
+                    mgraphics.set_source_rgba(active_slot_color[0], active_slot_color[1], active_slot_color[2], 0.7);
+                    draw_slot_bubble(last_hovered_slot.left + 1, last_hovered_slot.top + 1, slot_size-2, slot_size-2);
+                    mgraphics.fill();
+
+                } else if (modifier === "rename") {
                     // About to rename
                     mgraphics.set_source_rgba(text_color);
                     mgraphics.set_line_width(stroke_width);
-                    mgraphics.move_to(slots[last_hovered].left - 1, slots[last_hovered].top);
+                    mgraphics.move_to(last_hovered_slot.left - 1, last_hovered_slot.top);
                     mgraphics.rel_line_to(slot_size + 2, 0);
-                    mgraphics.move_to(slots[last_hovered].left - 1, slots[last_hovered].bottom);
+                    mgraphics.move_to(last_hovered_slot.left - 1, last_hovered_slot.bottom);
                     mgraphics.rel_line_to(slot_size + 2, 0);
                     mgraphics.stroke();
                 }
@@ -652,13 +664,13 @@ function paint()
                 // Display the text bubble on top of the next slot to avoid hiding slots borders (useful when attempting to lock/rename/delete)
                 var bg_txt_dim_w = text_dim[0] > slot_size ? text_dim[0] + 4 : slot_size + 4;
                 var bg_txt_dim_h = text_dim[1] > slot_size ? text_dim[1] + 4 : slot_size + 4;
-                var bg_txt_pos_x = slots[last_hovered].right + 2;
-                var bg_txt_pos_y =  slots[last_hovered].top - 2;
+                var bg_txt_pos_x = last_hovered_slot.right + 2;
+                var bg_txt_pos_y =  last_hovered_slot.top - 2;
                 
                 // If there is not enough place on the right and if there is more available place on the left, text is displayed on the left
                 var arrow_on_left = true;
-                if (bg_txt_pos_x + bg_txt_dim_w > ui_width && slots[last_hovered].left - half_spacing > ui_width - slots[last_hovered].right) {
-                    bg_txt_pos_x = slots[last_hovered].left - half_spacing - bg_txt_dim_w;
+                if (bg_txt_pos_x + bg_txt_dim_w > ui_width && last_hovered_slot.left - half_spacing > ui_width - last_hovered_slot.right) {
+                    bg_txt_pos_x = last_hovered_slot.left - half_spacing - bg_txt_dim_w;
                     arrow_on_left = false;
                 }
 
@@ -670,12 +682,12 @@ function paint()
                 mgraphics.rectangle_rounded(bg_txt_pos_x, bg_txt_pos_y, bg_txt_dim_w, bg_txt_dim_h, 4, 4);
                 // Draw an arrow pointing toward the preset slot
                 if (arrow_on_left) {
-                    mgraphics.move_to(slots[last_hovered].right, slots[last_hovered].top + slot_size / 2);
+                    mgraphics.move_to(last_hovered_slot.right, last_hovered_slot.top + slot_size / 2);
                     mgraphics.rel_line_to(2, 3);
                     mgraphics.rel_line_to(0, -6);
                     mgraphics.close_path();
                 } else {
-                    mgraphics.move_to(slots[last_hovered].left, slots[last_hovered].top + slot_size / 2);
+                    mgraphics.move_to(last_hovered_slot.left, last_hovered_slot.top + slot_size / 2);
                     mgraphics.rel_line_to(-2, 3);
                     mgraphics.rel_line_to(0, -6);
                     mgraphics.close_path();
@@ -1246,6 +1258,13 @@ function store(v) {
         active_slot_edited = 0;
         run_edited_poll_task();
 
+        if (is_interpolating) {
+            for (var i = 0; i < filled_slots.length; i++) {
+                slots[filled_slots[i]].interp = -1;
+            }
+            is_interpolating = 0;
+        }
+
         if (recalc_rows_flag) {
             calc_rows_columns();
         } else {
@@ -1723,23 +1742,74 @@ function restore_textedit() {
 }
 restore_textedit.local = 1;
 
+function set_modifier() {
+    var sum =  cmd_hold + shift_hold * 2 + control_hold * 4 + option_hold * 8;
+    var is_hovered_slot_filled = last_hovered > 0 && slots[last_hovered].filled;
+    switch (sum) {
+        case 2: //shift
+            modifier = "store"; break;
+        case 4: //ctrl
+            if (is_hovered_slot_filled) {
+                modifier = "rename";
+            }
+            break;
+        case 6: //shift+control
+            if (is_hovered_slot_filled) {
+                modifier = "lock";
+            }
+            break;
+        case 8: //option
+            modifier = "drag_swap"; break;
+        case 10: //shift+option
+                modifier = "delete"; break;
+        default:
+            switch (click_mode) {
+                case 1:
+                    if (is_hovered_slot_filled) {
+                        modifier = "select";
+                    }
+                    break;
+                case 2:
+                    modifier = "store"; break;
+                case 3:
+                    if (is_hovered_slot_filled) {
+                        modifier = "delete";
+                    }
+                    break;
+                default:
+                    modifier = null; break;
+            }
+    }
+}
+
 // MOUSE EVENTS
-function onidle(x,y,but,cmd,shift,capslock,option,ctrl)
+function onidle(x, y, but, cmd, shift, capslock, option, ctrl)
 {
     var redraw_flag = false;
     if (last_x != x || last_y != y - y_offset) {
+        // post("onidle", "but", but, "cmd", cmd, "shift", shift, "capslock", capslock, "option", option, "ctrl", ctrl, '\n');
         last_x = x;
 		last_y = y - y_offset;
         var cur = get_slot_index(x, y - y_offset);
 		if (cur != last_hovered) {
-			last_hovered = cur;
+            last_hovered = cur;
+			set_modifier();
             redraw_flag = true;
 		}
     }
-    if (shift_hold != shift || option_hold != option || control_hold != ctrl) {
+    // jsui: modifier keys return 0 or 1
+    // v8ui: modifier keys return 0 or 1 (cmd), 2 (shift), 4 (ctrl), 8 (option/alt)
+    if (this.box.maxclass === "v8ui") {
+        shift /= 2;
+        ctrl /= 4;
+        option /= 8;
+    }
+    if (shift_hold != shift || option_hold != option || control_hold != ctrl || cmd_hold !== cmd) {
+        cmd_hold = cmd;
         shift_hold = shift;
-		option_hold = option;
         control_hold = ctrl;
+		option_hold = option;
+        set_modifier();
         redraw_flag = true;
     }
     last_hovered_is_preset_slot = scrollable && nbslot_edit && last_hovered > (true_slots_count_display - 2) ? false : true;
@@ -1761,8 +1831,7 @@ function onidleout(x, y)
 }
 onidleout.local = 1;
 
-function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
-{
+function onclick(x, y, but, cmd, shift, capslock, option, ctrl) {
     if (scrollable && nbslot_edit) {
         // Click "-"
         if (last_hovered == true_slots_count_display - 1) {
@@ -1797,40 +1866,35 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
     if (is_typing_name) {
         restore_textedit();
     }
-	if (last_hovered > -1 && pattrstorage_name != null && last_hovered_is_preset_slot) {
-		var output = "recall";
-        if (click_mode === 1) {
-            output = "select";
+    if (pattrstorage_name != null && last_hovered > -1 && last_hovered_is_preset_slot) {
+        // normally onclick() never gets triggered on click release (but always === 1), but here we call onclick() with but 0 from ondrag() when the button is released and no drag happened.
+        // post("click_mode", click_mode, "but", but, "cmd", cmd, "shift", shift, "capslock", capslock, "option", option, "ctrl", ctrl, '\n');
+        var output = null;
+        if ((drag_mode > 0 && !but) || (drag_mode === 0 && but)) {
+            if (modifier === null && click_mode === 0 && slots[last_hovered].filled) {
+                output = "recall";
+            } else {
+                output = modifier;
+            }
         }
-        if (click_mode === 2 ||(shift && !option && !ctrl)) {
-            output = "store";
-        } else if (click_mode === 3 ||(shift && option && slots[last_hovered].filled)) {
-			output = "delete";
-		} else if (shift && ctrl && slots[last_hovered].filled) {
-            output = "lock";
-        } else if (!shift && ctrl && slots[last_hovered].filled) {
-            output = "rename";
-        } else if (slots[last_hovered].filled === false) {
-			return;
-		}
-        if (output == "recall" && recall_passthrough == false) {
+        if (output === "recall" && recall_passthrough == false) {
             // if recall_passthrough == true, send the recall message to pattrstorage directly
             outlet(0, 'recall', last_hovered);
-        } else if (output == "store") {
+        } else if (output === "store") {
             if (store_passthrough) {
                 store(last_hovered);
             } else {
                 outlet(0, 'store', last_hovered);
             }
-        } else if (output == "select") {
+        } else if (output === "select") {
             select(last_hovered);
-            // mgraphics.redraw();
-        } else if (output == "lock") {
+            mgraphics.redraw();
+        } else if (output === "lock") {
             lock(last_hovered, 1 - slots[last_hovered].lock);
-            if (selected_slot == last_hovered) {
+            if (selected_slot === last_hovered) {
                 outlet(3, "set", slots[last_hovered].lock);
             }
-        } else if (output == "rename") {
+        } else if (output === "rename") {
             if (!textedit_obj) {
                 find_textedit();
             }
@@ -1838,11 +1902,12 @@ function onclick(x,y,but,cmd,shift,capslock,option,ctrl)
                 select(last_hovered);
                 set_textedit(last_hovered);
             } else {
-                error('No textedit connected to tc.preset third outlet.');
+                error('No textedit connected to tc.preset third outlet.\n');
             }
-        } else {
+        } else if (output !== null){
             to_pattrstorage(output, last_hovered);
         }
+        set_modifier();
 	}
 	
 	last_x = x;
@@ -1859,8 +1924,7 @@ function ondblclick(x,y,but,cmd,shift,capslock,option,ctrl)
             outlet(0, 'recall', last_hovered);
         }
 	}
-	
-	last_x = x;
+	last_x = x; 
 	last_y = y - y_offset;
 }
 ondblclick.local = 1;
@@ -1869,6 +1933,10 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
 {
     if (pattrstorage_name != null) {
         y -= y_offset;
+        if (is_dragging === 0 && !but) {
+            // Triggering onclick() interactions when click releases if no drag happened
+            onclick(x, y, 0, cmd, shift, capslock, option, ctrl);
+        }
         if (drag_mode > 0 && !cmd && !shift && !ctrl) {
             switch (is_dragging) {
                 case 0: // Not dragging yet
@@ -1984,7 +2052,7 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                             }
                         }
                         for (var i = 0; i < nearby_slots.length; i++) {
-                            nearby_slots[i] = nearby_slots[i][0] + Math.min(nearby_slots[i][1] / accum, 0.99);
+                            nearby_slots[i] = nearby_slots[i][0] + Math.min(nearby_slots[i][1] / accum, 0.999);
                         }
                         if (nearby_slots.length) {
                             var args = ["recallmulti"].concat(nearby_slots);
@@ -2002,6 +2070,11 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
                         }
                     }
                     break;
+            }
+            if (!but) {
+                // When the click releases, we force onidle() to compute currently hovered slot
+                last_x += 1;
+                onidle(x, y, but, cmd, shift, capslock, option, ctrl);
             }
         }
     }
@@ -2351,7 +2424,14 @@ function setmin_rows(v){
 }
 setmin_rows.local = 1;
 
-declareattribute("click_mode", null, null, 1, { style: "enumindex", enumvals: ["Recall", "Select", "Store", "Delete"], default: 0, label: "Click Mode", paint: 1});
+declareattribute("click_mode", null, "setclick_mode", 1, { style: "enumindex", enumvals: ["Recall", "Select", "Store", "Delete"], default: 0, label: "Click Mode", paint: 1});
+function setclick_mode(v) {
+    var new_val = Math.min(Math.max(Math.floor(v), 0), 3);
+    if (click_mode !== new_val) {
+        click_mode = new_val;
+        set_modifier();
+    }
+}
 
 declareattribute("select_mode", null, "setselect_mode", 1, {style: "onoff", label: "Select Mode", invisible: 1});
 function setselect_mode(v) {
