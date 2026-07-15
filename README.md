@@ -5,7 +5,8 @@ A [jsui]/[v8ui] replacement for the [preset] object in Cycling'74 Max.
 ## Features
 - Same click + modifier key behavior as the preset object to store and delete presets
 - \+ Additional interactions (control+click to rename, shift+control+click to lock/unlock)
-- Drag and drop presets to re-organize
+- Drag modes : Drag and drop presets to re-organize, or drag through presets to interpolate
+- Click modes: set the behavior of single clicks: recall, select without recall, store, delete
 - Display presets as a grid or a list
 - Scrollable list layout (requires Max 8.6.2)
 - Shows active preset even if recalled directly from pattrstorage
@@ -23,7 +24,7 @@ A [jsui]/[v8ui] replacement for the [preset] object in Cycling'74 Max.
 - Color mode: various ways to colorize preset slots
 - UID: generate unique identifiers for each preset so you can "follow" them when they're moved, renamed or re-saved. Practical in case of advanced preset management
 - Timestamps: automatically save a 'created' and 'modified' date for each preset
-- Click mode: set the behavior of single clicks: recall, select without recall, store, delete
+
 ...and more!
 
 ## How to install
