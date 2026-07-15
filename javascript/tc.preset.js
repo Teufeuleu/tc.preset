@@ -586,7 +586,7 @@ function paint()
         // }
 
         // Hovered slot
-        if ((last_hovered > -1) && !is_dragging) {
+        if ((last_hovered > -1) && is_dragging < 2) {
             var last_hovered_slot = slots[last_hovered];
 
             // Slot border
