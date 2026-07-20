@@ -56,7 +56,7 @@ var stored_slot_color = max.getcolor("theme_accentcolor"); //[0.502, 0.502, 0.50
 var interp_slot_color = [1.0, 1.0, 1.0, 0.8];
 var border_color = [1.0, 1.0, 1.0, 0.85];
 var text_color = max.getcolor("theme_textcolor"); //[0.129, 0.129, 0.129, 1];
-var text_bg_color = set_text_bg_color();
+var text_bg_color; set_text_bg_color();
 var edited_color = [1, 0.49, 0.263, 1];
 
 var color_1 = [0.743, 0.41, 0.501, 1]; // Color set for the filled slots. I don't like how this is declared. More info in color_wheel() declaration
@@ -497,13 +497,11 @@ paint_base.local = 1;
 function paint()
 {
     // post("redraw\n");
-    if (is_jsui) {
-        // Handling Presentation mode enable/disable
-        var cur_size = mgraphics.size;
-        if (cur_size[0] != ui_width || cur_size[1] != ui_height) {
-            onresize(cur_size[0], cur_size[1]);
-            return
-        }
+    // Handling Presentation mode enable/disable
+    var cur_size = mgraphics.size;
+    if (cur_size[0] != ui_width || cur_size[1] != ui_height) {
+        onresize(cur_size[0], cur_size[1]);
+        return
     }
     
     mgraphics.select_font_face(font_name);
