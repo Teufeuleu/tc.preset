@@ -496,14 +496,13 @@ paint_base.local = 1;
 
 function paint()
 {
-    // post("redraw\n");
-    // Handling Presentation mode enable/disable
+    // Handling Presentation mode enable/disable in jsui
     var cur_size = mgraphics.size;
     if (cur_size[0] != ui_width || cur_size[1] != ui_height) {
         onresize(cur_size[0], cur_size[1]);
         return
     }
-    
+    // post("redraw\n");
     mgraphics.select_font_face(font_name);
     mgraphics.set_font_size(font_size);
     mgraphics.translate(0, y_offset);
@@ -2111,6 +2110,7 @@ onresize.local = 1;
 // in which case we resize it to a more convenient size to start with.
 if (ui_width == 64 && ui_height == 64) {
     box.setboxattr("patching_rect", box.rect[0], box.rect[1], 130, 58);
+    box.setboxattr("presentation_rect", box.rect[0], box.rect[1], 130, 58);
 }
 // Allows for dynamic resizing even in presentation mode (addressing the limitation of onresize() in jsui)
 if (is_jsui) {
