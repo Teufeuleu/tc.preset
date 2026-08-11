@@ -135,7 +135,6 @@ var option_hold = 0;
 var control_hold = 0;
 var cmd_hold = 0;
 var modifier = null; // null lock rename delete store drag_swap
-var is_updating_names = 0;
 var is_interpolating = 0;
 var is_moving = 0;
 var is_dragging = 0;    // Drag flag
@@ -1025,7 +1024,6 @@ function slotlist() {
         for (var i = 0; i < filled_slots.length; i++) {
             slots[filled_slots[i]].filled = true;
         }
-        is_updating_names = 1;
         to_pattrstorage("getslotnamelist");
         get_all_presets_metadata();
         update_filled_slots_dict();
@@ -1036,12 +1034,9 @@ function slotname() {
 	var args = arrayfromargs(arguments);
     var slot = args[0];
     var name = args[1];
-    if (slot == 'done') {
-        is_updating_names = 0;
-        return;
-    }
-    if (slot > 0 && name != "(undefined)") {
-        if (is_updating_names == 1 && slots[slot].filled === false && name !== "<(unnamed)>") {
+    if (slot === 'done') return;
+    if (slot > 0 && name !== "(undefined)") {
+        if (slots[slot].filled === false && name !== "<(unnamed)>") {
             // Removing parenthesis automatically added by pattrstorage if the preset has a name but isn't filled
             name = name.slice(1, -1);
         }
@@ -1484,7 +1479,6 @@ function resync() {
     to_pattrstorage("getslotlist");
     to_pattrstorage("getlockedslots");
     calc_rows_columns();
-
 }
 
 function find_pattrstorage(name) {
@@ -1500,7 +1494,6 @@ function find_pattrstorage(name) {
     if (pattrstorage_obj != null) {
         pattrstorage_name = name;
         filled_slots_dict.name = pattrstorage_name + '_presets_dict';
-        slots_clear();
         // this.patcher.hiddenconnect(pattrstorage_obj, 0, this.box, 0);
         // post('lets find presets_metata pattr for', name, '\n');
         if (use_uid || color_mode > 1) connect_to_metadata_pattr();
