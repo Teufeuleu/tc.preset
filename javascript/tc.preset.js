@@ -1933,11 +1933,11 @@ ondblclick.local = 1;
 function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
 {
     if (pattrstorage_name != null) {
-        y -= y_offset;
         if (is_dragging === 0 && !but) {
             // Triggering onclick() interactions when click releases if no drag happened
             onclick(x, y, 0, cmd, shift, capslock, option, ctrl);
         }
+        y -= y_offset;
         if (drag_mode > 0 && !cmd && !shift && !ctrl) {
             switch (is_dragging) {
                 case 0: // Not dragging yet
@@ -2075,7 +2075,7 @@ function ondrag(x,y,but,cmd,shift,capslock,option,ctrl)
             if (!but) {
                 // When the click releases, we force onidle() to compute currently hovered slot
                 last_x += 1;
-                onidle(x, y, but, cmd, shift, capslock, option, ctrl);
+                onidle(x, y + y_offset, but, cmd, shift, capslock, option, ctrl);
             }
         }
     }

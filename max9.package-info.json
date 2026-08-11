@@ -1,7 +1,7 @@
 {
 	"name" : "tc.preset",
 	"displayname" : "",
-	"version" : "1.5.2",
+	"version" : "1.5.3",
 	"author" : "Théophile Clet",
 	"authors" : [  ],
 	"description" : "A v8ui replacement for the preset object",
