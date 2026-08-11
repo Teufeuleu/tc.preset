@@ -229,7 +229,7 @@ slot.local = 1;
 
 function loadbang() {
     // If running in a M4L device, for some reason loadbang needs to be delayed in order to properly get presets stored in Live set
-    // So we prevent do_loadbang from happening from here, and we rely on init_tsk instead.
+    // So we bypass the initial loadbang, and we rely on init_tsk instead
     if (max.isplugin) return;
     do_loadbang();
 }
@@ -2151,6 +2151,9 @@ function setpattrstorage(v){
         pattrstorage_obj = null;
     } else  {
         pattrstorage_name = arrayfromargs(arguments)[0];
+    }
+    if (has_loaded) {
+        do_loadbang();
     }
 }
 setpattrstorage.local = 1;
