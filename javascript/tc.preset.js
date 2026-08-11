@@ -228,6 +228,13 @@ function slot(left, top, right, bottom) {
 slot.local = 1;
 
 function loadbang() {
+    // If running in a M4L device, for some reason loadbang needs to be delayed in order to properly get presets stored in Live set
+    // So we prevent do_loadbang from happening from here, and we rely on init_tsk instead.
+    if (max.isplugin) return;
+    do_loadbang();
+}
+
+function do_loadbang() {
     // post("loadbang\n");
     has_loaded = true;
     this.box.setboxattr('border', 0);
@@ -244,7 +251,7 @@ init_tsk.schedule(200);
 
 function delayed_init() {
     if (!has_loaded) {
-        loadbang();
+        do_loadbang();
     }
     if (arguments.callee.task.valid) {
             arguments.callee.task.freepeer();
