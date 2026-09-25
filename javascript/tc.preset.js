@@ -312,7 +312,7 @@ function calc_rows_columns(src) {
     }
     
     // Preventing useless redraws when resizing
-    if (src === "resize" && previous_rows === rows && previous_columns === columns) return false;
+    if (src === "resize" && layout === 0 && previous_rows === rows && previous_columns === columns) return false;
     
     true_slots_count_display = columns * rows - minus_slots_carry;
     slots_count_display = scrollable && nbslot_edit ? true_slots_count_display - 2 : true_slots_count_display;
