@@ -1501,6 +1501,7 @@ function find_pattrstorage(name) {
     if (pattrstorage_obj != null) {
         pattrstorage_name = name;
         filled_slots_dict.name = pattrstorage_name + '_presets_dict';
+        slots_clear();
         // this.patcher.hiddenconnect(pattrstorage_obj, 0, this.box, 0);
         // post('lets find presets_metata pattr for', name, '\n');
         if (use_uid || color_mode > 1) connect_to_metadata_pattr();
